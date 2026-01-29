@@ -5,80 +5,76 @@
     <title>Portafolio | Seguridad Informática</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Portafolio académico de Seguridad Informática">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <header>
-    <h1>América Fabiola Guerra Ramírez</h1>
-    <p>Alias: aguerra</p>
-    <h2>CNO V – Seguridad Informática | 8º Semestre</h2>
-    <p>Universidad Politécnica</p>
-
-    <nav>
-        <a href="#inicio">Inicio</a>
-        <a href="#perfil">Perfil</a>
-        <a href="#tecnico">Información técnica</a>
-        <a href="#contacto">Contacto</a>
-    </nav>
+    <div class="header-content">
+        <div class="badge">CNO V – 8º Semestre</div>
+        <h1>América Fabiola Guerra Ramírez</h1>
+        <p class="alias">Alias: <span>aguerra</span></p>
+        <p class="uni"><i class="fas fa-university"></i> Universidad Politécnica</p>
+        
+        <nav>
+            <a href="#inicio">Intro</a>
+            <a href="#perfil">Perfil</a>
+            <a href="#tecnico">Tecnología</a>
+            <a href="#contacto">Contacto</a>
+        </nav>
+    </div>
 </header>
 
-<section id="inicio">
-    <h3>Presentación del portafolio</h3>
-    <p>
-        Este portafolio digital documenta de manera estructurada las evidencias
-        académicas desarrolladas durante el curso de <strong>Seguridad Informática</strong>,
-        aplicando principios de documentación técnica, buenas prácticas y
-        presentación profesional.
-    </p>
-</section>
+<main class="container">
+    <section id="inicio" class="card">
+        <div class="card-icon"><i class="fas fa-terminal"></i></div>
+        <h3>Presentación</h3>
+        <p>
+            Este portafolio digital documenta de manera estructurada las evidencias
+            académicas de <strong>Seguridad Informática</strong>, bajo principios de documentación técnica y ciberseguridad.
+        </p>
+    </section>
 
-<section id="perfil">
-    <h3>Perfil del estudiante</h3>
-    <p>
-        Estudiante de nivel universitario con interés en el área de la seguridad
-        informática y la ciberseguridad, enfocada en el análisis de vulnerabilidades,
-        la protección de la información y el aprendizaje continuo mediante la
-        investigación tecnológica.
-    </p>
-</section>
+    <section id="perfil" class="card">
+        <div class="card-icon"><i class="fas fa-user-shield"></i></div>
+        <h3>Perfil</h3>
+        <p>
+            Estudiante enfocada en el <strong>análisis de vulnerabilidades</strong> y la protección de la información, buscando el aprendizaje continuo mediante la investigación tecnológica.
+        </p>
+    </section>
 
-<section id="tecnico">
-    <h3>Información técnica</h3>
-    <ul>
-        <li><strong>Lenguajes:</strong> HTML, Python, Java, C/C++, Linux</li>
-        <li><strong>Control de versiones:</strong> Git y GitHub</li>
-        <li><strong>Plataforma de publicación:</strong> GitHub Pages</li>
-        <li><strong>Enfoque:</strong> fundamentos de seguridad informática</li>
-    </ul>
-</section>
+    <section id="tecnico" class="card">
+        <div class="card-icon"><i class="fas fa-code"></i></div>
+        <h3>Nerd Insights</h3>
+        <div class="tech-grid">
+            <div class="tech-item"><strong>Lenguajes:</strong> Python, Java, C/C++, HTML</div>
+            <div class="tech-item"><strong>Sistemas:</strong> Linux (Kali/Ubuntu)</div>
+            <div class="tech-item"><strong>Herramientas:</strong> Git, GitHub Pages</div>
+        </div>
+    </section>
 
-<section id="contacto">
-    <h3>Formulario de contacto</h3>
-
-    <form id="contactForm">
-        <label for="nombre">Nombre:</label><br>
-        <input type="text" id="nombre" name="nombre" required><br><br>
-
-        <label for="email">Correo electrónico:</label><br>
-        <input type="email" id="email" name="email" required><br><br>
-
-        <label for="mensaje">Mensaje:</label><br>
-        <textarea id="mensaje" name="mensaje" rows="4" required></textarea><br><br>
-
-        <button type="submit">Enviar mensaje</button>
-    </form>
-
-    <p id="respuesta" style="display:none; margin-top:15px; color:green;">
-        ✅ Gracias por tu mensaje. Hemos recibido tu información y se ha enviado una
-        respuesta automática a tu correo.
-    </p>
-</section>
-
+    <section id="contacto" class="card">
+        <div class="card-icon"><i class="fas fa-envelope"></i></div>
+        <h3>Get In Touch</h3>
+        <form id="contactForm">
+            <div class="input-group">
+                <input type="text" id="nombre" placeholder="Tu Nombre" required>
+            </div>
+            <div class="input-group">
+                <input type="email" id="email" placeholder="Correo electrónico" required>
+            </div>
+            <div class="input-group">
+                <textarea id="mensaje" rows="4" placeholder="¿En qué puedo ayudarte?" required></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Enviar mensaje</button>
+        </form>
+    </section>
+</main>
 
 <footer>
-    <p>© 2026 | Portafolio académico – Seguridad Informática</p>
+    <p>© 2026 | América Guerra — Seguridad Informática</p>
 </footer>
 
 </body>
