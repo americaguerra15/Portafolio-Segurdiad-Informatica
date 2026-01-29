@@ -2,34 +2,74 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Portafolio | América Guerra RAM</title>
+    <title>Portafolio | América Guerra</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portafolio de Seguridad Informática con interfaz de consola interactiva.">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="terminal-wrapper">
+<div class="terminal-container">
     <div class="terminal-header">
-        <div class="terminal-buttons">
+        <div class="buttons">
             <span class="dot red"></span>
             <span class="dot yellow"></span>
             <span class="dot green"></span>
         </div>
-        <div class="terminal-title">aguerra@kali:~$</div>
+        <div class="title">aguerra@kali: ~/portafolio</div>
     </div>
+
     <div class="terminal-body">
-        <pre class="console-output"></pre>
-        <div class="prompt-line">
-            <span class="prompt">aguerra@kali:~$&nbsp;</span><input type="text" class="command-input" autofocus disabled>
+        <div class="command-line">
+            <span class="prompt">guest@kali:~$</span> <span class="command">whoami</span>
         </div>
-        <div id="dynamic-content">
-            </div>
+        
+        <section class="response">
+            <h1>América Fabiola Guerra Ramírez</h1>
+            <p class="subtitle">CNO V – Seguridad Informática | 8º Semestre</p>
+            <p class="location"><i class="fas fa-university"></i> Universidad Politécnica</p>
+            <p class="description">
+                Estudiante enfocada en el análisis de vulnerabilidades y ciberseguridad. 
+                Este espacio documenta mi progreso académico y técnico.
+            </p>
+        </section>
+
+        <div class="command-line">
+            <span class="prompt">guest@kali:~$</span> <span class="command">ls --skills</span>
+        </div>
+
+        <section class="response grid">
+            <div class="skill-tag">Python</div>
+            <div class="skill-tag">Java</div>
+            <div class="skill-tag">Linux / Kali</div>
+            <div class="skill-tag">C/C++</div>
+            <div class="skill-tag">Git / GitHub</div>
+            <div class="skill-tag">Security Fundamentals</div>
+        </section>
+
+        <div class="command-line">
+            <span class="prompt">guest@kali:~$</span> <span class="command">cat contacto.txt</span>
+        </div>
+
+        <section class="response">
+            <form class="contact-form">
+                <input type="text" placeholder="Tu nombre..." required>
+                <input type="email" placeholder="Tu email..." required>
+                <textarea placeholder="Escribe tu mensaje aquí..." rows="3"></textarea>
+                <button type="submit">_ENVIAR_DATOS</button>
+            </form>
+        </section>
+
+        <div class="command-line">
+            <span class="prompt">guest@kali:~$</span> <span class="cursor">█</span>
+        </div>
     </div>
 </div>
 
-<script src="script.js"></script>
+<footer>
+    <p>© 2026 | América Guerra - Sec Portfolio</p>
+</footer>
+
 </body>
 </html>
