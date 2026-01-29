@@ -31,69 +31,118 @@ footer {
     text-align: center;
     padding: 10px;
 }*/
+/* ===== CONFIGURACIÓN GENERAL ===== */
 body {
     font-family: 'Segoe UI', Arial, sans-serif;
     margin: 0;
     background-color: #f4f6f8;
     color: #333;
+    line-height: 1.6;
 }
 
+/* ===== HEADER ===== */
 header {
-    background-color: #0b1c2d;
+    background: linear-gradient(135deg, #0b1c2d, #123a63);
     color: white;
-    padding: 30px 20px;
+    padding: 35px 20px;
     text-align: center;
 }
 
 header h1 {
     margin: 0;
-    font-size: 2.2em;
+    font-size: 2.3em;
+    letter-spacing: 1px;
 }
 
 header h2 {
-    margin: 5px 0;
-    font-weight: normal;
+    margin: 8px 0;
+    font-weight: 400;
     font-size: 1.2em;
+    opacity: 0.9;
 }
 
+header p {
+    margin: 5px 0;
+    font-size: 0.95em;
+    opacity: 0.85;
+}
+
+/* ===== NAV ===== */
 nav {
-    margin-top: 15px;
+    margin-top: 18px;
 }
 
 nav a {
     color: white;
-    margin: 0 15px;
+    margin: 0 14px;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 600;
+    padding-bottom: 3px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
 }
 
 nav a:hover {
-    text-decoration: underline;
+    border-bottom: 2px solid #ffffff;
+    opacity: 0.9;
 }
 
+/* ===== SECCIONES ===== */
 section {
     background: white;
-    margin: 30px auto;
-    padding: 25px;
-    border-radius: 10px;
+    margin: 35px auto;
+    padding: 28px;
+    border-radius: 12px;
     max-width: 900px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
 }
 
 section h3 {
     color: #0b1c2d;
     margin-top: 0;
+    border-left: 4px solid #123a63;
+    padding-left: 10px;
 }
 
+/* ===== LISTAS ===== */
 ul {
-    padding-left: 20px;
+    padding-left: 22px;
 }
 
+ul li {
+    margin-bottom: 6px;
+}
+
+/* ===== FOOTER ===== */
 footer {
     background-color: #0b1c2d;
     color: white;
     text-align: center;
-    padding: 15px;
-    margin-top: 40px;
+    padding: 18px;
+    margin-top: 50px;
+    font-size: 0.9em;
+    opacity: 0.9;
 }
 
+/* ===== RESPONSIVE BÁSICO ===== */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.9em;
+    }
+
+    nav a {
+        display: inline-block;
+        margin: 8px;
+    }
+
+    section {
+        margin: 25px 15px;
+        padding: 22px;
+    }
+}
