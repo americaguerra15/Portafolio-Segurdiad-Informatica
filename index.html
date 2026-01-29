@@ -11,8 +11,9 @@
 <body>
 
 <header>
-    <h1>América Guerra</h1>
-    <h2>CNO V – Seguridad Informática</h2>
+    <h1>América Fabiola Guerra Ramírez</h1>
+    <p>Alias: aguerra</p>
+    <h2>CNO V – Seguridad Informática | 8º Semestre</h2>
     <p>Universidad Politécnica</p>
 
     <nav>
@@ -46,7 +47,7 @@
 <section id="tecnico">
     <h3>Información técnica</h3>
     <ul>
-        <li><strong>Lenguajes:</strong> HTML5, CSS3</li>
+        <li><strong>Lenguajes:</strong> HTML, Python, Java, C/C++, Linux</li>
         <li><strong>Control de versiones:</strong> Git y GitHub</li>
         <li><strong>Plataforma de publicación:</strong> GitHub Pages</li>
         <li><strong>Enfoque:</strong> fundamentos de seguridad informática</li>
@@ -54,12 +55,27 @@
 </section>
 
 <section id="contacto">
-    <h3>Contacto</h3>
-    <p>
-        Portafolio académico con fines educativos.<br>
-        Repositorio disponible en GitHub.
+    <h3>Formulario de contacto</h3>
+
+    <form id="contactForm">
+        <label for="nombre">Nombre:</label><br>
+        <input type="text" id="nombre" name="nombre" required><br><br>
+
+        <label for="email">Correo electrónico:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="mensaje">Mensaje:</label><br>
+        <textarea id="mensaje" name="mensaje" rows="4" required></textarea><br><br>
+
+        <button type="submit">Enviar mensaje</button>
+    </form>
+
+    <p id="respuesta" style="display:none; margin-top:15px; color:green;">
+        ✅ Gracias por tu mensaje. Hemos recibido tu información y se ha enviado una
+        respuesta automática a tu correo.
     </p>
 </section>
+
 
 <footer>
     <p>© 2026 | Portafolio académico – Seguridad Informática</p>
