@@ -1,186 +1,298 @@
-/*body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background-color: #f2f2f2;
-}
-
-header {
-    background-color: #0b1c2d;
-    color: white;
-    padding: 20px;
-    text-align: center;
-}
-
-nav a {
-    color: white;
-    margin: 0 10px;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-section {
-    background: white;
-    margin: 20px;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-footer {
-    background-color: #0b1c2d;
-    color: white;
-    text-align: center;
-    padding: 10px;
-}*/
 :root {
-    --bg-color: #0d1117;
-    --card-bg: #161b22;
-    --text-main: #e6edf3;
-    --text-dim: #8b949e;
-    --accent: #58a6ff;
-    --border: #30363d;
+    --bg-color: #0d1117; /* Fondo oscuro casi negro */
+    --terminal-bg: #1e1e1e; /* Fondo de la ventana de la terminal */
+    --text-color: #00ff00; /* Verde neón para el texto principal */
+    --prompt-color: #00ff00; /* Verde brillante para el prompt */
+    --header-color: #444; /* Gris oscuro para el encabezado de la terminal */
+    --border-color: #0a0a0a; /* Borde sutil para la terminal */
+    --accent-color: #00aaff; /* Azul eléctrico para elementos destacados */
+    --error-color: #ff0000; /* Rojo para errores o alertas */
+    --shadow-color: rgba(0, 255, 0, 0.3); /* Sombra de brillo verde */
+    --font-mono: 'Roboto Mono', monospace;
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-mono);
     margin: 0;
     background-color: var(--bg-color);
-    color: var(--text-main);
-    line-height: 1.6;
+    color: var(--text-color);
+    line-height: 1.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden; /* Evita barras de desplazamiento si no es necesario */
 }
 
-/* ===== HEADER ===== */
-header {
-    background: radial-gradient(circle at top, #1c2128 0%, #0d1117 100%);
-    padding: 80px 20px 40px;
+/* Efecto de ruido/glitch de fondo sutil (opcional, puede consumir recursos) */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0iIzBkMTExNyIvPjxwYXRoIGQ9Ik0wIDBoMTYwVjE2MEgwVjB6TTAgMEwxNjAgMTYwTTIxLjMxOSA1Ni42NjBMNzIuOTQzIDEwOC4yODQgTDI4LjI4NCAxNjAgTDAgMTM1LjczNiBMNTYuNjYgODIuOTQzIFoiIGZpbGw9IiM0NDQ0NDQiIGZpbGwtb3BhY2l0eT0iMC4wMyIgdHJhbnNmb3JtPSJyb3RhdGUoLTQ1IDgwIDgwKSIvPjwvc3ZnPg=='); /* Pequeño patrón de ruido */
+    opacity: 0.5;
+    pointer-events: none;
+    z-index: -1;
+}
+
+
+.terminal-wrapper {
+    width: 90%;
+    max-width: 900px;
+    background-color: var(--terminal-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 0 20px var(--shadow-color);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 550px; /* Altura mínima para que se vea como terminal */
+}
+
+.terminal-header {
+    background-color: var(--header-color);
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.terminal-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+.dot.red { background-color: #ff5f56; }
+.dot.yellow { background-color: #ffbd2e; }
+.dot.green { background-color: #27c93f; }
+
+.terminal-title {
+    flex-grow: 1;
     text-align: center;
-    border-bottom: 1px solid var(--border);
-}
-
-.badge {
-    display: inline-block;
-    background: rgba(88, 166, 255, 0.1);
-    color: var(--accent);
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 0.8em;
-    font-weight: 600;
-    margin-bottom: 15px;
-    border: 1px solid var(--accent);
-}
-
-header h1 {
-    font-size: 2.5em;
-    margin: 10px 0;
-    font-weight: 800;
-    letter-spacing: -1px;
-}
-
-.alias span {
-    color: var(--accent);
-    font-family: monospace;
-}
-
-.uni {
-    color: var(--text-dim);
+    color: #c2c2c2;
     font-size: 0.9em;
 }
 
-/* ===== NAV ===== */
-nav {
-    margin-top: 30px;
+.terminal-body {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto; /* Para desplazamiento si el contenido es largo */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: var(--accent-color) var(--terminal-bg); /* Firefox */
 }
 
-nav a {
-    color: var(--text-dim);
-    margin: 0 15px;
-    text-decoration: none;
-    font-size: 0.9em;
-    transition: 0.3s;
+/* Estilo para Webkit (Chrome, Safari) */
+.terminal-body::-webkit-scrollbar {
+    width: 8px;
+}
+.terminal-body::-webkit-scrollbar-track {
+    background: var(--terminal-bg);
+}
+.terminal-body::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color);
+    border-radius: 4px;
+    border: 2px solid var(--terminal-bg);
 }
 
-nav a:hover {
-    color: var(--accent);
+
+.console-output {
+    white-space: pre-wrap; /* Mantiene saltos de línea y espacios */
+    word-wrap: break-word; /* Rompe palabras largas */
+    margin: 0;
+    color: var(--text-color);
+    font-size: 0.95em;
+    min-height: 50px; /* Espacio para la salida inicial */
 }
 
-/* ===== CONTENEDOR Y TARJETAS ===== */
-.container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 0 20px;
+.prompt-line {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
 }
 
-.card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 30px;
-    margin-bottom: 25px;
-    position: relative;
-    transition: transform 0.3s ease;
+.prompt {
+    color: var(--prompt-color);
+    font-weight: bold;
+    flex-shrink: 0; /* Evita que el prompt se encoja */
 }
 
-.card:hover {
-    transform: translateY(-5px);
-    border-color: var(--accent);
+.command-input {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-family: var(--font-mono);
+    font-size: 0.95em;
+    padding: 0;
+    margin-left: 5px;
+    outline: none;
+    flex-grow: 1; /* Permite que el input crezca */
+    caret-color: var(--accent-color); /* Color del cursor de escritura */
 }
 
-.card-icon {
-    font-size: 1.5em;
-    color: var(--accent);
+/* Efecto de typing */
+.typing-effect::after {
+    content: '_';
+    animation: blink-caret 0.75s step-end infinite;
+}
+
+@keyframes blink-caret {
+    from, to { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+/* Contenido dinámico */
+#dynamic-content {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--border-color); /* Separador sutil */
+}
+
+/* Estilos de las secciones cargadas dinámicamente */
+.section-card {
+    background-color: #2a2a2a; /* Fondo ligeramente diferente para las tarjetas */
+    border: 1px solid var(--accent-color);
+    border-radius: 5px;
+    padding: 15px;
     margin-bottom: 15px;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.1); /* Brillo sutil */
 }
 
-.card h3 {
+.section-card h3 {
+    color: var(--accent-color);
     margin-top: 0;
-    font-size: 1.3em;
-    color: white;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5); /* Efecto de brillo en el título */
 }
 
-/* ===== GRID TÉCNICO ===== */
+.section-card p, .section-card li {
+    color: #c0c0c0; /* Texto más claro para mejor contraste */
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.section-card ul {
+    list-style: none; /* Quitamos los puntos por defecto */
+    padding-left: 0;
+}
+
+.section-card li::before {
+    content: '> '; /* Prefijo de flecha para los ítems de lista */
+    color: var(--text-color);
+    font-weight: bold;
+}
+
 .tech-grid {
     display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 10px;
+    margin-top: 15px;
 }
 
 .tech-item {
-    background: rgba(255, 255, 255, 0.03);
+    background-color: #333;
+    border: 1px solid #005f00; /* Borde verde oscuro */
     padding: 10px;
-    border-radius: 6px;
-    font-size: 0.9em;
+    border-radius: 3px;
+    font-size: 0.85em;
+    color: #e0e0e0;
+    transition: all 0.2s ease;
 }
 
-/* ===== FORMULARIO ===== */
-.input-group input, .input-group textarea {
-    width: 100%;
-    background: #0d1117;
-    border: 1px solid var(--border);
-    color: white;
-    padding: 12px;
-    border-radius: 6px;
+.tech-item:hover {
+    background-color: #004400; /* Fondo más oscuro al pasar el ratón */
+    border-color: var(--text-color); /* Borde más brillante */
+    box-shadow: 0 0 8px rgba(0, 255, 0, 0.3);
+}
+
+/* Formulario de contacto */
+.contact-form .input-group {
     margin-bottom: 15px;
-    box-sizing: border-box;
 }
 
-.btn-submit {
-    background: var(--accent);
-    color: #0d1117;
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    background-color: #1a1a1a;
+    border: 1px solid var(--accent-color);
+    color: var(--text-color);
+    border-radius: 3px;
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 255, 0, 0.1);
+}
+
+.contact-form input[type="text"]:focus,
+.contact-form input[type="email"]:focus,
+.contact-form textarea:focus {
+    border-color: var(--text-color);
+    box-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+}
+
+.contact-form textarea {
+    resize: vertical;
+}
+
+.contact-form button {
+    background-color: var(--accent-color);
+    color: var(--terminal-bg);
     border: none;
-    padding: 12px 25px;
-    border-radius: 6px;
-    font-weight: 700;
+    padding: 10px 20px;
+    border-radius: 3px;
     cursor: pointer;
-    width: 100%;
+    font-family: var(--font-mono);
+    font-weight: bold;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* ===== FOOTER ===== */
-footer {
+.contact-form button:hover {
+    background-color: #00ddff; /* Un poco más claro al pasar el ratón */
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+/* Mensaje de éxito del formulario */
+.form-success {
+    color: #00ff00;
+    margin-top: 15px;
     text-align: center;
-    padding: 40px;
-    color: var(--text-dim);
-    font-size: 0.8em;
+    font-weight: bold;
 }
 
-@media (max-width: 600px) {
-    header h1 { font-size: 1.8em; }
-    nav a { margin: 5px; display: inline-block; }
+
+/* Pie de página sutil */
+.footer-line {
+    border-top: 1px dashed var(--border-color);
+    padding-top: 15px;
+    margin-top: 30px;
+    text-align: center;
+    font-size: 0.8em;
+    color: #777;
+}
+
+/* Media Queries para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .terminal-wrapper {
+        width: 95%;
+        margin: 20px auto;
+    }
+    .terminal-body {
+        padding: 15px;
+    }
+    .section-card h3 {
+        font-size: 1.1em;
+    }
+    .tech-grid {
+        grid-template-columns: 1fr; /* Una columna en móviles */
+    }
 }
