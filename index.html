@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Portafolio | América Guerra</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -12,7 +12,7 @@
 
 <nav class="navbar">
     <div class="nav-content">
-        <span class="logo">AG<span>.</span></span>
+        <div class="logo">AG<span>.</span></div>
         <div class="links">
             <a href="#perfil">Perfil</a>
             <a href="#tecnico">Tecnología</a>
@@ -21,65 +21,51 @@
     </div>
 </nav>
 
-<header class="hero">
-    <div class="container">
-        <div class="badge">Estudiante de Seguridad Informática</div>
-        <h1>América Fabiola Guerra Ramírez</h1>
-        <p class="tagline">8º Semestre | Universidad Politécnica</p>
-        <p class="alias">aka <strong>aguerra</strong></p>
-    </div>
+<header class="main-header">
+    <div class="badge">Estudiante de Seguridad Informática</div>
+    <h1>América Fabiola Guerra Ramírez</h1>
+    <p class="subtitle">aka <span>aguerra</span> | 8º Semestre</p>
+    <p class="uni"><i class="fas fa-university"></i> Universidad Politécnica</p>
 </header>
 
-<main class="container">
-    <section id="perfil" class="section-card">
-        <h2><i class="fas fa-user-shield"></i> Sobre mí</h2>
-        <p>
-            Estudiante enfocada en el análisis de vulnerabilidades y la protección de la información. 
-            Me apasiona la ciberseguridad y el aprendizaje continuo de nuevas tecnologías para la mitigación de riesgos.
-        </p>
-    </section>
+<main class="grid-layout">
+    <div class="left-column">
+        <section id="presentacion" class="glass-card">
+            <h3><i class="fas fa-terminal"></i> Presentación</h3>
+            <p>Este portafolio digital documenta de manera estructurada las evidencias académicas de <strong>Seguridad Informática</strong>, aplicando principios de documentación técnica y ciberseguridad.</p>
+        </section>
 
-    <section id="tecnico" class="section-card">
-        <h2><i class="fas fa-code"></i> Información Técnica</h2>
-        <div class="skills-grid">
-            <div class="skill-item">
-                <i class="fab fa-python"></i>
-                <span>Python & Java</span>
-            </div>
-            <div class="skill-item">
-                <i class="fab fa-linux"></i>
-                <span>Linux (Kali/Ubuntu)</span>
-            </div>
-            <div class="skill-item">
-                <i class="fas fa-shield-alt"></i>
-                <span>Seguridad Info.</span>
-            </div>
-            <div class="skill-item">
-                <i class="fab fa-git-alt"></i>
-                <span>Git & GitHub</span>
-            </div>
-        </div>
-    </section>
+        <section id="perfil" class="glass-card">
+            <h3><i class="fas fa-user-shield"></i> Sobre mí</h3>
+            <p>Estudiante enfocada en el análisis de vulnerabilidades y la protección de la información, buscando el aprendizaje continuo mediante la investigación tecnológica.</p>
+        </section>
+    </div>
 
-    <section id="contacto" class="section-card">
-        <h2><i class="fas fa-paper-plane"></i> Contacto</h2>
-        <form id="contactForm">
-            <div class="form-group">
-                <input type="text" placeholder="Nombre completo" required>
+    <div class="right-column">
+        <section id="tecnico" class="glass-card">
+            <h3><i class="fas fa-microchip"></i> Habilidades Técnicas</h3>
+            <div class="tags-container">
+                <span class="tag"><i class="fab fa-python"></i> Python & Java</span>
+                <span class="tag"><i class="fab fa-linux"></i> Linux / Kali</span>
+                <span class="tag"><i class="fas fa-code-branch"></i> Git & GitHub</span>
+                <span class="tag"><i class="fas fa-file-code"></i> HTML / CSS</span>
             </div>
-            <div class="form-group">
-                <input type="email" placeholder="Correo electrónico" required>
-            </div>
-            <div class="form-group">
-                <textarea placeholder="¿En qué puedo ayudarte?" rows="4" required></textarea>
-            </div>
-            <button type="submit" class="btn">Enviar Mensaje</button>
-        </form>
-    </section>
+        </section>
+
+        <section id="contacto" class="glass-card">
+            <h3><i class="fas fa-envelope"></i> Contacto</h3>
+            <form class="clean-form">
+                <input type="text" placeholder="Nombre" required>
+                <input type="email" placeholder="Email" required>
+                <textarea placeholder="Mensaje" rows="3"></textarea>
+                <button type="submit">Enviar Mensaje</button>
+            </form>
+        </section>
+    </div>
 </main>
 
 <footer>
-    <p>© 2026 | América Fabiola Guerra Ramírez | Portafolio Académico</p>
+    <p>© 2026 | América Guerra — Seguridad Informática</p>
 </footer>
 
 </body>
