@@ -1,155 +1,202 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Portafolio | América Guerra</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Portafolio | América Guerra</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<nav class="navbar">
+  <!-- NAVBAR -->
+  <nav class="navbar">
     <div class="nav-content">
-        <div class="logo">AG<span>.</span></div>
-        <div class="links">
-            <a href="#perfil">Perfil</a>
-            <a href="#tecnico">Tecnología</a>
-            <a href="#actividades">Actividades</a>
-            <a href="#contacto">Contacto</a>
-        </div>
-    </div>
-</nav>
+      <div class="logo">AG<span>.</span></div>
 
-<header class="main-header">
+      <div class="links">
+        <a href="#presentacion">Presentación</a>
+        <a href="#perfil">Sobre mí</a>
+        <a href="#tecnico">Tecnología</a>
+        <a href="#actividades">Actividades</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="main-header">
     <div class="badge-container">
-        <span class="badge">Estudiante de Seguridad Informática</span>
+      <span class="badge">Estudiante de Seguridad Informática</span>
     </div>
+
     <h1>América Fabiola Guerra Ramírez</h1>
+
     <div class="header-meta">
-        <span>aka <strong>aguerra</strong></span>
-        <span class="separator">|</span>
-        <span>8º Semestre</span>
-    </div>
-    <p class="uni-text"><i class="fas fa-university"></i> Universidad Politécnica de San Luis Potosí</p>
-</header>
-
-<main class="grid-container">
-    <div class="column">
-        <section id="presentacion" class="info-card">
-            <div class="card-title">
-                <i class="fas fa-terminal"></i>
-                <h3>Presentación</h3>
-            </div>
-            <p>Este portafolio digital documenta de manera estructurada las evidencias académicas desarrolladas en la materia de <strong>Seguridad Informática</strong>.</p>
-        </section>
-
-        <section id="perfil" class="info-card">
-            <div class="card-title">
-                <i class="fas fa-user-shield"></i>
-                <h3>Sobre mí</h3>
-            </div>
-            <p>Estudiante de nivel superior enfocada en el análisis de vulnerabilidades y la protección de la información mediante investigación tecnológica continua.</p>
-        </section>
+      <span>aka <strong>aguerra</strong></span>
+      <span class="separator">|</span>
+      <span>8º Semestre</span>
     </div>
 
+    <p class="uni-text">
+      <i class="fas fa-university"></i>
+      Universidad Politécnica de San Luis Potosí
+    </p>
+  </header>
+
+
+  <!-- SECCIÓN SUPERIOR -->
+  <main class="grid-container">
+
     <div class="column">
-        <section id="tecnico" class="info-card">
-            <div class="card-title">
-                <i class="fas fa-microchip"></i>
-                <h3>Habilidades Técnicas</h3>
-            </div>
-            <div class="skill-pills">
-                <span class="pill"><i class="fab fa-python"></i> Python & Java</span>
-                <span class="pill"><i class="fab fa-linux"></i> Linux / Kali</span>
-                <span class="pill"><i class="fab fa-git-alt"></i> Git & GitHub</span>
-                <span class="pill"><i class="fas fa-file-code"></i> HTML / CSS</span>
-            </div>
-        </section>
-         <section id="actividades" class="info-card">
+
+      <section id="presentacion" class="info-card">
         <div class="card-title">
-            <i class="fas fa-layer-group"></i>
-            <h3>Actividades</h3>
+          <i class="fas fa-terminal"></i>
+          <h3>Presentación</h3>
         </div>
+        <p>
+          Este portafolio digital documenta de manera estructurada las evidencias académicas desarrolladas
+          en la materia de <strong>Seguridad Informática</strong>, integrando actividades, prácticas y proyectos
+          aplicados a escenarios reales.
+        </p>
+      </section>
 
-        <div class="carousel">
-            <button class="carousel-btn prev"><i class="fas fa-chevron-left"></i></button>
-
-            <div class="carousel-track-container">
-                <div class="carousel-track">
-
-                    <div class="activity-card">
-                        <h4>Actividad 1</h4>
-                        <p>Aquí vas a describir lo que hiciste en esta actividad.</p>
-                        <span class="tag">Redes</span>
-                        <span class="tag">Packet Tracer</span>
-                    </div>
-
-                    <div class="activity-card">
-                        <h4>Actividad 2</h4>
-                        <p>Aquí vas a describir lo que hiciste en esta actividad.</p>
-                        <span class="tag">Linux</span>
-                        <span class="tag">Firewall</span>
-                    </div>
-
-                    <div class="activity-card">
-                        <h4>Actividad 3</h4>
-                        <p>Aquí vas a describir lo que hiciste en esta actividad.</p>
-                        <span class="tag">Seguridad</span>
-                        <span class="tag">Análisis</span>
-                    </div>
-
-                </div>
-            </div>
-
-            <button class="carousel-btn next"><i class="fas fa-chevron-right"></i></button>
+      <section id="perfil" class="info-card">
+        <div class="card-title">
+          <i class="fas fa-user-shield"></i>
+          <h3>Sobre mí</h3>
         </div>
-    </section>
-        
-        <section id="contacto" class="info-card">
-            <div class="card-title">
-                <i class="fas fa-paper-plane"></i>
-                <h3>Contacto</h3>
-            </div>
-            <form class="minimal-form">
-                <div class="form-row">
-                    <input type="text" placeholder="Nombre" required>
-                    <input type="email" placeholder="Email" required>
-                </div>
-                <textarea placeholder="¿Cómo puedo ayudarte?" rows="3"></textarea>
-                <button type="submit">Enviar Mensaje</button>
-            </form>
-        </section> 
+        <p>
+          Estudiante enfocada en el análisis de vulnerabilidades, auditorías básicas, gestión de riesgos
+          y protección de información mediante investigación tecnológica continua y práctica constante.
+        </p>
+      </section>
+
     </div>
-</main>
 
-<footer>
+    <div class="column">
+
+      <section id="tecnico" class="info-card">
+        <div class="card-title">
+          <i class="fas fa-microchip"></i>
+          <h3>Habilidades Técnicas</h3>
+        </div>
+
+        <div class="skill-pills">
+          <span class="pill"><i class="fab fa-python"></i> Python</span>
+          <span class="pill"><i class="fab fa-java"></i> Java</span>
+          <span class="pill"><i class="fab fa-linux"></i> Linux / Kali</span>
+          <span class="pill"><i class="fab fa-git-alt"></i> Git & GitHub</span>
+          <span class="pill"><i class="fas fa-file-code"></i> HTML / CSS</span>
+          <span class="pill"><i class="fas fa-network-wired"></i> Redes</span>
+        </div>
+      </section>
+
+      <!-- CONTACTO (más pequeño) -->
+      <section id="contacto" class="info-card small-card">
+        <div class="card-title">
+          <i class="fas fa-paper-plane"></i>
+          <h3>Contacto</h3>
+        </div>
+
+        <form class="minimal-form">
+          <div class="form-row">
+            <input type="text" placeholder="Nombre" required>
+            <input type="email" placeholder="Email" required>
+          </div>
+
+          <textarea placeholder="¿Cómo puedo ayudarte?" rows="2"></textarea>
+          <button type="submit">Enviar</button>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+
+  <!-- SECCIÓN ACTIVIDADES (EN MEDIO) -->
+  <section id="actividades" class="activities-section">
+    <div class="activities-container">
+
+      <div class="activities-header">
+        <h2><i class="fas fa-folder-open"></i> Actividades</h2>
+        <p>
+          Evidencias académicas organizadas por prácticas, investigaciones y ejercicios.
+          Cada actividad abre en una página independiente.
+        </p>
+      </div>
+
+      <div class="activities-grid">
+
+        <div class="activity-card">
+          <div class="activity-icon">
+            <i class="fas fa-lock"></i>
+          </div>
+          <h3>Actividad 1</h3>
+          <p>Políticas restrictivas con iptables y configuración de reglas.</p>
+          <a class="activity-btn" href="actividades/actividad1.html" target="_blank">
+            Ver actividad <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="activity-card">
+          <div class="activity-icon">
+            <i class="fas fa-network-wired"></i>
+          </div>
+          <h3>Actividad 2</h3>
+          <p>Configuración de redes y simulaciones en Packet Tracer.</p>
+          <a class="activity-btn" href="actividades/actividad2.html" target="_blank">
+            Ver actividad <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="activity-card">
+          <div class="activity-icon">
+            <i class="fas fa-bug"></i>
+          </div>
+          <h3>Actividad 3</h3>
+          <p>Identificación de vulnerabilidades y análisis de riesgos.</p>
+          <a class="activity-btn" href="actividades/actividad3.html" target="_blank">
+            Ver actividad <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="activity-card">
+          <div class="activity-icon">
+            <i class="fas fa-code"></i>
+          </div>
+          <h3>Actividad 4</h3>
+          <p>Scripts y automatización en Linux con Bash.</p>
+          <a class="activity-btn" href="actividades/actividad4.html" target="_blank">
+            Ver actividad <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+      </div>
+
+      <!-- EXPORTAR PDF -->
+      <div class="pdf-export">
+        <h3><i class="fas fa-file-pdf"></i> Exportar Portafolio</h3>
+        <p>Puedes descargar el portafolio completo en formato PDF.</p>
+
+        <a href="portafolio.pdf" class="pdf-btn" target="_blank">
+          <i class="fas fa-download"></i> Exportar PDF
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer>
     <p>© 2026 | América Guerra — San Luis Potosí</p>
-</footer>
-    
-<script>
-const track = document.querySelector(".carousel-track");
-const prevBtn = document.querySelector(".prev");
-const nextBtn = document.querySelector(".next");
-
-let index = 0;
-
-nextBtn.addEventListener("click", () => {
-    const cards = document.querySelectorAll(".activity-card");
-    if (index < cards.length - 1) {
-        index++;
-        track.style.transform = `translateX(-${index * 280}px)`;
-    }
-});
-
-prevBtn.addEventListener("click", () => {
-    if (index > 0) {
-        index--;
-        track.style.transform = `translateX(-${index * 280}px)`;
-    }
-});
-</script>
+  </footer>
 
 </body>
 </html>
+
