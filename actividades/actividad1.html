@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Actividad 1 | Iptables</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+  <div style="max-width: 900px; margin: auto; padding: 50px 20px;">
+
+    <a href="../index.html" style="text-decoration:none; font-weight:700; color:#334155;">
+      ← Volver al Portafolio
+    </a>
+
+    <div class="info-card" style="margin-top: 20px;">
+
+      <div class="card-title">
+        <i class="fas fa-lock"></i>
+        <h3>Actividad 1: Políticas restrictivas con iptables</h3>
+      </div>
+
+      <p>
+        En esta actividad se configuró una política restrictiva de firewall utilizando iptables,
+        permitiendo únicamente el tráfico necesario para servicios específicos.
+      </p>
+
+      <h4>📌 Evidencia</h4>
+      <p>Aquí puedes colocar capturas, comandos, explicaciones, etc.</p>
+
+      <h4>💻 Comandos utilizados</h4>
+      <pre style="background:#f8fafc; padding:20px; border-radius:16px; border:1px solid #e2e8f0; overflow:auto;">
+iptables -P INPUT DROP
+iptables -P OUTPUT DROP
+iptables -P FORWARD DROP
+      </pre>
+
+      <h4>✅ Conclusión</h4>
+      <p>
+        Se logró asegurar el tráfico de entrada y salida estableciendo reglas específicas,
+        evitando accesos no autorizados.
+      </p>
+
+      <!-- BOTÓN EXPORTAR PDF -->
+      <div style="margin-top: 35px; text-align: center;">
+        <a href="../pdf/actividad1.pdf" class="pdf-btn" target="_blank">
+          <i class="fas fa-file-pdf"></i> Exportar PDF
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
