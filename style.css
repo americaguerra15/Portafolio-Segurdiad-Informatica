@@ -177,3 +177,81 @@ footer { text-align: center; padding: 50px; color: var(--text-soft); font-size: 
     .grid-container { grid-template-columns: 1fr; }
     .form-row { grid-template-columns: 1fr; }
 }
+
+/* ===== ACTIVIDADES CARRUSEL ===== */
+.carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.carousel-track-container {
+    overflow: hidden;
+    width: 100%;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 18px;
+    transition: transform 0.4s ease-in-out;
+}
+
+.activity-card {
+    min-width: 260px;
+    background: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    padding: 20px;
+    flex-shrink: 0;
+    transition: 0.3s;
+}
+
+.activity-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.06);
+}
+
+.activity-card h4 {
+    margin: 0 0 10px;
+    font-size: 1em;
+    font-weight: 800;
+    color: var(--text-dark);
+}
+
+.activity-card p {
+    margin: 0 0 15px;
+    font-size: 0.9em;
+    color: var(--text-soft);
+    line-height: 1.5;
+}
+
+.tag {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 4px 6px 0 0;
+    border-radius: 12px;
+    background: white;
+    border: 1px solid var(--border-color);
+    font-size: 0.75em;
+    font-weight: 700;
+    color: var(--text-soft);
+}
+
+.carousel-btn {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    transition: 0.3s;
+    flex-shrink: 0;
+}
+
+.carousel-btn:hover {
+    background: var(--text-dark);
+    color: white;
+}
+
