@@ -42,6 +42,7 @@
       <h2>Índice</h2>
       <ul>
         <li><a href="#introduccion">1. Introducción</a></li>
+        <li><a href="#inv">1.1 Investigación y Documentación.</a></li>
         <li><a href="#objetivos">2. Objetivos</a></li>
         <li><a href="#desarrollo">3. Desarrollo</a></li>
         <li><a href="#conclusion">4. Conclusión</a></li>
@@ -78,31 +79,47 @@
         activos críticos.
       </p>
 
-      <h3>Escenarios</h3>
+      <h3 id="inv">1.1 Investigación y Documentación</h3>
 
       <div style="overflow-x:auto; margin-top:20px;">
         <table style="width:100%; border-collapse:collapse; min-width:900px;">
           <thead>
             <tr style="background:#f8fafc;">
-              <th style="border:1px solid #e2e8f0; padding:12px;">Escenario</th>
-              <th style="border:1px solid #e2e8f0; padding:12px;">Servicios X.800 comprometidos</th>
-              <th style="border:1px solid #e2e8f0; padding:12px;">Definición(es) aplicable(s) RFC 4949.</th>
-              <th style="border:1px solid #e2e8f0; padding:12px;">Tipo de amenaza</th>
-              <th style="border:1px solid #e2e8f0; padding:12px;">Vector de ataque.</th>
-              <th style="border:1px solid #e2e8f0; padding:12px;">Impacto técnico / operativo</th>
-              <th style="border:1px solid #e2e8f0; padding:12px;">Medida de control recomendada.</th>
+              <th style="border:1px solid #e2e8f0; padding:12px;">Fase</th>
+              <th style="border:1px solid #e2e8f0; padding:12px;">Fecha / Periodo</th>
+              <th style="border:1px solid #e2e8f0; padding:12px;">Hito o Evento Clave</th>
+              <th style="border:1px solid #e2e8f0; padding:12px;">Descripción del Suceso</th>
             </tr>
           </thead>
 
           <tbody>
             <tr>
-              <td style="border:1px solid #e2e8f0; padding:12px;">1</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Confidencialidad, Integridad y Disponibilidad.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Multi-stage attack, Data Breach, Availability Attack.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Externa</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Inyección de Ransomware tras acceso inicial no autorizado.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Interrupción de servicios críticos y exposición de datos sensibles.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Respaldos inmutables y segmentación de red.</td>
+              <td rowspan="2" style="border:1px solid #ffffff; padding:12px; font-weight:bold; background:#b76d24; color:white;">
+                I.<br>Infiltración
+              </td>
+              <td style="border:1px solid #ffffff; padding:12px; font-weight:bold;">
+                Antes del 7 de mayo
+              </td>
+              <td style="border:1px solid #ffffff; padding:12px;">
+                Acceso inicial
+              </td>
+              <td style="border:1px solid #ffffff; padding:12px;">
+                Los atacantes vulneran la red (probablemente vía VPN/RDP robado o Phishing).
+              </td>
+            </tr>
+      
+            <tr style="background:#e6c5a6;">
+              <td style="border:1px solid #ffffff; padding:12px; font-weight:bold;">
+                7 de mayo (Madrugada)
+              </td>
+      
+              <td style="border:1px solid #ffffff; padding:12px;">
+                Exfiltración masiva
+              </td>
+      
+              <td style="border:1px solid #ffffff; padding:12px;">
+                Se roban aproximadamente 100 GB de información en un lapso cercano a dos horas antes de ejecutar el cifrado de los sistemas.
+              </td>
             </tr>
 
             <tr>
