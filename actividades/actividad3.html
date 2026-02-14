@@ -87,72 +87,49 @@
         </table>
       </div>
 
-      <h3 style="margin-top:30px;">Análisis de Impacto y Medidas de Control</h3>
-
+      <h3>3. Anatomía de un comando iptables: </h3>
       <p>
-        En estos 10 escenarios, queda claro que la seguridad no es solo que "no se caiga la página", 
-        sino proteger todo el flujo de información.
+        iptables -A <b>INPUT</b> -p tcp -m <b>multiport</b> --dports 80,443 -j <b>ACCEPT</b>
       </p>
 
+      <h3>4. Este comando permite: </h3>
       <p>
-        Ataques de Ransomware y Destrucción (Escenarios 01, 05 y 10): Cuando grupos como 
-        LockBit entran, no solo cifran archivos; hacen un desastre en etapas. Primero roban datos y 
-        luego bloquean todo. El impacto es que la empresa se detiene por completo y puede hasta 
-        quebrar si no tiene cómo recuperar sus datos. La mejor defensa aquí no es solo un antivirus, 
-        sino tener respaldos.
+        El trafico TCP hacía los puetos 80 y 443 
       </p>
 
-      <p>
-        El Factor Humano y las Identidades (Escenarios 04 y 09): Aquí el atacante solo necesito 
-        convencer a alguien de dar su contraseña mediante phishing. Esto es peligroso porque el 
-        atacante pudo obtener acceso con llaves legítimas. Para evitar esto, lo más sencillo y efectivo 
-        es obligar a usar autenticación de dos factores (2FA), sobre todo, para que no caiga en 
-        trampas.
-      </p>
+      <h3>5. Variables y opciones comunes </h3>
+      <p><b>a) Limitar intentos por minuto</b></p>
+      <p>-- limit 5/minute </p>
+      
+      <p><b>b) Filtrar por IP de origen</b></p>
+      <p>-s 192.168.1.0/32 </p>
+      
+      <p><b>c) Ver solo números, sin DNS (ni resolución de puetos)</b></p>
+      <p>iptables -L -n </p>
 
-      <p>
-        Errores Internos y Configuración (Escenarios 02 y 08): Aprendimos que no siempre hay un 
-        "malo" afuera; a veces nosotros mismos dejamos la base de datos abierta por un error de 
-        configuración. El impacto es legal y reputacional, porque la gente pierde la confianza. La 
-        solución es usar herramientas que revisen automáticamente la configuración en la nube y 
-        nunca hacer cambios sin probarlos antes en un entorno seguro.
-      </p>
+      <p><b>d) Ver reglas con contadores (paquetes y bytes) </b></p>
+      <p>iptables -L -v </p>
 
+      <h3>6. ¿Qué hace esta regla?</h3>
       <p>
-        Traiciones y Proveedores (Escenarios 03 y 06): Es el peor de los casos: cuando un empleado 
-        roba información o un software en el que confiamos viene con muchas consecuencias. Aquí 
-        el impacto es la pérdida de información importante de la empresa. La medida clave es el 
-        Mínimo Privilegio: que nadie tenga acceso a más de lo que estrictamente necesita para 
-        trabajar.
+       <b>iptables -A INPUT -i eth0 -p tcp -m multiport --dports 22,80,443 \ -m satate --state NEW, ESTABLESHED -j ACCEPT</b>
       </p>
+      <p> Permite el trafico TCP entrante por la interfaz eth0 hacía los puertos 22, 80 y 443 siempre y cuando sea nueva y este establecida</p>
 
-      <p>
-        Borrando Huellas (Escenario 07): Si un atacante borra los registros de actividad, será muy 
-        difícil encontrarlo. No podemos saber quién entró ni qué se llevó, lo que arruina cualquier 
-        investigación legal. Para evitar esto, los registros deben mandarse a un servidor externo 
-        donde solo se puedan escribir y nunca borrar.
-      </p>
+      <h3>7. Permitir tráfico HTTP entrante</h3>
+      <p> iptables -A INPUT -p tcp --dport 80 -j ACCEPT</p>
 
-      <h3>Conclusión</h3>
-      <p>
-        El análisis de incidentes de seguridad informática mediante los servicios definidos en el ITU-T X.800 
-        y la terminología del RFC 4949 permite comprender de forma estructurada cómo se producen y 
-        afectan las vulneraciones de seguridad en escenarios reales. La aplicación conjunta de ambos marcos 
-        facilita una descripción técnica precisa, mejora la comunicación profesional y fortalece la capacidad 
-        para identificar, explicar y documentar adecuadamente los incidentes, contribuyendo a una visión 
-        integral de la seguridad de la información.
-      </p>
+      <h3>8. Permitir todo el tráfico saliente</h3>
+      <p> iptables -A OUTPUT -j ACCEPT</p>
 
-      <h3>Referencias</h3>
-      <p>
-        ITU: CONNECTING THE WORLD AND BEYOND. (S. F.). ITU. <br>
-        HTTPS://WWW.ITU.INT/ES/PAGES/DEFAULT.ASPX#/ES
-      </p>
-
-      <p>
-        RFC 4949: INTERNET SECURITY GLOSSARY, VERSION 2. (S. F.). IETF DATATRACKER. <br>
-        HTTPS://DATATRACKER.IETF.ORG/DOC/HTML/RFC4949
-      </p>
+      <h3>9. Permitir SSH solo desde la IP 192.168.1.50</h3>
+      <p> iptables -A INPUT -p tcp --dport 22 -s 192.168.1.50 -j ACCEPT</p>
+      
+      <h3>10. Permitir tráfico TCP entrante a purtos 80 y 443 solo si es conexión establecida o relacionada</h3>
+      <p> iptables -A INPUT -i eth0 -p tcp -m multiport --dports 22,80,443 -m satate --state ESTABLESHED, RELATED -j ACCEPT</p>
+      
+       <h3>11. Permitir tráfico TCP entrante por eth0 a 22, 80 y 443 registrar intento y permitir solo NEW y ESTABLESHED</h3>
+      <p> iptables -A INPUT -i eth0 -p tcp -m multiport --dports 22,80,443 -m satate --state NEW, ESTABLESHES -j LOG --log -prefix "conexion Nueva: " -j ACCEPT</p>
 
       <!-- BOTÓN EXPORTAR PDF -->
       <div style="margin-top: 35px; text-align: center;">
