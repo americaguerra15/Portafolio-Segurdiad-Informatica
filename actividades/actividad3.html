@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Actividad 3 | Interpretación de políticas de filtrado en iptables</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+
+  <div style="max-width: 1000px; margin: auto; padding: 50px 20px;">
+
+    <a href="../index.html" style="text-decoration:none; font-weight:700; color:#334155;">
+      ← Volver al Portafolio
+    </a>
+
+    <div class="info-card" style="margin-top: 25px;">
+
+      <div class="card-title">
+        <i class="fas fa-shield-halved"></i>
+        <h3>Actividad 3: Interpretación de políticas de filtrado en iptables</h3>
+      </div>
+
+      <p style="color:#64748b; margin-top:-10px;">
+        <strong>Materia:</strong> CNO V. Seguridad Informática | 
+        <strong>Semestre:</strong> 8º | 
+        <strong>Fecha:</strong> 3 de Febrero de 2026 <br>
+        <strong>Nombre:</strong> América Fabiola Guerra Ramírez - 179884
+      </p>
+
+    <hr style="border:none; border-top:1px solid #e2e8f0; margin:25px 0;">
+
+      <h3>1. Completa los espacios conforme se explica el flujo del paquete</h3>
+      <p>
+        Cuando un paquete llega al sistema, primero pasa por una <b>tabla</b>, 
+        después por una <b>cadena</b> y finalmente se ejecuta una <b>regla</b>
+      </p>
+
+      <h3>2. Relaciona cada tabla con su propósito principal.</h3>
+
+      <div style="overflow-x:auto; margin-top:20px;">
+        <table style="width:100%; border-collapse:collapse; min-width:900px;">
+          <thead>
+            <tr style="background:#f8fafc;">
+              <th style="border:1px solid #e2e8f0; padding:12px;">Tabla</th>
+              <th style="border:1px solid #e2e8f0; padding:12px;">Propósito principal</th>
+              <th style="border:1px solid #e2e8f0; padding:12px;">Ejemplo de uso (01 palabra o frase corta)</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td style="border:1px solid #e2e8f0; padding:12px;"><b>FILTER</b></td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Filtar paquetes</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Bloquear puertos</td>
+            </tr>
+
+            <tr>
+              <td style="border:1px solid #e2e8f0; padding:12px;"><b>NAT</b></td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Traducción de direcciones</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Compartir internet</td>
+            </tr>
+
+            <tr>
+              <td style="border:1px solid #e2e8f0; padding:12px;"><b>MANGLE</b></td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Modificar paquetes</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Cambiar Cabeceras</td>
+            </tr>
+
+            <tr>
+              <td style="border:1px solid #e2e8f0; padding:12px;"><b>RAW</b></td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Excepcion al seguimiento</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Paquetes no inspeccionados</td>
+            </tr>
+
+            <tr>
+              <td style="border:1px solid #e2e8f0; padding:12px;"><b>SECURITY</b></td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Aplicar políticas de seguirdad</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Seguridad adicinal</td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="margin-top:30px;">Análisis de Impacto y Medidas de Control</h3>
+
+      <p>
+        En estos 10 escenarios, queda claro que la seguridad no es solo que "no se caiga la página", 
+        sino proteger todo el flujo de información.
+      </p>
+
+      <p>
+        Ataques de Ransomware y Destrucción (Escenarios 01, 05 y 10): Cuando grupos como 
+        LockBit entran, no solo cifran archivos; hacen un desastre en etapas. Primero roban datos y 
+        luego bloquean todo. El impacto es que la empresa se detiene por completo y puede hasta 
+        quebrar si no tiene cómo recuperar sus datos. La mejor defensa aquí no es solo un antivirus, 
+        sino tener respaldos.
+      </p>
+
+      <p>
+        El Factor Humano y las Identidades (Escenarios 04 y 09): Aquí el atacante solo necesito 
+        convencer a alguien de dar su contraseña mediante phishing. Esto es peligroso porque el 
+        atacante pudo obtener acceso con llaves legítimas. Para evitar esto, lo más sencillo y efectivo 
+        es obligar a usar autenticación de dos factores (2FA), sobre todo, para que no caiga en 
+        trampas.
+      </p>
+
+      <p>
+        Errores Internos y Configuración (Escenarios 02 y 08): Aprendimos que no siempre hay un 
+        "malo" afuera; a veces nosotros mismos dejamos la base de datos abierta por un error de 
+        configuración. El impacto es legal y reputacional, porque la gente pierde la confianza. La 
+        solución es usar herramientas que revisen automáticamente la configuración en la nube y 
+        nunca hacer cambios sin probarlos antes en un entorno seguro.
+      </p>
+
+      <p>
+        Traiciones y Proveedores (Escenarios 03 y 06): Es el peor de los casos: cuando un empleado 
+        roba información o un software en el que confiamos viene con muchas consecuencias. Aquí 
+        el impacto es la pérdida de información importante de la empresa. La medida clave es el 
+        Mínimo Privilegio: que nadie tenga acceso a más de lo que estrictamente necesita para 
+        trabajar.
+      </p>
+
+      <p>
+        Borrando Huellas (Escenario 07): Si un atacante borra los registros de actividad, será muy 
+        difícil encontrarlo. No podemos saber quién entró ni qué se llevó, lo que arruina cualquier 
+        investigación legal. Para evitar esto, los registros deben mandarse a un servidor externo 
+        donde solo se puedan escribir y nunca borrar.
+      </p>
+
+      <h3>Conclusión</h3>
+      <p>
+        El análisis de incidentes de seguridad informática mediante los servicios definidos en el ITU-T X.800 
+        y la terminología del RFC 4949 permite comprender de forma estructurada cómo se producen y 
+        afectan las vulneraciones de seguridad en escenarios reales. La aplicación conjunta de ambos marcos 
+        facilita una descripción técnica precisa, mejora la comunicación profesional y fortalece la capacidad 
+        para identificar, explicar y documentar adecuadamente los incidentes, contribuyendo a una visión 
+        integral de la seguridad de la información.
+      </p>
+
+      <h3>Referencias</h3>
+      <p>
+        ITU: CONNECTING THE WORLD AND BEYOND. (S. F.). ITU. <br>
+        HTTPS://WWW.ITU.INT/ES/PAGES/DEFAULT.ASPX#/ES
+      </p>
+
+      <p>
+        RFC 4949: INTERNET SECURITY GLOSSARY, VERSION 2. (S. F.). IETF DATATRACKER. <br>
+        HTTPS://DATATRACKER.IETF.ORG/DOC/HTML/RFC4949
+      </p>
+
+      <!-- BOTÓN EXPORTAR PDF -->
+      <div style="margin-top: 35px; text-align: center;">
+        <a href="../pdf/179884-act02.pdf" class="pdf-btn" target="_blank">
+          <i class="fas fa-file-pdf"></i> Exportar PDF
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
