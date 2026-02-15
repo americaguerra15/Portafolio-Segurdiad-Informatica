@@ -53,6 +53,7 @@
         <li><a href="#perdida"><sub>5.4. Perdida de beneficio inmediata (L)</sub></a></li>      
         <li><a href="#reconstruccion"><sub>5.5 Coste de reconstrucción (R)</sub></a></li>      
         <li><a href="#conclusionCosto"><sub>5.6. Conclusión del costo total del ciberataque</sub></a></li>
+        <li><a href="#marcosNorma">6. Relación con marcos normativos></a></li>
       </ul>
 
 
@@ -817,6 +818,89 @@
           </tbody>
         </table>
       </div>
+      </p>
+
+      <h3 id="marcosNorma">6 Relación con marcos normativos</h3>
+      <p>
+        <b>ISO 27001 - Controles relevantes aplicables al incidente: </b>
+      <div style="overflow-x:auto; margin-top:20px;">
+      <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
+          <thead>
+            <tr style="background:#f8fafc;">
+              <th style="border:1px solid #e2e8f0; padding:12px; width:15%;"><b>Control ISO27001</b></th>
+              <th style="border:1px solid #e2e8f0; padding:12px; width:15%;"><b>Relación con el incidente</b></th>
+              <th style="border:1px solid #e2e8f0; padding:12px; width:20%;"><b>Prevención / Mitigación posible</b></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td style="border:1px solid #e2e8f0; padding:12px; vertical-align:middle;"><b>A.9.2.3 – Gestión de credenciales de acceso</b></td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">La cuenta VPN sin MFA y con contraseña filtrada permitió el acceso inicial.</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Habría exigido MFA y rotación de contraseñas, bloqueando el acceso con credenciales robadas.</td>
+            </tr>
+
+            <tr>
+              <td style="border:1px solid #e2e8f0; padding:12px; vertical-align:middle;"><b>A.13.1.1 – Controles de red</b></td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Falta de segmentación entre TI y OT.</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Una segmentación adecuada habría contenido el ataque en la red administrativa.</td>
+            </tr>
+      
+            <tr>
+              <td style="border:1px solid #e2e8f0; padding:12px; vertical-align:middle;"><b>A.12.3.1 – Copias de seguridad</b></td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Los respaldos fueron eliminados o no eran eficientes para recuperación rápida.</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Respaldos offline y pruebas regulares habrían permitido restaurar sin depender del rescate.</td>
+            </tr>
+      
+            <tr>
+              <td style="border:1px solid #e2e8f0; padding:12px; vertical-align:middle;"><b>A.16.1.5 – Respuesta a incidentes</b></td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">La respuesta fue reactiva y no evitó la exfiltración de datos.</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Un plan de respuesta probado habría acelerado la contención y reducido el tiempo de inactividad.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <b>NIST Cybersecurity Framework (CSF) – Controles relevantes:</b>
+      <div style="overflow-x:auto; margin-top:20px;">
+          <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
+            <thead>
+              <tr style="background:#f8fafc;">
+                <th style="border:1px solid #e2e8f0; padding:12px; width:20%;"><b>Función NIST CSF</b></th>
+                <th style="border:1px solid #e2e8f0; padding:12px; width:40%;"><b>Controles aplicables</b></th>
+                <th style="border:1px solid #e2e8f0; padding:12px; width:40%;"><b>Prevención / Mitigación posible</b></th>
+              </tr>
+            </thead>
+        
+            <tbody>
+              <tr>
+                <td style="border:1px solid #e2e8f0; padding:12px; vertical-align:middle;"><b>Protect</b></td>
+                <td style="border:1px solid #e2e8f0; padding:12px;">PR.AC-1 (Gestión de identidades) y PR.AC-7 (Protección de accesos remotos)</td>
+                <td style="border:1px solid #e2e8f0; padding:12px;">MFA y revisión de cuentas habrían evitado el acceso no autorizado.</td>
+              </tr>
+        
+              <tr>
+                <td style="border:1px solid #e2e8f0; padding:12px; vertical-align:middle;"><b>Detect</b></td>
+                <td style="border:1px solid #e2e8f0; padding:12px;">DE.CM-1 (Monitoreo de red)</td>
+                <td style="border:1px solid #e2e8f0; padding:12px;">Un SIEM con detección de exfiltración habría alertado antes del cifrado.</td>
+              </tr>
+        
+              <tr>
+                <td style="border:1px solid #e2e8f0; padding:12px; vertical-align:middle;"><b>Respond</b></td>
+                <td style="border:1px solid #e2e8f0; padding:12px;">RS.RP-1 (Plan de respuesta)</td>
+                <td style="border:1px solid #e2e8f0; padding:12px;">Un plan ejecutado con simulacros habría reducido la paralización operativa.</td>
+              </tr>
+        
+              <tr>
+                <td style="border:1px solid #e2e8f0; padding:12px; vertical-align:middle;"><b>Recover</b></td>
+                <td style="border:1px solid #e2e8f0; padding:12px;">RC.RP-1 (Plan de recuperación)</td>
+                <td style="border:1px solid #e2e8f0; padding:12px;">Respaldos validados y herramientas de recuperación eficientes habrían acelerado el retorno.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+
       </p>
       
       <h3>Conclusión</h3>
