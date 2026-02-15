@@ -60,129 +60,289 @@
               <th style="border:1px solid #e2e8f0; padding:12px;">Orientación</th>
               <th style="border:1px solid #e2e8f0; padding:12px;">Autores/organismos</th>
               <th style="border:1px solid #e2e8f0; padding:12px;">URL</th>
-              <th style="border:1px solid #e2e8f0; padding:12px;">Certficaciones asociadas</th>
+              <th style="border:1px solid #e2e8f0; padding:12px;">Certificaciones asociadas</th>
               <th style="border:1px solid #e2e8f0; padding:12px;">Versiones / vigencia</th>
             </tr>
           </thead>
-
+      
           <tbody>
+            <!-- MITRE ATT&CK -->
             <tr>
               <td style="border:1px solid #e2e8f0; padding:12px;">MITRE ATT&CK</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Es una base de conocimientos que recopila y organiza tácticas, técnicas y procedimientos (TTP)
-                usados por atacantes reales, con el fin de modelar, detectar, prevenir y combatir amenazas cibernéticas basadas en comportamientos adversarios.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Reconocimiento
-                Desarrollo de recursos
-                Acceso inicial                
-                Ejecución                
-                Persistencia                
-                Escalamiento de privilegios                
-                Evasión de defensa                
-                Acceso a credenciales                
-                Descubrimiento                
-                Movimiento lateral                
-                Recopilación                
-                Comando y control                
-                Exfiltración                
-                Impacto</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Externa</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Inyección de Ransomware tras acceso inicial no autorizado.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Interrupción de servicios críticos y exposición de datos sensibles.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Respaldos inmutables y segmentación de red.</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Es una base de conocimientos que recopila y organiza tácticas, técnicas y procedimientos (TTP)
+                usados por atacantes reales, con el fin de modelar, detectar, prevenir y combatir amenazas
+                cibernéticas basadas en comportamientos adversarios.
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Reconocimiento<br>
+                Desarrollo de recursos<br>
+                Acceso inicial<br>
+                Ejecución<br>
+                Persistencia<br>
+                Escalamiento de privilegios<br>
+                Evasión de defensa<br>
+                Acceso a credenciales<br>
+                Descubrimiento<br>
+                Movimiento lateral<br>
+                Recopilación<br>
+                Comando y control<br>
+                Exfiltración<br>
+                Impacto
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Crear un estándar de referencia para detectar técnicas de ataque, simular ataques reales y
+                fortalecer defensas y planes de respuesta a incidentes.
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Threat Hunting (caza de amenazas)<br>
+                Clasificación de alertas<br>
+                Respuesta a incidentes<br>
+                Red Teaming / Emulación de adversarios<br>
+                Integración en SIEM, SOAR y EDR
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Defensiva y análisis de amenazas (Blue Team), con apoyo ofensivo.
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Desarrollado y mantenido por MITRE Corporation con apoyo de una comunidad global.
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                <a href="https://attack.mitre.org/" target="_blank">https://attack.mitre.org/</a>
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                No tiene certificación oficial propia, pero está ligado a entrenamientos y certificaciones como:<br>
+                Blue Team / SOC Analyst<br>
+                Red Team<br>
+                Threat Hunter<br>
+                OSCP, CEH, CISSP
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Se actualiza continuamente.<br>
+                Matrices activas: Enterprise, Mobile, ICS.
+              </td>
             </tr>
-
+      
+            <!-- OWASP WSTG -->
             <tr>
-              <td style="border:1px solid #e2e8f0; padding:12px;">2</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Confidencialidad y Control de Acceso.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Misconfiguration, Exposure, Data Leak.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Interna</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Error humano en configuración de permisos en la nube.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Exposición pública de bases de datos y sanciones legales.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">CSPM (Cloud Security Posture Management) y auditorías.</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">OWASP WSTG</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Es una comunidad abierta que desarrolla metodologías, guías y herramientas para mejorar la
+                seguridad de aplicaciones web, móviles y APIs.
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Requisitos<br>
+                Diseño<br>
+                Desarrollo<br>
+                Implementación<br>
+                Mantenimiento
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Detectar y prevenir vulnerabilidades en aplicaciones web y APIs, especialmente las más comunes.
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Desarrollo de software seguro<br>
+                Auditorías de aplicaciones web<br>
+                Pentesting de APIs<br>
+                Revisión de código
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Ofensiva y preventiva (pentesting y prevención durante desarrollo seguro).
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Comunidad global de OWASP Foundation.
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                <a href="https://owasp.org/" target="_blank">https://owasp.org/</a>
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                No tiene certificaciones oficiales propias, pero está ligada a certificaciones como:<br>
+                OSCP<br>
+                CEH<br>
+                eWPT
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Se actualiza periódicamente.<br>
+                La versión más reciente del OWASP Top 10 es 2021 y se esperan nuevas actualizaciones.
+              </td>
             </tr>
-
+      
+            <!-- NIST SP 800-115 -->
             <tr>
-              <td style="border:1px solid #e2e8f0; padding:12px;">3</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Integridad y Autenticación.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Supply Chain Attack, Malicious Code, Trust Relationship.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Externa</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Compromiso de actualización de software de un tercero.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Ruptura de la cadena de confianza y compromiso masivo.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Análisis de composición de software (SCA) y firmas digitales.</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">NIST SP 800-115</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Es una guía técnica del NIST que describe procesos y recomendaciones para realizar pruebas de
+                penetración y evaluaciones de seguridad en sistemas de información.
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Revisión de documentación<br>
+                Escaneo y rastreo de red<br>
+                Evaluación de vulnerabilidades<br>
+                Ingeniería social<br>
+                Pentesting técnico<br>
+                Análisis de resultados<br>
+                Reporte y recomendaciones<br>
+                Corrección de vulnerabilidades
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Proporcionar un marco técnico para evaluar controles de seguridad y reducir riesgos de ciberataques.
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Empresas financieras<br>
+                Organizaciones gubernamentales<br>
+                Auditorías profesionales<br>
+                Evaluación de infraestructura TI
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Evaluación y auditoría defensiva (enfoque formal y técnico).
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Creado por el NIST (National Institute of Standards and Technology).
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                <a href="https://csrc.nist.gov/publications/detail/sp/800-115/final" target="_blank">
+                  https://csrc.nist.gov/publications/detail/sp/800-115/final
+                </a>
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                No tiene certificación directa, pero se relaciona con certificaciones como:<br>
+                CISSP<br>
+                CISA<br>
+                CEH
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                La guía se mantiene vigente como referencia técnica.<br>
+                Publicación formal oficial del NIST.
+              </td>
             </tr>
-
+      
+            <!-- OSSTMM -->
             <tr>
-              <td style="border:1px solid #e2e8f0; padding:12px;">4</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Autenticación y Control de Acceso.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Credential Compromise, Masquerade, Phishing.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Externa</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Ingeniería social para robo de credenciales legítimas.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Persistencia del atacante y acceso lateral inadvertido.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">MFA (Autenticación Multi-Factor) y monitoreo UEBA.</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">OSSTMM</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Metodología para realizar pruebas de seguridad operativa mediante métricas medibles y basadas en hechos.
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Seguridad humana<br>
+                Seguridad física<br>
+                Comunicaciones inalámbricas<br>
+                Telecomunicaciones<br>
+                Redes de datos
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Evaluar de manera medible y estructurada la seguridad operativa de una organización.
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Auditorías de seguridad empresarial<br>
+                Evaluación integral de infraestructura tecnológica<br>
+                Pruebas de seguridad física y humana (no solo digital)
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Auditoría y medición cuantitativa.
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Desarrollado por ISECOM (Institute for Security and Open Methodologies).
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                <a href="https://www.isecom.org/OSSTMM.3.pdf" target="_blank">https://www.isecom.org/OSSTMM.3.pdf</a>
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                OPST (OSSTMM Professional Security Tester)
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                La versión más conocida es OSSTMM 3.
+              </td>
             </tr>
-
+      
+            <!-- PTES -->
             <tr>
-              <td style="border:1px solid #e2e8f0; padding:12px;">5</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Disponibilidad e Integridad.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Data Destruction, Availability Attack, Backup Integrity.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Externa</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Cifrado y eliminación activa de copias de seguridad.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Incapacidad total de recuperación ante desastres.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Respaldos "Air-gapped" y políticas de Object Lock.</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">PTES</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Es un estándar que define un proceso claro para ejecutar pruebas de penetración,
+                desde la recolección de información hasta el reporte final.
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Recopilación de inteligencia<br>
+                Modelado de amenazas<br>
+                Análisis de vulnerabilidades<br>
+                Explotación<br>
+                Reporte<br>
+                Post-explotación (seguimiento)
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Guiar la ejecución de pruebas técnicas de penetración con resultados claros y documentados.
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Pentesting empresarial estándar<br>
+                Evaluación de redes corporativas<br>
+                Auditorías técnicas de ciberseguridad
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Ofensiva (pentesting técnico) con enfoque profesional.
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Comunidad y equipo de expertos del estándar PTES.
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                <a href="http://www.pentest-standard.org/" target="_blank">http://www.pentest-standard.org/</a>
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                No tiene certificación oficial propia, pero se usa como referencia en certificaciones como:<br>
+                OSCP<br>
+                CEH<br>
+                GPEN
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                El estándar se mantiene vigente y es ampliamente utilizado como guía práctica.
+              </td>
             </tr>
-
+      
+            <!-- ISSAF -->
             <tr>
-              <td style="border:1px solid #e2e8f0; padding:12px;">6</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Confidencialidad y Control de Acceso.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Insider Threat, Privilege Abuse, Data Theft.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Interna</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Abuso de privilegios por empleado con acceso legítimo.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Robo de propiedad intelectual y fuga de información.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Principio de mínimo privilegio (PoLP) y herramientas DLP.</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">ISSAF</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Es un marco completo para pruebas de seguridad que detalla herramientas,
+                procedimientos y resultados esperados.
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Recopilación de información<br>
+                Mapeo de red<br>
+                Identificación de vulnerabilidades<br>
+                Penetración<br>
+                Obtención y elevación de privilegios<br>
+                Mantenimiento del acceso<br>
+                Compromiso de usuarios/sitios remotos<br>
+                Eliminación de huellas del evaluador
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Realizar pruebas de penetración exhaustivas simulando ataques reales.
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Evaluación de seguridad empresarial completa<br>
+                Pentesting avanzado<br>
+                Auditorías profundas de redes y sistemas
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Ofensiva avanzada / auditoría profunda.
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Creado por OISSG (Open Information Systems Security Group).
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                <a href="http://www.oissg.org/issaf" target="_blank">http://www.oissg.org/issaf</a>
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                No es común que tenga certificaciones oficiales directas ampliamente reconocidas.
+              </td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">
+                Se considera una metodología estable, pero no se actualiza tan frecuentemente como OWASP o NIST.
+              </td>
             </tr>
-
-            <tr>
-              <td style="border:1px solid #e2e8f0; padding:12px;">7</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Integridad y No Repudio.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Audit Trail, Evidentiary Integrity, Tampering.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Externa</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Alteración o borrado de registros (logs) del sistema.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Imposibilidad de reconstrucción forense y nulidad legal.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Logs centralizados en SIEM y almacenamiento WORM.</td>
-            </tr>
-
-            <tr>
-              <td style="border:1px solid #e2e8f0; padding:12px;">8</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Disponibilidad.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Operational Failure, System Outage, Human Error.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Interna</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Aplicación de actualización fallida sin pruebas previas.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Caída global de servicios y pérdida de ingresos.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Gestión de cambios (Change Management) y entornos Staging.</td>
-            </tr>
-
-            <tr>
-              <td style="border:1px solid #e2e8f0; padding:12px;">9</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Autenticación y Confidencialidad.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Phishing, Spoofing, Social Engineering.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Externa</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Suplantación de identidad mediante sitios web clonados.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Robo de datos personales y daño a la reputación oficial.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Protocolos DMARC/SPF y concientización de usuarios.</td>
-            </tr>
-
-            <tr>
-              <td style="border:1px solid #e2e8f0; padding:12px;">10</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Confidencialidad, Integridad y Disponibilidad.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Destructive Attack, Intrusion, Data Wiping.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Externa</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Exfiltración seguida de borrado masivo de sistemas.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Destrucción irreversible de la infraestructura tecnológica.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Plan de Respuesta a Incidentes (IRP) y detección IDS activa.</td>
-            </tr>
-
+      
           </tbody>
         </table>
       </div>
+
 
       <h3 style="margin-top:30px;">Análisis de Impacto y Medidas de Control</h3>
 
