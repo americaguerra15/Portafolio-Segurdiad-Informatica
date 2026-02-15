@@ -27,43 +27,63 @@
 
       <p style="color:#64748b; margin-top:-10px;">
         <strong>Materia:</strong> Seguridad Informática | <strong>Semestre:</strong> 8º | 
-        <strong>Fecha:</strong> 27 de enero de 2026
+        <strong>Fecha:</strong> 13 de febrero de 2026 |
+        <strong>Nombre:</strong> América Fabiola Guerra Ramírez - 179884 |
+        <strong>Profesor:</strong> Servando López Contreras
       </p>
 
     <hr style="border:none; border-top:1px solid #e2e8f0; margin:25px 0;">
 
       <h3>Introducción</h3>
       <p>
-        La seguridad informática es esencial para proteger la información frente a incidentes cada 
-        vez más frecuentes y complejos. En esta tarea se analizarán distintos escenarios de 
-        seguridad aplicando los servicios definidos en el ITU-T X.800 y utilizando la terminología 
-        estandarizada del RFC 4949. El objetivo es identificar las vulneraciones presentes, 
-        comprender la relación entre los servicios de seguridad comprometidos y describir 
-        técnicamente las amenazas y ataques, fortaleciendo así el análisis y la documentación de 
-        incidentes en contextos reales.
+        El pentesting (penetration testing) es un proceso fundamental dentro de la Seguridad Informática, ya que permite
+        evaluar la resistencia de un sistema, red o aplicación ante ataques reales. Existen diversas metodologías y
+        estándares que guían estas pruebas, cada una con enfoques distintos dependiendo del tipo de organización que se
+        buscan proteger.
+        En esta actividad se realiza una comparación estructurada de metodologías y marcos reconocidos
+        internacionalmente, como MITRE ATT&CK, OWASP WSTG, NIST SP 800-115, OSSTMM, PTES e ISSAF, con
+        el objetivo de identificar sus características principales, fases, objetivos, escenarios de aplicación y relevancia en
+        el pentesting moderno.
       </p>
 
-      <h3>Escenarios</h3>
+      <h3>Desarrollo</h3>
 
       <div style="overflow-x:auto; margin-top:20px;">
         <table style="width:100%; border-collapse:collapse; min-width:900px;">
           <thead>
             <tr style="background:#f8fafc;">
-              <th style="border:1px solid #e2e8f0; padding:12px;">Escenario</th>
-              <th style="border:1px solid #e2e8f0; padding:12px;">Servicios X.800 comprometidos</th>
-              <th style="border:1px solid #e2e8f0; padding:12px;">Definición(es) aplicable(s) RFC 4949.</th>
-              <th style="border:1px solid #e2e8f0; padding:12px;">Tipo de amenaza</th>
-              <th style="border:1px solid #e2e8f0; padding:12px;">Vector de ataque.</th>
-              <th style="border:1px solid #e2e8f0; padding:12px;">Impacto técnico / operativo</th>
-              <th style="border:1px solid #e2e8f0; padding:12px;">Medida de control recomendada.</th>
+              <th style="border:1px solid #e2e8f0; padding:12px;">Metodología</th>
+              <th style="border:1px solid #e2e8f0; padding:12px;">Descripción</th>
+              <th style="border:1px solid #e2e8f0; padding:12px;">Fases de implementación</th>
+              <th style="border:1px solid #e2e8f0; padding:12px;">Objetivo principal</th>
+              <th style="border:1px solid #e2e8f0; padding:12px;">Escenarios de uso</th>
+              <th style="border:1px solid #e2e8f0; padding:12px;">Orientación</th>
+              <th style="border:1px solid #e2e8f0; padding:12px;">Autores/organismos</th>
+              <th style="border:1px solid #e2e8f0; padding:12px;">URL</th>
+              <th style="border:1px solid #e2e8f0; padding:12px;">Certficaciones asociadas</th>
+              <th style="border:1px solid #e2e8f0; padding:12px;">Versiones / vigencia</th>
             </tr>
           </thead>
 
           <tbody>
             <tr>
-              <td style="border:1px solid #e2e8f0; padding:12px;">1</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Confidencialidad, Integridad y Disponibilidad.</td>
-              <td style="border:1px solid #e2e8f0; padding:12px;">Multi-stage attack, Data Breach, Availability Attack.</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">MITRE ATT&CK</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Es una base de conocimientos que recopila y organiza tácticas, técnicas y procedimientos (TTP)
+                usados por atacantes reales, con el fin de modelar, detectar, prevenir y combatir amenazas cibernéticas basadas en comportamientos adversarios.</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Reconocimiento
+                Desarrollo de recursos
+                Acceso inicial                
+                Ejecución                
+                Persistencia                
+                Escalamiento de privilegios                
+                Evasión de defensa                
+                Acceso a credenciales                
+                Descubrimiento                
+                Movimiento lateral                
+                Recopilación                
+                Comando y control                
+                Exfiltración                
+                Impacto</td>
               <td style="border:1px solid #e2e8f0; padding:12px;">Externa</td>
               <td style="border:1px solid #e2e8f0; padding:12px;">Inyección de Ransomware tras acceso inicial no autorizado.</td>
               <td style="border:1px solid #e2e8f0; padding:12px;">Interrupción de servicios críticos y exposición de datos sensibles.</td>
