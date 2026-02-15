@@ -27,24 +27,48 @@
 
       <p style="color:#64748b; margin-top:-10px;">
         <strong>Materia:</strong> Seguridad Informática | <strong>Semestre:</strong> 8º | 
-        <strong>Fecha:</strong> 27 de enero de 2026
-        <strong>Nombre:</strong> América Fabiola Guerra Ramírez - 179884
-        <strong>Profesor:</strong> Servando López Contreras
+        <strong>Fecha:</strong> 27 de enero de 2026 |
+        <strong>Nombre:</strong> América Fabiola Guerra Ramírez - 179884 |
+        <strong>Profesor:</strong> Servando López Contreras |
       </p>
 
     <hr style="border:none; border-top:1px solid #e2e8f0; margin:25px 0;">
 
      <h3>1. Establecer una política restrictiva.  </h3>
       <p>
-        iptables -P INPUT DROP
-        iptables -P OUTPUT DROP
+        <p>iptables -P INPUT DROP</p>
+        <p>iptables -P OUTPUT DROP</p>
       </p>
 
-      <h3>4. Este comando permite: </h3>
+      <h3>2. Permitir el tráfico de conexiones ya establecidas.</h3>
       <p>
-        El trafico TCP hacía los puetos 80 y 443 
+        iptables -A INPUT -m state --state ESTABLISHED -j ACCEPT
+      </p>
+      
+      <h3>3. Aceptar tráfico DNS (TCP) saliente de la red local.</h3>
+      <p>
+        iptables -A OUTPUT -p tcp --dport 53 -j ACCEPT
       </p>
 
+      <h3>4. Aceptar correo entrante proveniente de Internet en el servidor de correo.</h3>
+      <p>
+        iptables -A INPUT -p tcp --dport 25 -j ACCEPT
+      </p>
+
+      <h3>5. Permitir correo saliente a Internet desde el servidor de correo. </h3>
+      <p>
+        iptables -A OUTPUT -p tcp --dport 25 -j ACCEPT
+      </p>
+      
+      <h3>6. Aceptar conexiones HTTP desde Internet a nuestro servidor web.</h3>
+      <p>
+        iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+      </p>
+
+      <h3>7. Permitir tráfico HTTP desde la red local a Internet</h3>
+      <p>
+        iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
+      </p>
 
       <!-- BOTÓN EXPORTAR PDF -->
       <div style="margin-top: 35px; text-align: center;">
