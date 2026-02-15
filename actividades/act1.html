@@ -900,7 +900,7 @@
           </table>
         </div>
 
-      <br><b>GDPR (aplicación contextual):</b>
+      <br><b>GDPR (aplicación contextual):</b><br>
       Aunque Colonial Pipeline no está sujeta al GDPR, los principios de notificación de violaciones de datos y protección de datos personales son relevantes.
       La exfiltración de 100 GB pudo incluir datos personales de empleados o clientes. Bajo GDPR, esto habría exigido notificación a autoridades en 72 horas, lo que podría haber acelerado la respuesta y la
       transparencia pública. <br>
@@ -910,6 +910,206 @@
       no es solo un requisito normativo, sino una estrategia de resiliencia operativa ante amenazas como el ransomware.
 
       </p>
+
+      <h3 id="leccionesAprendidas" style="margin-top:40px;">6. Lecciones aprendidas y recomendaciones</h3>
+      <p>
+        El incidente de Colonial Pipeline evidenció que incluso operadores de infraestructura crítica pueden verse comprometidos
+        cuando la ciberseguridad no es tratada como un componente estratégico del negocio. El ataque no fue producto de una sola
+        vulnerabilidad, sino de una cadena de fallas técnicas, operativas y de gobernanza.
+      </p>
+      
+      
+      <h4 style="margin-top:25px;">6.1 Fallas críticas detectadas</h4>
+      
+      <h4 style="margin-top:15px;">Fallas técnicas</h4>
+      
+      <ol style="margin-top:10px;">
+        <li>
+          <b>Ausencia de autenticación multifactor (MFA) en accesos remotos</b><br>
+          El acceso inicial se produjo mediante una cuenta VPN antigua que solo utilizaba usuario y contraseña.<br>
+          Esta credencial estaba filtrada en la dark web.<br>
+          Esto permitió que los atacantes ingresaran como un usuario legítimo.
+        </li>
+      
+        <li style="margin-top:12px;">
+          <b>Gestión deficiente de identidades y accesos (IAM)</b>
+          <ol type="a" style="margin-top:8px;">
+            <li>Cuenta obsoleta aún activa</li>
+            <li>Falta de revisión periódica de accesos</li>
+            <li>Ausencia de principio de mínimo privilegio</li>
+          </ol>
+        </li>
+      
+        <li style="margin-top:12px;">
+          <b>Segmentación insuficiente entre TI y OT</b><br>
+          Aunque el malware no llegó a sistemas industriales, el riesgo de propagación obligó a detener la operación del oleoducto.
+        </li>
+      
+        <li style="margin-top:12px;">
+          <b>Monitoreo y detección tardíos</b><br>
+          Los atacantes exfiltraron 100 GB de información antes de activar el cifrado sin ser detectados oportunamente.
+        </li>
+      
+        <li style="margin-top:12px;">
+          <b>Estrategia de respaldo y recuperación poco efectiva</b>
+          <ol type="a" style="margin-top:8px;">
+            <li>La herramienta de descifrado fue lenta</li>
+            <li>Dependencia parcial del pago del rescate</li>
+            <li>Restauración prolongada</li>
+          </ol>
+        </li>
+      
+        <li style="margin-top:12px;">
+          <b>Controles de acceso remoto débiles</b><br>
+          VPN sin MFA, sin políticas estrictas de dispositivos confiables o verificación adicional.
+        </li>
+      </ol>
+      
+      
+      <h4 style="margin-top:25px;">Fallas humanas y organizacionales</h4>
+      
+      <ol style="margin-top:10px;">
+        <li>
+          <b>Gobernanza de ciberseguridad débil</b><br>
+          La ciberseguridad no estaba plenamente integrada en la gestión de riesgos corporativos.
+        </li>
+      
+        <li style="margin-top:12px;">
+          <b>Enfoque reactivo, no preventivo</b><br>
+          No se priorizaron controles básicos a pesar de operar infraestructura crítica.
+        </li>
+      
+        <li style="margin-top:12px;">
+          <b>Falta de cultura de seguridad</b><br>
+          Las cuentas antiguas no deberían existir si hubiera procesos estrictos de revisión.
+        </li>
+      
+        <li style="margin-top:12px;">
+          <b>Planes de continuidad no probados a nivel realista</b><br>
+          La interrupción operativa mostró que los planes no estaban optimizados para un escenario de ransomware.
+        </li>
+      </ol>
+      
+      
+      <h4 style="margin-top:30px;">6.2 Buenas prácticas que habrían reducido el daño</h4>
+      <p>
+        Si se hubieran aplicado correctamente, estas medidas habrían evitado o minimizado el impacto:
+      </p>
+      
+      <div style="overflow-x:auto; margin-top:20px;">
+        <table style="width:100%; border-collapse:collapse; table-layout:fixed;">
+          <thead>
+            <tr style="background:#f8fafc;">
+              <th style="border:1px solid #e2e8f0; padding:12px; width:20%;"><b>Área</b></th>
+              <th style="border:1px solid #e2e8f0; padding:12px; width:40%;"><b>Buena práctica</b></th>
+              <th style="border:1px solid #e2e8f0; padding:12px; width:40%;"><b>Impacto que habría mitigado</b></th>
+            </tr>
+          </thead>
+      
+          <tbody>
+            <tr>
+              <td style="border:1px solid #e2e8f0; padding:12px; vertical-align:middle;"><b>Accesos remotos</b></td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">MFA obligatorio</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Habría bloqueado el acceso inicial.</td>
+            </tr>
+      
+            <tr>
+              <td style="border:1px solid #e2e8f0; padding:12px; vertical-align:middle;"><b>Identidades</b></td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Auditoría periódica de cuentas</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">La VPN obsoleta habría sido eliminada.</td>
+            </tr>
+      
+            <tr>
+              <td style="border:1px solid #e2e8f0; padding:12px; vertical-align:middle;"><b>Red</b></td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Segmentación TI/OT estricta</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Menor necesidad de detener operaciones.</td>
+            </tr>
+      
+            <tr>
+              <td style="border:1px solid #e2e8f0; padding:12px; vertical-align:middle;"><b>Monitoreo</b></td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">SIEM + detección de exfiltración</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Alerta antes del cifrado.</td>
+            </tr>
+      
+            <tr>
+              <td style="border:1px solid #e2e8f0; padding:12px; vertical-align:middle;"><b>Respaldo</b></td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Backups offline y pruebas periódicas</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Recuperación sin pagar rescate.</td>
+            </tr>
+      
+            <tr>
+              <td style="border:1px solid #e2e8f0; padding:12px; vertical-align:middle;"><b>Respuesta a incidentes</b></td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Simulacros de ransomware</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Reducción del tiempo de inactividad.</td>
+            </tr>
+      
+            <tr>
+              <td style="border:1px solid #e2e8f0; padding:12px; vertical-align:middle;"><b>Gobernanza</b></td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Alineación con NIST CSF e ISA/IEC 62443</td>
+              <td style="border:1px solid #e2e8f0; padding:12px;">Mejor preparación estructural.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      
+      <h4 style="margin-top:35px;">6.3 Lecciones estratégicas clave</h4>
+      
+      <ol style="margin-top:10px;">
+        <li>
+          <b>El ransomware es un riesgo operativo, no solo informático</b><br>
+          Puede detener infraestructura física crítica.
+        </li>
+      
+        <li style="margin-top:12px;">
+          <b>Las credenciales robadas son el vector más peligroso hoy en día</b><br>
+          No fue un exploit sofisticado, fue mala gestión de accesos.
+        </li>
+      
+        <li style="margin-top:12px;">
+          <b>Pagar rescate no garantiza recuperación rápida</b><br>
+          El descifrador fue ineficiente.
+        </li>
+      
+        <li style="margin-top:12px;">
+          <b>TI y OT están conectados a nivel de riesgo</b><br>
+          Aunque no se infectó OT, la empresa tuvo que detenerlo.
+        </li>
+      
+        <li style="margin-top:12px;">
+          <b>La ciberseguridad es un asunto de seguridad nacional</b><br>
+          El incidente generó impacto económico y político.
+        </li>
+      </ol>
+      
+      
+      <h4 style="margin-top:35px;">6.4 Recomendaciones para el contexto mexicano y latinoamericano</h4>
+      
+      <h4 style="margin-top:15px;">MX Infraestructura crítica en México (energía, transporte, gobierno)</h4>
+      
+      <ol style="margin-top:10px;">
+        <li>Implementar MFA obligatorio en todos los accesos remotos</li>
+        <li>Eliminar cuentas heredadas y accesos no utilizados</li>
+        <li>Adoptar el marco NIST CSF como base mínima</li>
+        <li>Separar redes TI y OT físicamente cuando sea posible</li>
+        <li>Establecer monitoreo continuo con detección de exfiltración</li>
+        <li>Mantener respaldos offline (air-gapped)</li>
+        <li>Realizar simulacros anuales de ciberataques</li>
+        <li>Crear equipos CSIRT internos o sectoriales</li>
+        <li>Invertir en capacitación del personal</li>
+        <li>Integrar la ciberseguridad en la alta dirección (gobernanza)</li>
+      </ol>
+      
+      <h4 style="margin-top:25px;">Para empresas privadas latinoamericanas</h4>
+      
+      <ul style="margin-top:10px;">
+        <li>No depender solo de antivirus tradicional</li>
+        <li>Revisar accesos VPN cada mes</li>
+        <li>Usar Zero Trust para accesos externos</li>
+        <li>Contratar auditorías de ciberseguridad anuales</li>
+        <li>Tener seguro de riesgo cibernético</li>
+      </ul>
+
       
       <h3>Conclusión</h3>
       <p>
