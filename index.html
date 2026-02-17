@@ -121,17 +121,58 @@
   <!-- SECCIÓN ACTIVIDADES (EN MEDIO) -->
   <section id="actividades" class="activities-section">
     <div class="activities-container">
-
+  
       <div class="activities-header">
         <h2><i class="fas fa-folder-open"></i> Actividades</h2>
         <p>
-          Evidencias académicas organizadas por prácticas, investigaciones y ejercicios.
-          Cada actividad abre en una página independiente.
+          Selecciona un parcial para visualizar las actividades correspondientes.
         </p>
       </div>
-
-      <div class="activities-grid">
-
+  
+      <!-- SELECTOR DE PARCIALES (CARRUSEL) -->
+      <div class="parcial-carousel">
+  
+        <button class="carousel-btn" onclick="scrollParcial(-1)">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+  
+        <div class="parcial-track" id="parcialTrack">
+  
+          <div class="parcial-card" onclick="mostrarParcial(1)">
+            <div class="parcial-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <h3>Parcial 1</h3>
+            <p>Fundamentos y análisis inicial.</p>
+          </div>
+  
+          <div class="parcial-card" onclick="mostrarParcial(2)">
+            <div class="parcial-icon">
+              <i class="fas fa-fire"></i>
+            </div>
+            <h3>Parcial 2</h3>
+            <p>Firewall, filtrado y reglas.</p>
+          </div>
+  
+          <div class="parcial-card" onclick="mostrarParcial(3)">
+            <div class="parcial-icon">
+              <i class="fas fa-user-secret"></i>
+            </div>
+            <h3>Parcial 3</h3>
+            <p>Pentesting y VPN.</p>
+          </div>
+  
+        </div>
+  
+        <button class="carousel-btn" onclick="scrollParcial(1)">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+  
+      </div>
+  
+      <!-- ACTIVIDADES PARCIAL 1 -->
+      <div class="activities-grid parcial-content" id="parcial1">
+  
         <div class="activity-card">
           <div class="activity-icon">
             <i class="fas fa-lock"></i>
@@ -142,56 +183,91 @@
             Ver actividad <i class="fas fa-arrow-right"></i>
           </a>
         </div>
-
+  
         <div class="activity-card">
           <div class="activity-icon">
             <i class="fas fa-network-wired"></i>
           </div>
           <h3>Actividad 2</h3>
-          <p>Análisis de Servicios de Seguridad</p>
+          <p>Análisis de Servicios de Seguridad.</p>
           <a class="activity-btn" href="actividades/Parcial1/actividad2.html" target="_blank">
             Ver actividad <i class="fas fa-arrow-right"></i>
           </a>
         </div>
-
+  
         <div class="activity-card">
           <div class="activity-icon">
             <i class="fas fa-bug"></i>
           </div>
           <h3>Actividad 3</h3>
-          <p>Interpretación de políticas de filtrado en iptables</p>
+          <p>Interpretación de políticas de filtrado en iptables.</p>
           <a class="activity-btn" href="actividades/Parcial1/actividad3.html" target="_blank">
             Ver actividad <i class="fas fa-arrow-right"></i>
           </a>
         </div>
-
+  
         <div class="activity-card">
           <div class="activity-icon">
             <i class="fas fa-code"></i>
           </div>
           <h3>Actividad 4</h3>
-          <p>Iptables</p>
+          <p>iptables: configuración y análisis de reglas.</p>
           <a class="activity-btn" href="actividades/Parcial1/actividad4.html" target="_blank">
             Ver actividad <i class="fas fa-arrow-right"></i>
           </a>
         </div>
-
+  
         <div class="activity-card">
           <div class="activity-icon">
             <i class="fas fa-code"></i>
           </div>
           <h3>Actividad 5</h3>
-          <p>Cartografiando el pentesting</p>
+          <p>Cartografiando el pentesting.</p>
           <a class="activity-btn" href="actividades/Parcial1/actividad5.html" target="_blank">
             Ver actividad <i class="fas fa-arrow-right"></i>
           </a>
         </div>
-
+  
       </div>
-
-
+  
+      <!-- ACTIVIDADES PARCIAL 2 -->
+      <div class="activities-grid parcial-content" id="parcial2">
+        <p style="text-align:center; color: var(--text-soft); font-weight:700;">
+          Aquí van tus actividades del Parcial 2.
+        </p>
+      </div>
+  
+      <!-- ACTIVIDADES PARCIAL 3 -->
+      <div class="activities-grid parcial-content" id="parcial3">
+        <p style="text-align:center; color: var(--text-soft); font-weight:700;">
+          Aquí van tus actividades del Parcial 3.
+        </p>
+      </div>
+  
     </div>
   </section>
+  
+  <!-- SCRIPT PARA MOSTRAR PARCIALES -->
+  <script>
+    function mostrarParcial(num) {
+      document.querySelectorAll(".parcial-content").forEach(section => {
+        section.classList.remove("active");
+      });
+  
+      document.getElementById("parcial" + num).classList.add("active");
+    }
+  
+    function scrollParcial(direction) {
+      const track = document.getElementById("parcialTrack");
+      track.scrollBy({
+        left: 300 * direction,
+        behavior: "smooth"
+      });
+    }
+  
+    // Mostrar Parcial 1 por defecto
+    mostrarParcial(1);
+  </script>
 
 
   <!-- FOOTER -->
