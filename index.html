@@ -47,7 +47,6 @@
     </p>
   </header>
 
-
   <!-- SECCIÓN SUPERIOR -->
   <main class="grid-container">
 
@@ -96,7 +95,6 @@
         </div>
       </section>
 
-      <!-- CONTACTO -->
       <section id="contacto" class="info-card small-card">
         <div class="card-title">
           <i class="fas fa-paper-plane"></i>
@@ -125,66 +123,44 @@
       <div class="activities-header">
         <h2><i class="fas fa-folder-open"></i> Actividades</h2>
         <p>
-          Selecciona un parcial para visualizar las actividades correspondientes.
+          Evidencias académicas organizadas por parciales. Selecciona un parcial para ver sus actividades.
         </p>
       </div>
 
-      <!-- CARRUSEL PARCIALES -->
+      <!-- CARRUSEL -->
       <div class="parcial-carousel">
 
-        <button class="carousel-btn" onclick="scrollParcial(-1)">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-
-        <div class="parcial-track" id="parcialTrack">
-
-          <div class="parcial-card" onclick="location.href='Parcial1.html'">
-            <div class="parcial-icon">
-              <i class="fas fa-shield-alt"></i>
-            </div>
-            <h3>Parcial 1</h3>
-            <p>Fundamentos y análisis inicial.</p>
+        <a class="parcial-card" href="actividades/Parcial1/parcial1.html">
+          <div class="parcial-icon">
+            <i class="fas fa-shield-alt"></i>
           </div>
+          <h3>Parcial 1</h3>
+          <p>Fundamentos y análisis inicial.</p>
+          <span class="parcial-btn">Ver actividades <i class="fas fa-arrow-right"></i></span>
+        </a>
 
-          <div class="parcial-card" onclick="location.href='Parcial2.html'">
-            <div class="parcial-icon">
-              <i class="fas fa-fire"></i>
-            </div>
-            <h3>Parcial 2</h3>
-            <p>Firewall, filtrado y reglas.</p>
+        <a class="parcial-card" href="actividades/Parcial2/parcial2.html">
+          <div class="parcial-icon">
+            <i class="fas fa-fire"></i>
           </div>
+          <h3>Parcial 2</h3>
+          <p>Firewall, filtrado y reglas.</p>
+          <span class="parcial-btn">Ver actividades <i class="fas fa-arrow-right"></i></span>
+        </a>
 
-          <div class="parcial-card" onclick="location.href='Parcial3.html'">
-            <div class="parcial-icon">
-              <i class="fas fa-user-secret"></i>
-            </div>
-            <h3>Parcial 3</h3>
-            <p>Pentesting, VPN y auditoría.</p>
+        <a class="parcial-card" href="actividades/Parcial3/parcial3.html">
+          <div class="parcial-icon">
+            <i class="fas fa-user-secret"></i>
           </div>
-
-        </div>
-
-        <button class="carousel-btn" onclick="scrollParcial(1)">
-          <i class="fas fa-chevron-right"></i>
-        </button>
+          <h3>Parcial 3</h3>
+          <p>Pentesting, VPN y auditoría.</p>
+          <span class="parcial-btn">Ver actividades <i class="fas fa-arrow-right"></i></span>
+        </a>
 
       </div>
 
     </div>
   </section>
-
-
-  <!-- SCRIPT -->
-  <script>
-    function scrollParcial(direction) {
-      const track = document.getElementById("parcialTrack");
-      track.scrollBy({
-        left: 320 * direction,
-        behavior: "smooth"
-      });
-    }
-  </script>
-
 
   <!-- FOOTER -->
   <footer>
