@@ -784,6 +784,44 @@ h1 {
   transform: translateY(-2px);
 }
 
+.pdf-export {
+  margin-top: 70px;
+  text-align: center;
+  padding: 45px;
+  background: white;
+  border-radius: 28px;
+  border: 1px solid var(--border-color);
+}
+
+.pdf-export h3 {
+  margin: 0;
+  font-size: 1.4em;
+}
+
+.pdf-export p {
+  color: var(--text-soft);
+  margin-top: 10px;
+}
+
+.pdf-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  text-decoration: none;
+  font-weight: 800;
+  padding: 14px 22px;
+  border-radius: 16px;
+  background: var(--text-dark);
+  color: white;
+  transition: 0.3s;
+}
+
+.pdf-btn:hover {
+  background: var(--accent);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+}
+
 /* ===== FOOTER ===== */
 footer {
   text-align: center;
