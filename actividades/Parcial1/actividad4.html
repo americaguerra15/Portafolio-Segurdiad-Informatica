@@ -43,6 +43,16 @@
 
     <hr style="border:none; border-top:1px solid #e2e8f0; margin:25px 0;">
 
+      <h3>Introducción</h3>
+      <p>
+        En el área de seguridad informática, el uso de firewalls es fundamental para controlar el tráfico de red y 
+        proteger los sistemas ante accesos no autorizados. En esta actividad se implementaron reglas utilizando iptables 
+        con el propósito de establecer una política de filtrado restrictiva, permitiendo únicamente conexiones necesarias 
+        para el funcionamiento de servicios esenciales como DNS, correo electrónico (SMTP) y navegación web (HTTP). 
+        De esta manera, se refuerza la importancia de aplicar configuraciones seguras que reduzcan riesgos y mantengan el control 
+        del flujo de paquetes dentro de un entorno Linux
+      </p>
+
      <h3>1. Establecer una política restrictiva.  </h3>
       <p>
         <p>iptables -P INPUT DROP</p>
@@ -77,6 +87,15 @@
       <h3>7. Permitir tráfico HTTP desde la red local a Internet</h3>
       <p>
         iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT
+      </p>
+
+      <h3>Conclusión</h3>
+      <p>
+        En conclusión, la configuración de reglas en iptables permite establecer un control detallado del tráfico entrante y saliente en un sistema Linux. 
+        Al definir políticas restrictivas y permitir únicamente conexiones específicas, se logra minimizar la exposición del sistema ante posibles amenazas. 
+        Además, al aceptar tráfico relacionado con conexiones establecidas, se garantiza un funcionamiento correcto sin comprometer la seguridad. 
+        Esta actividad demuestra cómo una adecuada administración de firewall contribuye directamente a la protección de servicios críticos y al fortalecimiento 
+        general de la infraestructura de red.
       </p>
 
       <!-- IMÁGENES -->
