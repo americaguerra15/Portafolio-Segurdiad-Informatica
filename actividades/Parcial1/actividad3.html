@@ -140,6 +140,53 @@
        <h3>11. Permitir tráfico TCP entrante por eth0 a 22, 80 y 443 registrar intento y permitir solo NEW y ESTABLESHED</h3>
       <p> iptables -A INPUT -i eth0 -p tcp -m multiport --dports 22,80,443 -m satate --state NEW, ESTABLESHES -j LOG --log -prefix "conexion Nueva: " -j ACCEPT</p>
 
+      <h3 style="margin-top:40px;">Contenido Multimedia</h3>
+      <p>
+        En esta sección se incluyen recursos visuales y audiovisuales relacionados con el funcionamiento de iptables,
+        el flujo de paquetes y las tablas/cadenas del firewall en Linux.
+      </p>
+      
+      <!-- IMÁGENES -->
+      <h4 style="margin-top:25px;">Imágenes</h4>
+      
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:15px; margin-top:15px;">
+      
+        <div style="background:#f8fafc; padding:15px; border-radius:15px; border:1px solid #e2e8f0;">
+          <img src="../../img/iptables.jpg" alt="Flujo de paquetes Netfilter" style="width:100%; border-radius:12px;">
+          <p style="margin-top:10px; font-size:14px; color:#475569;">
+            Imagen 1: Diagrama del flujo de paquetes en Netfilter (iptables).
+          </p>
+        </div>
+      
+        <div style="background:#f8fafc; padding:15px; border-radius:15px; border:1px solid #e2e8f0;">
+          <img src="../../img/tablas.png" alt="Tablas y cadenas iptables" style="width:100%; border-radius:12px;">
+          <p style="margin-top:10px; font-size:14px; color:#475569;">
+            Imagen 2: Tablas y cadenas principales (INPUT, OUTPUT, FORWARD).
+          </p>
+        </div>
+      
+      </div>
+      
+      <!-- VIDEO DE YOUTUBE -->
+      <h4 style="margin-top:30px;">Video Explicativo</h4>
+      
+      <div style="margin-top:15px; background:#f8fafc; padding:15px; border-radius:15px; border:1px solid #e2e8f0;">
+      
+        <iframe width="100%" height="400"
+          src="https://youtu.be/Gx_36CysrB4?si=TiMsdG1mQpiMIDiB"
+          title="Video sobre iptables"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          style="border-radius:12px;">
+        </iframe>
+      
+        <p style="margin-top:10px; font-size:14px; color:#475569;">
+          Video: Explicación del funcionamiento de iptables, sus tablas y cadenas principales.
+        </p>
+      
+      </div>
+
       <!-- BOTÓN EXPORTAR PDF -->
       <div style="margin-top: 35px; text-align: center;">
         <a href="../../pdf/179884-act03.pdf" class="activity-btn" target="_blank">
