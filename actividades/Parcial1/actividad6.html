@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Actividad 6 | Configuración de VPN IPSec</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../../style.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-content">
+      <div class="logo">AG<span>.</span></div>
+
+      <div class="links">
+        <a href="../../index.html">Inicio</a>
+        <a href="parcial1.html">Parcial 1</a>
+      </div>
+    </div>
+  </nav>
+
+  <div style="max-width: 1000px; margin: auto; padding: 50px 20px;">
+
+    <div class="info-card" style="margin-top: 25px;">
+
+      <div class="card-title">
+        <i class="fas fa-network-wired"></i>
+        <h3>Actividad 6: Configuración de VPN IPSec Tunnel</h3>
+      </div>
+
+      <p style="color:#64748b; margin-top:-10px;">
+        <strong>Materia:</strong> Seguridad Informática |
+        <strong>Semestre:</strong> 8º |
+        <strong>Profesor:</strong> Servando López Contreras <br>
+        <strong>Alumna:</strong> América Fabiola Guerra Ramírez - 179884 <br>
+        <strong>Fecha de entrega:</strong> 16 de febrero de 2026
+      </p>
+
+      <hr style="border:none; border-top:1px solid #e2e8f0; margin:25px 0;">
+
+      <h3>Configuración de la topología de red</h3>
+      <p>
+        En esta actividad se realiza la configuración de una topología de red utilizando routers,
+        con el objetivo de implementar un túnel VPN IPSec entre dos redes privadas. 
+        Esto permite asegurar la comunicación a través de Internet mediante cifrado, autenticación
+        e integridad de datos.
+      </p>
+
+      <!-- IMAGEN TOPOLOGÍA -->
+      <h3 style="margin-top:35px;">Topología de red</h3>
+
+      <div style="background:#f8fafc; padding:15px; border-radius:15px; border:1px solid #e2e8f0; margin-top:15px;">
+        <img src="../../img/act06-topologia.png" alt="Topología de red" style="width:100%; border-radius:12px;">
+        <p style="margin-top:10px; font-size:14px; color:#475569;">
+          Figura 1: Topología utilizada para la configuración de la VPN IPSec.
+        </p>
+      </div>
+
+      <h3 style="margin-top:40px;">Fases de la configuración</h3>
+
+      <h3 style="margin-top:30px;">1. Configuración inicial</h3>
+      <p>
+        En la fase de configuración inicial se realiza la preparación básica de cada router. Primero se utiliza
+        el comando <b>enable</b> (o <b>en</b>) para entrar al modo EXEC privilegiado. Posteriormente se utiliza
+        <b>configure terminal</b> para ingresar al modo de configuración global.
+      </p>
+
+      <p>
+        Se asigna un nombre a cada router mediante el comando <b>hostname</b> para facilitar su identificación.
+        Después se configuran las interfaces usando <b>interface GigabitEthernet</b>, asignando dirección IP y máscara
+        con <b>ip address</b>. Finalmente, se activa la interfaz con <b>no shut</b>.
+      </p>
+
+      <p>
+        Además, se configura una ruta estática por defecto utilizando:
+        <b>ip route 0.0.0.0 0.0.0.0</b>, permitiendo que el tráfico hacia redes desconocidas se envíe al siguiente salto.
+      </p>
+
+      <!-- IMAGENES ROUTERS -->
+      <h4 style="margin-top:25px;">Evidencias (Routers)</h4>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:15px; margin-top:15px;">
+
+        <div style="background:#f8fafc; padding:15px; border-radius:15px; border:1px solid #e2e8f0;">
+          <img src="../../img/act06-router1.png" alt="Router 01" style="width:100%; border-radius:12px;">
+          <p style="margin-top:10px; font-size:14px; color:#475569;">
+            Router 01: Configuración inicial.
+          </p>
+        </div>
+
+        <div style="background:#f8fafc; padding:15px; border-radius:15px; border:1px solid #e2e8f0;">
+          <img src="../../img/act06-router2.png" alt="Router 02" style="width:100%; border-radius:12px;">
+          <p style="margin-top:10px; font-size:14px; color:#475569;">
+            Router 02: Configuración inicial.
+          </p>
+        </div>
+
+        <div style="background:#f8fafc; padding:15px; border-radius:15px; border:1px solid #e2e8f0;">
+          <img src="../../img/act06-isp.png" alt="Router ISP" style="width:100%; border-radius:12px;">
+          <p style="margin-top:10px; font-size:14px; color:#475569;">
+            Router ISP: Configuración inicial.
+          </p>
+        </div>
+
+      </div>
+
+      <h3 style="margin-top:40px;">2. Licencia de seguridad habilitada</h3>
+      <p>
+        En esta fase se habilita la licencia de seguridad necesaria para ejecutar funciones criptográficas como IPSec.
+        Se activa el paquete tecnológico <b>SecurityK9</b> con:
+      </p>
+
+      <p><b>license boot technology-package securityK9</b></p>
+
+      <p>
+        Después se guarda la configuración con <b>copy running-config startup-config</b> y se reinicia el equipo con
+        <b>reload</b>. Finalmente se valida con <b>show version</b> que la licencia está activa.
+      </p>
+
+      <h3 style="margin-top:40px;">3. Implementación de ACLs</h3>
+      <p>
+        En esta fase se crean Listas de Control de Acceso extendidas (ACL). Estas ACL permiten tráfico IP entre las redes
+        privadas <b>192.168.1.0</b> y <b>192.168.3.0</b> utilizando una wildcard mask <b>0.0.0.255</b>.
+      </p>
+
+      <p>
+        Estas ACL no se utilizan para bloquear tráfico, sino para definir el tráfico interesante que será protegido por IPSec.
+        Solo los paquetes que coincidan con esta ACL serán cifrados dentro del túnel VPN.
+      </p>
+
+      <h3 style="margin-top:40px;">4. Phase 1: ISAKMP policy</h3>
+      <p>
+        En la Phase 1 se configura la política ISAKMP, encargada de negociar los parámetros de seguridad antes de cifrar datos.
+        Se utiliza el cifrado <b>AES 256</b>, autenticación <b>pre-share</b> y el grupo <b>Diffie-Hellman 5</b>.
+      </p>
+
+      <p>
+        Con <b>crypto isakmp key</b> se define la clave precompartida para autenticar al peer remoto. 
+        Esta fase establece la Security Association inicial.
+      </p>
+
+      <h3 style="margin-top:40px;">5. Phase 2: IPSec transform set</h3>
+      <p>
+        En la Phase 2 se configura el transform-set de IPSec. Esta etapa define cómo se protegerán los datos dentro del túnel.
+        Se utiliza <b>ESP</b> con cifrado <b>AES 256</b> y autenticación con <b>SHA-HMAC</b>.
+      </p>
+
+      <p>
+        A diferencia de la Phase 1, aquí se cifra y autentica el tráfico real que viaja entre redes.
+      </p>
+
+      <h3 style="margin-top:40px;">6. Crear el mapa criptográfico</h3>
+      <p>
+        Se crea el crypto map con el comando <b>crypto map</b>, el cual integra todos los elementos configurados previamente.
+        Se define el peer remoto, el transform-set, la ACL y se habilita Perfect Forward Secrecy (PFS) con grupo 5.
+      </p>
+
+      <p>
+        También se configura el tiempo de vida de la Security Association con:
+        <b>set security-association lifetime seconds 86400</b>.
+      </p>
+
+      <h3 style="margin-top:40px;">7. Aplicar el mapa criptográfico</h3>
+      <p>
+        Finalmente se aplica el crypto map a la interfaz que conecta hacia la red pública.
+        Con esto se activa IPSec en la interfaz externa y el tráfico que coincida con la ACL será cifrado automáticamente.
+      </p>
+
+      <!-- RESULTADO FINAL -->
+      <h3 style="margin-top:40px;">Resultado final</h3>
+
+      <div style="background:#f8fafc; padding:15px; border-radius:15px; border:1px solid #e2e8f0; margin-top:15px;">
+        <img src="../../img/act06-result.png" alt="Resultado final" style="width:100%; border-radius:12px;">
+        <p style="margin-top:10px; font-size:14px; color:#475569;">
+          Figura final: Evidencia de la conexión establecida mediante VPN IPSec.
+        </p>
+      </div>
+
+      <!-- VIDEO -->
+      <h3 style="margin-top:40px;">Contenido Multimedia</h3>
+      <p>
+        A continuación se presenta un video explicativo relacionado con la configuración de VPN IPSec en routers Cisco.
+      </p>
+
+      <div style="margin-top:20px; width:100%; border-radius:18px; overflow:hidden; box-shadow:0px 8px 20px rgba(0,0,0,0.20);">
+        <iframe 
+          width="100%" 
+          height="500"
+          src="https://www.youtube.com/embed/XZ9fy_4Eplw"
+          title="Video explicativo VPN IPSec"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+      <h3 style="margin-top:40px;">Conclusión</h3>
+      <p>
+        En resumen, aplicar la VPN IPSec Tunnel en la topología propuesta demuestra que la seguridad en redes necesita
+        una configuración ordenada y coherente en cada etapa. Primero se estableció el direccionamiento IP y las rutas
+        estáticas para asegurar la conectividad básica.
+      </p>
+
+      <p>
+        Después se habilitó la licencia SecurityK9 para activar funciones criptográficas. Las ACL definieron el tráfico
+        interesante que sería protegido, evitando cifrar información innecesaria.
+      </p>
+
+      <p>
+        En la Phase 1, la política ISAKMP permitió negociar parámetros como AES 256, autenticación pre-share y Diffie-Hellman 5.
+        En la Phase 2, el transform-set con ESP, AES 256 y SHA-HMAC garantizó confidencialidad e integridad.
+      </p>
+
+      <p>
+        Finalmente, el crypto map integró todo y al aplicarlo en la interfaz externa se logró establecer una conexión segura
+        y funcional entre las dos redes privadas, asegurando autenticación, integridad y confidencialidad en la comunicación.
+      </p>
+
+      <!-- BOTÓN EXPORTAR PDF -->
+      <div style="margin-top: 35px; text-align: center;">
+        <a href="../../pdf/179884-act06.pdf" class="activity-btn" target="_blank">
+          <i class="fas fa-file-pdf"></i> Exportar PDF
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
