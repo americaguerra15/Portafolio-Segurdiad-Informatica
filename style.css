@@ -1,30 +1,611 @@
-.contact-section {
-  padding: 80px 20px;
+:root {  
+  --bg-base: #f0f2f5;
+  --card-bg: #ffffff;
+  --text-dark: #334155;
+  --text-soft: #64748b;
+  --accent: #475569;
+  --border-color: #e2e8f0;
+}
+
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: radial-gradient(circle at top, #ffffff, #f0f2f5);
+  color: var(--text-dark);
+  margin: 0;
+  line-height: 1.7;
+}
+
+/* ===== ANIMACIONES ===== */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  padding: 18px 0;
+  backdrop-filter: blur(12px);
+  background: rgba(240, 242, 245, 0.75);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.nav-content {
+  max-width: 1050px;
+  margin: 0 auto;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.logo {
+  font-weight: 900;
+  font-size: 1.6em;
+  color: var(--text-dark);
+  letter-spacing: -1px;
+}
+
+.logo span {
+  color: var(--text-soft);
+  font-weight: 900;
+}
+
+.links a {
+  position: relative;
+  text-decoration: none;
+  color: var(--text-soft);
+  margin-left: 20px;
+  font-weight: 700;
+  font-size: 0.9em;
+  transition: 0.3s;
+}
+
+.links a:hover {
+  color: var(--text-dark);
+}
+
+.links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 2px;
+  background: var(--text-dark);
+  transition: 0.3s;
+  border-radius: 5px;
+}
+
+.links a:hover::after {
+  width: 100%;
+}
+
+/* ===== HEADER ===== */
+.main-header {
+  text-align: center;
+  padding: 70px 20px 50px;
+  position: relative;
+  animation: fadeUp 0.9s ease forwards;
+}
+
+.main-header::before {
+  content: "";
+  position: absolute;
+  top: -90px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 450px;
+  height: 450px;
+  background: rgba(100, 116, 139, 0.14);
+  border-radius: 50%;
+  filter: blur(90px);
+  z-index: -1;
+}
+
+.badge-container {
+  margin-bottom: 20px;
+}
+
+.badge {
+  background: #fff;
+  padding: 10px 22px;
+  border-radius: 50px;
+  font-size: 0.75em;
+  font-weight: 800;
+  border: 1px solid var(--border-color);
+  color: var(--text-soft);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+}
+
+h1 {
+  font-size: 2.6em;
+  margin: 10px 0;
+  letter-spacing: -1.8px;
+}
+
+.header-meta {
+  color: var(--text-soft);
+  margin: 10px 0;
+  font-size: 1.1em;
+}
+
+.header-meta strong {
+  color: var(--text-dark);
+}
+
+.separator {
+  margin: 0 10px;
+  opacity: 0.3;
+}
+
+.uni-text {
+  color: var(--text-soft);
+  font-size: 0.95em;
+  margin-top: 5px;
+}
+
+/* ===== GRID ESTRUCTURA ===== */
+.grid-container {
+  max-width: 1050px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 25px;
+  padding: 20px;
+}
+
+/* ===== TARJETAS PRINCIPALES ===== */
+.info-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 26px;
+  padding: 35px;
+  margin-bottom: 25px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.03);
+  transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+  animation: fadeUp 0.9s ease forwards;
+}
+
+.info-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 55px rgba(0,0,0,0.08);
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  color: var(--text-dark);
+}
+
+.card-title h3 {
+  margin: 0;
+  font-size: 1.18em;
+  font-weight: 800;
+}
+
+.card-title i {
+  color: var(--text-soft);
+  font-size: 1.2em;
+}
+
+/* ===== CONTACTO MÁS PEQUEÑO (ya no se usa arriba, pero lo dejamos por si lo ocupas) ===== */
+.small-card {
+  padding: 25px;
+}
+
+/* ===== HABILIDADES PILLS ===== */
+.skill-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pill {
+  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  padding: 10px 18px;
+  border-radius: 14px;
+  font-size: 0.85em;
+  font-weight: 700;
+  color: var(--text-soft);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: 0.3s;
+}
+
+.pill:hover {
+  transform: translateY(-3px);
+  background: #ffffff;
+  color: var(--text-dark);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+}
+
+/* ===== FORMULARIO ===== */
+.minimal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.minimal-form input,
+.minimal-form textarea {
+  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  padding: 14px;
+  border-radius: 12px;
+  font-family: inherit;
+  transition: 0.3s;
+  font-size: 0.95em;
+}
+
+.minimal-form input:focus,
+.minimal-form textarea:focus {
+  outline: none;
+  background: #fff;
+  border-color: var(--text-soft);
+  box-shadow: 0 0 0 3px rgba(100, 116, 139, 0.15);
+}
+
+.minimal-form button {
+  background: var(--text-dark);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.minimal-form button:hover {
+  background: var(--accent);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+}
+
+/* ===== ACTIVIDADES ===== */
+.activities-section {
+  padding: 90px 20px;
+}
+
+.activities-container {
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+.activities-header {
+  text-align: center;
+  margin-bottom: 50px;
+  animation: fadeUp 1s ease forwards;
+}
+
+.activities-header h2 {
+  font-size: 2.1em;
+  margin-bottom: 10px;
+  letter-spacing: -1px;
+}
+
+.activities-header p {
+  color: var(--text-soft);
+  max-width: 650px;
+  margin: 0 auto;
+  font-size: 1em;
+}
+
+/* ===== GRID AUTOMÁTICO ACTIVIDADES ===== */
+.activities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+/* ===== TARJETAS DE ACTIVIDAD ===== */
+.activity-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 28px;
+  padding: 32px;
+  transition: 0.35s;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 240px;
+  animation: fadeUp 1s ease forwards;
+}
+
+.activity-card::before {
+  content: "";
+  position: absolute;
+  top: -70px;
+  right: -70px;
+  width: 160px;
+  height: 160px;
+  background: rgba(100, 116, 139, 0.08);
+  border-radius: 50%;
+}
+
+.activity-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.09);
+}
+
+.activity-icon {
+  width: 58px;
+  height: 58px;
+  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
   justify-content: center;
+  font-size: 1.4em;
+  margin-bottom: 18px;
+  color: var(--accent);
+}
+
+.activity-card h3 {
+  margin: 0;
+  font-size: 1.25em;
+  font-weight: 900;
+}
+
+.activity-card p {
+  color: var(--text-soft);
+  margin-top: 10px;
+  font-size: 0.95em;
+  line-height: 1.6;
+}
+
+/* ===== BOTÓN ACTIVIDAD ===== */
+.activity-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  text-decoration: none;
+  font-weight: 800;
+  color: var(--text-dark);
+  padding: 12px 18px;
+  border-radius: 14px;
+  border: 1px solid var(--border-color);
+  background: #f8fafc;
+  transition: 0.25s ease;
+  width: fit-content;
+}
+
+.activity-btn:hover {
+  background: var(--text-dark);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* ===================================================== */
+/* ===== PARCIALES (CARRUSEL / TARJETAS CLICKEABLES) ===== */
+/* ===================================================== */
+
+.parcial-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  margin: 40px auto 20px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+/* Tarjetas Parcial (ahora funcionan como <a>) */
+.parcial-card {
+  width: 280px;
+  min-height: 220px;
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: 26px;
+  padding: 28px;
+  cursor: pointer;
+  transition: 0.35s;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.03);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--text-dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.parcial-card::before {
+  content: "";
+  position: absolute;
+  top: -70px;
+  right: -70px;
+  width: 170px;
+  height: 170px;
+  background: rgba(100, 116, 139, 0.09);
+  border-radius: 50%;
+}
+
+.parcial-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 22px 55px rgba(0,0,0,0.08);
+}
+
+.parcial-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 18px;
+  background: #f8fafc;
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4em;
+  color: var(--accent);
+  margin-bottom: 18px;
+}
+
+.parcial-card h3 {
+  margin: 0;
+  font-size: 1.3em;
+  font-weight: 900;
+}
+
+.parcial-card p {
+  margin-top: 8px;
+  color: var(--text-soft);
+  font-weight: 600;
+  font-size: 0.95em;
+}
+
+/* Botoncito dentro del parcial */
+.parcial-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  text-decoration: none;
+  font-weight: 800;
+  color: var(--text-dark);
+  padding: 12px 18px;
+  border-radius: 14px;
+  border: 1px solid var(--border-color);
+  background: #f8fafc;
+  transition: 0.25s ease;
+  width: fit-content;
+}
+
+.parcial-card:hover .parcial-btn {
+  background: var(--text-dark);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* ===== BOTÓN VOLVER ===== */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 25px;
+  padding: 12px 18px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.75);
+  border: 1px solid var(--border-color);
+  text-decoration: none;
+  font-weight: 800;
+  color: var(--text-dark);
+  transition: 0.25s;
+}
+
+.back-btn:hover {
+  background: var(--text-dark);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.10);
+}
+
+/* ================================= */
+/* ===== CONTACTO ABAJO (NUEVO) ===== */
+/* ================================= */
+
+.contact-section {
+  padding: 90px 20px;
 }
 
 .contact-container {
-  width: 100%;
-  max-width: 900px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 18px;
-  padding: 40px;
-  box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
-  backdrop-filter: blur(10px);
+  max-width: 750px;
+  margin: 0 auto;
 }
 
-.contact-header {
+.contact-card {
+  padding: 45px;
+}
+
+/* ===== FOOTER ===== */
+footer {
   text-align: center;
-  margin-bottom: 30px;
+  padding: 65px 20px;
+  color: var(--text-soft);
+  font-size: 0.85em;
+  border-top: 1px solid var(--border-color);
+  margin-top: 60px;
 }
 
-.contact-header h2 {
-  font-size: 28px;
-  margin-bottom: 10px;
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  .navbar {
+    padding: 14px 0;
+  }
+
+  .links a {
+    margin-left: 12px;
+    font-size: 0.85em;
+  }
 }
 
-.contact-header p {
-  opacity: 0.8;
-  font-size: 16px;
+@media (max-width: 700px) {
+  .parcial-carousel {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .parcial-card {
+    width: 95%;
+  }
 }
+
+@media (max-width: 600px) {
+  .parcial-card {
+    padding: 22px;
+  }
+
+  .parcial-card h3 {
+    font-size: 1.15em;
+  }
+
+  .parcial-card p {
+    font-size: 0.9em;
+  }
+
+  .contact-card {
+    padding: 30px;
+  }
+}
+
