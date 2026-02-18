@@ -42,6 +42,14 @@
       </p>
 
     <hr style="border:none; border-top:1px solid #e2e8f0; margin:25px 0;">
+    <h3>Introducción</h3>
+      <p>
+        La seguridad perimetral en sistemas operativos basados en Linux constituye un pilar fundamental para la protección de la integridad y disponibilidad de la información. 
+        El presente documento detalla la interpretación y traducción de políticas de filtrado mediante el uso de iptables, una herramienta de administración de reglas de firewall 
+        en el espacio de usuario. A través de este ejercicio, se analizan los componentes estructurales de una regla de filtrado, la jerarquía de las tablas (FILTER, NAT, MANGLE, RAW y SECURITY) 
+        y el flujo de los paquetes de red a través de las distintas cadenas. El objetivo principal es consolidar los conocimientos prácticos para la gestión del tráfico TCP/IP, 
+        permitiendo o denegando conexiones en puertos críticos como el 22 (SSH), 80 (HTTP) y 443 (HTTPS) bajo condiciones específicas de estado y origen
+      </p>
 
       <h3>1. Completa los espacios conforme se explica el flujo del paquete</h3>
       <p>
@@ -144,6 +152,14 @@
       <p>
         En esta sección se incluyen recursos visuales y audiovisuales relacionados con el funcionamiento de iptables,
         el flujo de paquetes y las tablas/cadenas del firewall en Linux.
+      </p>
+
+      <h3>Conclusión</h3>
+      <p>En conclusión, el dominio de la sintaxis y la lógica de iptables permite implementar políticas de seguridad granulares y adaptadas a las 
+        necesidades de una infraestructura de red específica. A lo largo de la actividad, se demostró la importancia de distinguir entre los estados de conexión 
+        (NEW, ESTABLISHED, RELATED) para optimizar el filtrado de tráfico entrante y saliente. Asimismo, la integración de módulos adicionales como multiport y state, 
+        junto con el registro de eventos mediante LOG, fortalece la capacidad de auditoría y respuesta ante posibles intrusiones. Esta práctica reafirma que una 
+        configuración correcta de las tablas y cadenas es esencial para reducir la superficie de ataque y garantizar un entorno de red controlado y seguro.
       </p>
       
       <!-- IMÁGENES -->
