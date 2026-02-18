@@ -204,7 +204,7 @@ h1 {
   font-size: 1.2em;
 }
 
-/* ===== CONTACTO MÁS PEQUEÑO (ya no se usa arriba, pero lo dejamos por si lo ocupas) ===== */
+/* ===== CONTACTO MÁS PEQUEÑO ===== */
 .small-card {
   padding: 25px;
 }
@@ -529,23 +529,6 @@ h1 {
   box-shadow: 0 10px 25px rgba(0,0,0,0.10);
 }
 
-/* ================================= */
-/* ===== CONTACTO ABAJO (NUEVO) ===== */
-/* ================================= */
-
-.contact-section {
-  padding: 90px 20px;
-}
-
-.contact-container {
-  max-width: 750px;
-  margin: 0 auto;
-}
-
-.contact-card {
-  padding: 45px;
-}
-
 /* ===== FOOTER ===== */
 footer {
   text-align: center;
@@ -603,9 +586,37 @@ footer {
   .parcial-card p {
     font-size: 0.9em;
   }
-
-  .contact-card {
-    padding: 30px;
-  }
 }
+
+.contact-section {
+  padding: 80px 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.contact-container {
+  width: 100%;
+  max-width: 900px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 18px;
+  padding: 40px;
+  box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
+  backdrop-filter: blur(10px);
+}
+
+.contact-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.contact-header h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.contact-header p {
+  opacity: 0.8;
+  font-size: 16px;
+}
+
 
