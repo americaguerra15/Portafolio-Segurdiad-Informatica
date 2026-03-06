@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Lab 2 - SQL Injection Login Bypass</title>
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-content">
+    <div class="logo">AG<span>.</span></div>
+
+    <div class="links">
+      <a href="../index.html">Inicio</a>
+      <a href="../roadmap/sql-injection.html">Volver a Labs</a>
+    </div>
+  </div>
+</nav>
+
+
+<section class="activities-section">
+
+<div class="activities-container">
+
+<div class="activities-header">
+<h2><i class="fas fa-bug"></i> Lab 2</h2>
+
+<p>
+SQL Injection vulnerability allowing login bypass
+</p>
+</div>
+
+
+<!-- INFORMACIÓN -->
+<div class="info-card">
+
+<h3><i class="fas fa-layer-group"></i> Información del laboratorio</h3>
+
+<p><strong>Nivel:</strong> Apprentice</p>
+
+<p><strong>Tipo de SQLi:</strong> Error-based / Classic SQL Injection</p>
+
+</div>
+
+
+<!-- OBJETIVO -->
+<div class="info-card">
+
+<h3><i class="fas fa-bullseye"></i> Objetivo</h3>
+
+<p>
+Explotar una vulnerabilidad SQL Injection en el formulario de login para
+autenticarse como el usuario <strong>administrator</strong> sin conocer su contraseña real,
+modificando la lógica de la consulta SQL de autenticación y logrando acceso
+no autorizado a la aplicación.
+</p>
+
+</div>
+
+
+<!-- VULNERABILIDAD -->
+<div class="info-card">
+
+<h3><i class="fas fa-exclamation-triangle"></i> Vulnerabilidad</h3>
+
+<p>
+El formulario de login construye una consulta SQL dinámica concatenando
+directamente los valores de los campos <strong>username</strong> y
+<strong>password</strong> sin sanitización ni uso de sentencias preparadas.
+</p>
+
+<p>La consulta típica es:</p>
+
+<pre>
+SELECT * FROM users 
+WHERE username = 'input_username'
+AND password = 'input_password'
+</pre>
+
+<p>
+Al inyectar un cierre de comilla simple (<strong>'</strong>) seguido de
+un comentario SQL (<strong>--</strong>) se altera la lógica de la consulta.
+</p>
+
+<p>
+El comentario SQL elimina la verificación de contraseña, permitiendo
+autenticarse como administrador si el usuario existe en la base de datos.
+</p>
+
+</div>
+
+
+<!-- PROCEDIMIENTO -->
+<div class="info-card">
+
+<h3><i class="fas fa-terminal"></i> Procedimiento</h3>
+
+<p><strong>Paso 1:</strong> Ir a la sección <strong>My Account</strong>.</p>
+
+<p><strong>Paso 2:</strong> En el campo Username ingresar:</p>
+
+<pre>
+administrator'--
+</pre>
+
+<p>
+El cierre de comilla simple termina la cadena del username y
+<strong>--</strong> comenta el resto de la consulta SQL.
+</p>
+
+<p><strong>Paso 3:</strong> En el campo Password ingresar cualquier valor:</p>
+
+<pre>
+123
+</pre>
+
+<p><strong>Paso 4:</strong> Enviar el formulario presionando <strong>Log in</strong>.</p>
+
+<p>La consulta SQL resultante se convierte en:</p>
+
+<pre>
+SELECT * FROM users 
+WHERE username = 'administrator'--' 
+AND password = '123'
+</pre>
+
+<p>
+El comentario SQL <strong>--</strong> elimina la verificación de contraseña,
+por lo que la consulta se reduce a:
+</p>
+
+<pre>
+SELECT * FROM users WHERE username = 'administrator'
+</pre>
+
+<p>
+Si el usuario existe, el sistema concede acceso como administrador,
+logrando un bypass de autenticación.
+</p>
+
+</div>
+
+
+<!-- EXPLICACIÓN DEL PAYLOAD -->
+<div class="info-card">
+
+<h3><i class="fas fa-code"></i> Explicación del payload</h3>
+
+<p>El payload utilizado fue:</p>
+
+<pre>
+Username: administrator'--
+Password: cualquier valor
+</pre>
+
+<ul>
+
+<li>El carácter <strong>'</strong> cierra la cadena literal del campo username.</li>
+
+<li>El operador <strong>--</strong> inicia un comentario SQL.</li>
+
+<li>Todo el código posterior de la consulta es ignorado.</li>
+
+<li>La consulta solo verifica si existe el usuario administrator.</li>
+
+</ul>
+
+<p>
+Esto permite autenticarse sin conocer la contraseña real,
+aprovechando la concatenación insegura de entradas en la consulta SQL.
+</p>
+
+</div>
+
+
+<!-- MITIGACIÓN -->
+<div class="info-card">
+
+<h3><i class="fas fa-shield-alt"></i> Mitigación recomendada</h3>
+
+<ul>
+
+<li>Implementar <strong>consultas parametrizadas</strong> o prepared statements.</li>
+
+<li>Validar estrictamente las entradas de usuario (regex, longitud máxima).</li>
+
+<li>Evitar caracteres peligrosos como <strong>'</strong> o <strong>--</strong>.</li>
+
+<li>Almacenar contraseñas usando hashing seguro como:
+bcrypt, Argon2 o PBKDF2.</li>
+
+<li>Aplicar el principio de <strong>mínimo privilegio</strong> en la base de datos.</li>
+
+<li>Implementar un <strong>Web Application Firewall (WAF)</strong> para detectar patrones de SQL Injection.</li>
+
+</ul>
+
+</div>
+
+
+<a href="../roadmap/sql-injection.html" class="back-btn">
+<i class="fas fa-arrow-left"></i> Volver a laboratorios
+</a>
+
+
+</div>
+
+</section>
+
+</body>
+</html>
