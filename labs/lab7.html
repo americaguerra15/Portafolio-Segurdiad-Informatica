@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Lab 7 - Determining Number of Columns</title>
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="nav-content">
+<div class="logo">AG<span>.</span></div>
+
+<div class="links">
+<a href="../index.html">Inicio</a>
+<a href="../roadmap/sql-injection.html">Volver a Labs</a>
+</div>
+</div>
+</nav>
+
+<section class="activities-section">
+
+<div class="activities-container">
+
+<div class="activities-header">
+<h2><i class="fas fa-database"></i> Lab 7</h2>
+<p>SQL Injection UNION attack, determining the number of columns returned by the query</p>
+</div>
+
+
+<div class="info-card">
+<h3><i class="fas fa-layer-group"></i> Información del laboratorio</h3>
+<p><strong>Nivel:</strong> Apprentice</p>
+<p><strong>Tipo de SQLi:</strong> UNION-based SQL Injection</p>
+</div>
+
+
+<div class="info-card">
+<h3><i class="fas fa-bullseye"></i> Objetivo</h3>
+
+<p>
+Determinar cuántas columnas devuelve la consulta SQL original
+utilizando un ataque <strong>UNION SELECT</strong>.
+</p>
+
+</div>
+
+
+<div class="info-card">
+<h3><i class="fas fa-exclamation-triangle"></i> Vulnerabilidad</h3>
+
+<p>
+La aplicación concatena directamente el parámetro
+<strong>category</strong> dentro de la consulta SQL
+sin validación ni sanitización.
+</p>
+
+<pre>
+SELECT * FROM products WHERE category = 'Accessories'
+</pre>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-terminal"></i> Procedimiento</h3>
+
+<p><strong>Paso 1 – Interceptar la petición</strong></p>
+
+<pre>
+GET /filter?category=Accessories
+</pre>
+
+<p>Se intercepta la petición usando Burp Suite.</p>
+
+
+<p><strong>Paso 2 – Enviar al Repeater</strong></p>
+
+<p>
+La solicitud se envía a Repeater para modificar el parámetro
+<strong>category</strong>.
+</p>
+
+
+<p><strong>Paso 3 – Probar UNION SELECT</strong></p>
+
+<pre>
+' UNION SELECT NULL--
+</pre>
+
+<p>
+El servidor responde con error 500, indicando
+que el número de columnas no coincide.
+</p>
+
+
+<p><strong>Paso 4 – Probar con más columnas</strong></p>
+
+<pre>
+' UNION SELECT NULL,NULL,NULL--
+</pre>
+
+<p>
+El servidor responde con <strong>HTTP 200 OK</strong>,
+confirmando que la consulta original tiene <strong>3 columnas</strong>.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-shield-alt"></i> Mitigación recomendada</h3>
+
+<ul>
+
+<li>Uso de consultas parametrizadas.</li>
+
+<li>Validación de parámetros mediante listas blancas.</li>
+
+<li>Ocultar mensajes de error SQL.</li>
+
+<li>Realizar auditorías de seguridad periódicas.</li>
+
+</ul>
+
+</div>
+
+
+<a href="../roadmap/sql-injection.html" class="back-btn">
+<i class="fas fa-arrow-left"></i> Volver a laboratorios
+</a>
+
+</div>
+
+</section>
+
+</body>
+</html>
