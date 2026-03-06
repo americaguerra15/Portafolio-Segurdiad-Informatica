@@ -731,3 +731,99 @@ footer {
 .roadmap-card:hover .roadmap-btn{
   background:var(--accent);
 }
+
+/* ======================= */
+/* SQL LABS LIST */
+/* ======================= */
+
+.labs-list{
+margin-top:40px;
+display:flex;
+flex-direction:column;
+gap:20px;
+}
+
+.lab-item{
+background:white;
+border:1px solid var(--border-color);
+border-radius:20px;
+padding:25px;
+box-shadow:0 6px 18px rgba(0,0,0,0.04);
+transition:0.3s;
+}
+
+.lab-item:hover{
+transform:translateY(-3px);
+box-shadow:0 12px 30px rgba(0,0,0,0.08);
+}
+
+.lab-header{
+display:flex;
+flex-direction:column;
+gap:10px;
+}
+
+.lab-number{
+background:#2563eb;
+color:white;
+padding:6px 14px;
+border-radius:20px;
+font-weight:800;
+font-size:0.85em;
+width:fit-content;
+}
+
+.lab-title{
+margin:0;
+font-size:1.2em;
+font-weight:900;
+}
+
+.lab-meta{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.lab-tag{
+background:#f1f5f9;
+border:1px solid var(--border-color);
+padding:6px 12px;
+border-radius:10px;
+font-size:0.85em;
+font-weight:700;
+color:var(--text-soft);
+}
+
+.lab-enter{
+margin-top:10px;
+display:inline-flex;
+align-items:center;
+gap:8px;
+text-decoration:none;
+font-weight:800;
+color:var(--text-dark);
+padding:10px 16px;
+border-radius:12px;
+background:#f8fafc;
+border:1px solid var(--border-color);
+transition:0.2s;
+width:fit-content;
+}
+
+.lab-enter:hover{
+background:var(--text-dark);
+color:white;
+}
+
+.lab-details{
+margin-top:15px;
+border-top:1px solid var(--border-color);
+padding-top:15px;
+}
+
+.lab-details summary{
+cursor:pointer;
+font-weight:800;
+color:#2563eb;
+}
