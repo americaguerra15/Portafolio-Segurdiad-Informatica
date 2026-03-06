@@ -1,1 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
 
+<head>
+<meta charset="UTF-8">
+<title>Lab 1 - SQL Injection</title>
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-content">
+    <div class="logo">AG<span>.</span></div>
+
+    <div class="links">
+      <a href="../index.html">Inicio</a>
+      <a href="../roadmap/sql-injection.html">Volver a Labs</a>
+    </div>
+  </div>
+</nav>
+
+
+<section class="activities-section">
+
+<div class="activities-container">
+
+<div class="activities-header">
+<h2><i class="fas fa-bug"></i> Lab 1</h2>
+
+<p>
+SQL injection vulnerability in WHERE clause allowing retrieval of hidden data
+</p>
+</div>
+
+
+<!-- INFORMACIÓN DEL LAB -->
+<div class="info-card">
+
+<h3><i class="fas fa-layer-group"></i> Información del laboratorio</h3>
+
+<p><strong>Nivel:</strong> Apprentice</p>
+
+<p><strong>Tipo de SQLi:</strong></p>
+
+<ul>
+<li>SQL Injection basada en manipulación lógica (Boolean-Based SQL Injection)</li>
+<li>In-band SQL Injection</li>
+<li>Boolean-based SQLi</li>
+<li>SQLi en parámetro GET</li>
+<li>SQLi en cláusula WHERE</li>
+</ul>
+
+<p>
+La vulnerabilidad consiste en modificar la lógica de la consulta SQL agregando una condición
+siempre verdadera (<strong>OR 1=1</strong>), lo que provoca que la cláusula WHERE devuelva todos
+los registros de la tabla.
+</p>
+
+</div>
+
+
+<!-- OBJETIVO -->
+<div class="info-card">
+
+<h3><i class="fas fa-bullseye"></i> Objetivo</h3>
+
+<p>
+El objetivo fue modificar la cláusula WHERE para que la condición evaluara como verdadera
+en todos los casos, permitiendo recuperar datos que normalmente no son visibles para el usuario.
+</p>
+
+</div>
+
+
+<!-- PROCEDIMIENTO -->
+<div class="info-card">
+
+<h3><i class="fas fa-terminal"></i> Procedimiento</h3>
+
+<p>
+Primero ingresamos al laboratorio desde <strong>Web Security Academy</strong> y copiamos la URL generada.
+El objetivo era explotar una vulnerabilidad de SQL Injection en la cláusula WHERE para recuperar datos ocultos.
+</p>
+
+<p>
+Al cargar la página observamos una tienda con filtros por categoría como:
+</p>
+
+<ul>
+<li>Clothing</li>
+<li>Corporate gifts</li>
+<li>Food & Drink</li>
+<li>Lifestyle</li>
+</ul>
+
+<p>
+Posteriormente abrimos <strong>Burp Suite Community Edition</strong> y nos dirigimos a:
+</p>
+
+<ul>
+<li>Proxy → Intercept</li>
+<li>Activamos <strong>Intercept is on</strong></li>
+<li>Seleccionamos <strong>Open browser</strong></li>
+</ul>
+
+<p>
+Esto abre el navegador interno de Burp, permitiendo interceptar el tráfico HTTP.
+</p>
+
+<p>
+En el navegador interno pegamos la URL del laboratorio y Burp interceptó automáticamente la petición.
+Luego seleccionamos <strong>Forward all</strong> para permitir que la solicitud llegara al servidor.
+</p>
+
+<p>
+Después seleccionamos la categoría:
+<strong>Corporate gifts</strong>
+</p>
+
+<p>
+Burp interceptó la siguiente solicitud:
+</p>
+
+<pre>
+GET /filter?category=Corporate+gifts HTTP/2
+</pre>
+
+<p>
+Este parámetro es utilizado para filtrar productos y probablemente se inserta en una consulta SQL como:
+</p>
+
+<pre>
+SELECT * FROM products WHERE category = 'Gifts' AND released = 1
+</pre>
+
+<p>
+Si el input no se valida correctamente, es posible realizar SQL Injection.
+</p>
+
+<p>
+Para modificar manualmente la solicitud:
+</p>
+
+<ul>
+<li>Clic derecho en la petición interceptada</li>
+<li>Seleccionar <strong>Send to Repeater</strong></li>
+<li>Abrir la pestaña <strong>Repeater</strong></li>
+</ul>
+
+<p>
+En Repeater modificamos la URL agregando el payload:
+</p>
+
+<pre>
+'+OR+1=1--
+</pre>
+
+<p>
+Quedando la petición final así:
+</p>
+
+<pre>
+GET /filter?category=Corporate+gifts'+OR+1=1-- HTTP/2
+</pre>
+
+<p>
+Después de enviar la solicitud modificada:
+</p>
+
+<ul>
+<li>La respuesta HTTP fue <strong>200 OK</strong></li>
+<li>Se mostraron productos ocultos</li>
+<li>El laboratorio marcó el estado como <strong>Solved</strong></li>
+</ul>
+
+<p>
+Esto confirma que la aplicación era vulnerable y que la inyección fue exitosa.
+</p>
+
+</div>
+
+
+<!-- MITIGACIÓN -->
+<div class="info-card">
+
+<h3><i class="fas fa-shield-alt"></i> Mitigación recomendada</h3>
+
+<p>
+Para prevenir este tipo de vulnerabilidades es importante evitar que los datos
+ingresados por el usuario se interpreten como parte del código SQL.
+</p>
+
+<p>
+Una de las medidas principales es utilizar <strong>consultas parametrizadas
+(prepared statements)</strong>, ya que separan el código SQL de los datos ingresados.
+De esta forma, aunque un atacante introduzca código malicioso, este será tratado
+únicamente como datos.
+</p>
+
+<p>
+También es recomendable implementar:
+</p>
+
+<ul>
+<li>Validación y sanitización de entradas</li>
+<li>Restricción de valores permitidos en parámetros</li>
+<li>Aplicar el principio de <strong>mínimos privilegios</strong> en la base de datos</li>
+</ul>
+
+</div>
+
+
+<a href="../roadmap/sql-injection.html" class="back-btn">
+<i class="fas fa-arrow-left"></i> Volver a laboratorios
+</a>
+
+</div>
+
+</section>
+
+</body>
+</html>
