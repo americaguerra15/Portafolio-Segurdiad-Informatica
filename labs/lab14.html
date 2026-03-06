@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Lab 14 - Time-based SQL Injection</title>
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="nav-content">
+<div class="logo">AG<span>.</span></div>
+
+<div class="links">
+<a href="../index.html">Inicio</a>
+<a href="../roadmap/sql-injection.html">Volver a Labs</a>
+</div>
+</div>
+</nav>
+
+<section class="activities-section">
+<div class="activities-container">
+
+<div class="activities-header">
+<h2><i class="fas fa-database"></i> Lab 14</h2>
+<p>Blind SQL Injection with Time Delay</p>
+</div>
+
+<div class="info-card">
+<h3>Información</h3>
+<p><strong>Nivel:</strong> Practitioner</p>
+<p><strong>Tipo:</strong> Time-based Blind SQL Injection</p>
+</div>
+
+<div class="info-card">
+<h3>Objetivo</h3>
+
+<p>
+Demostrar que la consulta SQL se ejecuta de forma síncrona
+forzando un retraso de 10 segundos en la respuesta del servidor.
+</p>
+
+</div>
+
+<div class="info-card">
+<h3>Procedimiento</h3>
+
+<p>Se interceptó la cookie TrackingId.</p>
+
+<pre>
+TrackingId='||pg_sleep(10)--
+</pre>
+
+<p>
+El servidor tarda 10 segundos en responder,
+confirmando la ejecución de la consulta SQL.
+</p>
+
+</div>
+
+<div class="info-card">
+<h3>Mitigación</h3>
+
+<ul>
+<li>Consultas parametrizadas.</li>
+<li>Validación de cookies.</li>
+<li>Monitoreo de tiempos de respuesta anómalos.</li>
+</ul>
+
+</div>
+
+<a href="../roadmap/sql-injection.html" class="back-btn">
+<i class="fas fa-arrow-left"></i> Volver a laboratorios
+</a>
+
+</div>
+</section>
+
+</body>
+</html>
