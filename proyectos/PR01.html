@@ -1,110 +1,115 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
 <meta charset="UTF-8">
+<title>PR01 | Walkthrough en acción</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>PR01 - Walkthrough</title>
-
-<!-- TU CSS DEL PORTAFOLIO -->
-<link rel="stylesheet" href="../css/style.css">
-
-<!-- ICONOS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="../../style.css">
 
 </head>
 
 <body>
 
-<!-- NAVBAR (igual que en tu portafolio) -->
-<header class="navbar">
+<!-- NAVBAR -->
+<nav class="navbar">
+<div class="nav-content">
 
-  <div class="nav-container">
+<div class="logo">AG<span>.</span></div>
 
-    <div class="logo">AG.</div>
+<div class="links">
+<a href="../../index.html">Inicio</a>
+<a href="../proyectos.html">Proyectos</a>
+</div>
 
-    <nav>
-      <a href="../index.html">Inicio</a>
-      <a href="../index.html#proyectos">Proyectos</a>
-    </nav>
-
-  </div>
-
-</header>
+</div>
+</nav>
 
 
+<div style="max-width: 1000px; margin: auto; padding: 50px 20px;">
 
-<!-- SECCIÓN DEL PROYECTO -->
-<section class="activities-section">
-
-  <div class="activities-container">
-
-    <div class="activities-header">
-
-      <h2>
-        <i class="fas fa-shield-alt"></i>
-        PR01 - De la teoría a la práctica: Walkthrough en acción
-      </h2>
-
-      <p>
-        Proyecto enfocado en la aplicación práctica de técnicas de ciberseguridad
-        mediante el análisis y explotación de una máquina vulnerable en un entorno controlado.
-      </p>
-
-    </div>
+<div class="info-card" style="margin-top: 25px;">
 
 
-
-    <div class="activity-card">
-
-      <h3>Objetivo</h3>
-
-      <p>
-        Demostrar la capacidad de aplicar conocimientos teóricos de seguridad informática
-        en un entorno práctico mediante la realización de un walkthrough detallado.
-      </p>
+<div class="card-title">
+<i class="fas fa-shield-halved"></i>
+<h3>PR01: De la teoría a la práctica - Walkthrough en acción</h3>
+</div>
 
 
-      <h3>Descripción del Proyecto</h3>
+<p style="color:#64748b; margin-top:-10px;">
+<strong>Materia:</strong> Seguridad Informática |
+<strong>Semestre:</strong> 8º |
+<strong>Fecha:</strong> 2026 |
+<strong>Nombre:</strong> América Fabiola Guerra Ramírez - 179884 |
+<strong>Profesor:</strong> Servando López Contreras
+</p>
 
-      <p>
-        El proyecto consiste en preparar un entorno de laboratorio utilizando
-        máquinas virtuales vulnerables. Se realizan fases de reconocimiento,
-        escaneo de puertos, enumeración de servicios y análisis de vulnerabilidades.
-      </p>
-
-
-      <h3>Video del Walkthrough</h3>
-
-      <iframe
-        width="100%"
-        height="420"
-        src="https://www.youtube.com/embed/FYdSZBi3f6U"
-        frameborder="0"
-        allowfullscreen>
-      </iframe>
-
-      <p style="margin-top:10px;">
-        Video demostrativo del proceso completo de explotación realizado durante el proyecto.
-      </p>
-
-    </div>
-
-  </div>
-
-</section>
+<hr style="border:none; border-top:1px solid #e2e8f0; margin:25px 0;">
 
 
+<h3>Objetivo</h3>
 
-<!-- FOOTER -->
-<footer class="footer">
+<p>
+Demostrar la capacidad de aplicar conocimientos teóricos de seguridad informática
+en un entorno práctico mediante la realización de un walkthrough detallado.
+Durante el proceso se analizan vulnerabilidades de una máquina virtual vulnerable,
+se identifican posibles vectores de ataque y se aplican técnicas de explotación
+hasta obtener acceso al sistema objetivo.
+</p>
 
-  <p>
-    © 2026 América Guerra | Portafolio de Ciberseguridad
-  </p>
 
-</footer>
+<h3>Descripción del Proyecto</h3>
+
+<p>
+El proyecto consiste en preparar un entorno de laboratorio utilizando máquinas virtuales
+vulnerables. Posteriormente se realiza un proceso de reconocimiento del sistema,
+enumeración de servicios, análisis de vulnerabilidades y explotación de las debilidades
+identificadas. Finalmente se documenta todo el proceso realizado para demostrar el
+impacto de las vulnerabilidades encontradas y el control obtenido sobre el sistema.
+</p>
+
+
+<h3>Video del Walkthrough</h3>
+
+<div style="margin-top:20px; border-radius:18px; overflow:hidden; box-shadow:0px 8px 20px rgba(0,0,0,0.20);">
+
+<div style="position:relative; width:100%; padding-top:56.25%;">
+
+<iframe
+src="https://www.youtube.com/embed/FYdSZBi3f6U"
+title="Walkthrough PR01"
+frameborder="0"
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen
+style="position:absolute; top:0; left:0; width:100%; height:100%;">
+</iframe>
+
+</div>
+
+</div>
+
+
+<p style="margin-top:15px;">
+Video demostrativo del proceso completo de explotación realizado durante el proyecto.
+</p>
+
+
+<!-- BOTÓN PDF (OPCIONAL) -->
+<div style="margin-top: 35px; text-align: center;">
+
+<a href="../../pdf/PR01-walkthrough.pdf" class="activity-btn" target="_blank">
+<i class="fas fa-file-pdf"></i> Exportar PDF
+</a>
+
+</div>
+
+
+</div>
+
+</div>
 
 
 </body>
