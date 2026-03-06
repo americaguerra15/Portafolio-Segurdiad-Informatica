@@ -626,3 +626,108 @@ footer {
 #roadmap .activities-header .parcial-btn{
   margin-top:20px;
 }
+/* ============================ */
+/* ROADMAP HALL OF FAME */
+/* ============================ */
+
+.roadmap-wrapper{
+  display:flex;
+  justify-content:center;
+  margin-top:40px;
+}
+
+.roadmap-card{
+  width:420px;
+  background:white;
+  border:1px solid var(--border-color);
+  border-radius:30px;
+  padding:40px;
+  text-decoration:none;
+  color:var(--text-dark);
+  box-shadow:0 10px 30px rgba(0,0,0,0.05);
+  transition:0.35s;
+  position:relative;
+  overflow:hidden;
+}
+
+.roadmap-card::before{
+  content:"";
+  position:absolute;
+  top:-80px;
+  right:-80px;
+  width:200px;
+  height:200px;
+  background:rgba(100,116,139,0.08);
+  border-radius:50%;
+}
+
+.roadmap-card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 25px 60px rgba(0,0,0,0.12);
+}
+
+.roadmap-icon{
+  width:65px;
+  height:65px;
+  border-radius:18px;
+  background:#f8fafc;
+  border:1px solid var(--border-color);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.6em;
+  margin-bottom:20px;
+  color:var(--accent);
+}
+
+.roadmap-card h3{
+  font-size:1.6em;
+  margin:0;
+}
+
+.roadmap-desc{
+  margin-top:12px;
+  color:var(--text-soft);
+  line-height:1.6;
+}
+
+.roadmap-progress{
+  margin-top:25px;
+}
+
+.roadmap-progress span{
+  font-size:0.9em;
+  font-weight:700;
+}
+
+.progress-bar{
+  width:100%;
+  height:8px;
+  background:#e2e8f0;
+  border-radius:10px;
+  margin-top:8px;
+  overflow:hidden;
+}
+
+.progress-fill{
+  width:100%;
+  height:100%;
+  background:var(--text-dark);
+}
+
+.roadmap-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  margin-top:25px;
+  padding:14px 22px;
+  border-radius:14px;
+  background:var(--text-dark);
+  color:white;
+  font-weight:800;
+  transition:0.3s;
+}
+
+.roadmap-card:hover .roadmap-btn{
+  background:var(--accent);
+}
