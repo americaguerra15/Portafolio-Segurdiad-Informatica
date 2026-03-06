@@ -621,61 +621,8 @@ footer {
 
 /* ROADMAP */
 
-.roadmap-section{
-  padding:80px 20px;
-  background:#0f172a;
-  color:white;
+/* ===== ROAD TO HALL OF FAME ===== */
+
+#roadmap .activities-header .parcial-btn{
+  margin-top:20px;
 }
-
-.roadmap-container{
-  max-width:1100px;
-  margin:auto;
-}
-
-.roadmap-header{
-  text-align:center;
-  margin-bottom:40px;
-}
-
-.download-btn{
-  display:inline-block;
-  margin-top:15px;
-  padding:10px 18px;
-  background:#2563eb;
-  color:white;
-  border-radius:8px;
-  text-decoration:none;
-}
-
-.subtitulo{
-  text-align:center;
-  margin:40px 0 20px;
-}
-
-.labs-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
-}
-
-.lab-card{
-  background:#1e293b;
-  padding:20px;
-  border-radius:10px;
-  text-align:center;
-  transition:0.3s;
-}
-
-.lab-card:hover{
-  transform:translateY(-5px);
-  background:#334155;
-}
-
-.lab-card a{
-  display:inline-block;
-  margin-top:10px;
-  color:#38bdf8;
-  text-decoration:none;
-}
-
-
