@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Lab 18 - SQL Injection Filter Bypass via XML Encoding</title>
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="nav-content">
+<div class="logo">AG<span>.</span></div>
+
+<div class="links">
+<a href="../index.html">Inicio</a>
+<a href="../roadmap/sql-injection.html">Volver a Labs</a>
+</div>
+</div>
+</nav>
+
+
+<section class="activities-section">
+
+<div class="activities-container">
+
+<div class="activities-header">
+<h2><i class="fas fa-database"></i> Lab 18</h2>
+<p>SQL injection with filter bypass via XML encoding</p>
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-layer-group"></i> Información del laboratorio</h3>
+
+<p><strong>Nivel:</strong> Practitioner</p>
+<p><strong>Tipo de SQLi:</strong> UNION-based SQL Injection con bypass de filtros</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-bullseye"></i> Objetivo</h3>
+
+<p>
+Explotar una vulnerabilidad SQL Injection en la función
+de verificación de stock utilizando codificación XML
+para evadir filtros de seguridad.
+</p>
+
+<p>
+El objetivo es recuperar el usuario y contraseña
+del administrador almacenados en la tabla <strong>users</strong>.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-exclamation-triangle"></i> Vulnerabilidad</h3>
+
+<p>
+La aplicación procesa datos enviados en formato XML
+sin validar adecuadamente su contenido.
+</p>
+
+<p>
+Además, existe un filtro que bloquea palabras clave
+como <strong>SELECT</strong> o <strong>UNION</strong>,
+pero este filtro puede ser evadido utilizando
+codificación XML hexadecimal.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-terminal"></i> Procedimiento</h3>
+
+<p><strong>Paso 1 — Interceptar la solicitud</strong></p>
+
+<pre>
+<stockCheck>
+<productId>1</productId>
+<storeId>1</storeId>
+</stockCheck>
+</pre>
+
+
+<p><strong>Paso 2 — Probar inyección básica</strong></p>
+
+<p>
+Se intentó el payload:
+</p>
+
+<pre>
+1 UNION SELECT NULL
+</pre>
+
+<p>
+El servidor respondió con <strong>403 Forbidden</strong>.
+</p>
+
+
+<p><strong>Paso 3 — Evadir filtro con XML encoding</strong></p>
+
+<p>
+Se utilizó la extensión <strong>Hackvertor</strong>
+para convertir el payload en entidades hexadecimales.
+</p>
+
+
+<p><strong>Paso 4 — Extraer credenciales</strong></p>
+
+<p>
+Payload utilizado:
+</p>
+
+<pre>
+1 UNION SELECT username || '~' || password FROM users
+</pre>
+
+
+<p>
+La aplicación devolvió:
+</p>
+
+<pre>
+administrator~PASSWORD
+</pre>
+
+
+<p>
+Con estas credenciales se inició sesión como administrador,
+completando el laboratorio.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-shield-alt"></i> Mitigación recomendada</h3>
+
+<ul>
+
+<li>Uso de consultas parametrizadas.</li>
+
+<li>Validación estricta de entradas XML.</li>
+
+<li>Decodificación previa antes de inspección WAF.</li>
+
+<li>Principio de mínimo privilegio en la base de datos.</li>
+
+</ul>
+
+</div>
+
+
+<a href="../roadmap/sql-injection.html" class="back-btn">
+<i class="fas fa-arrow-left"></i> Volver a laboratorios
+</a>
+
+</div>
+
+</section>
+
+</body>
+</html>
