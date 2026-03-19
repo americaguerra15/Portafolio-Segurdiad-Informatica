@@ -2,172 +2,271 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Phishing Quiz Pro</title>
+<title>Simulador de Phishing</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 body{
 margin:0;
 font-family:'Segoe UI',sans-serif;
-background:linear-gradient(135deg,#ffe4ec,#e0f2fe);
+background:#fdf2f8;
 }
 
+/* PANTALLAS */
 .screen{
 display:none;
 height:100vh;
 justify-content:center;
 align-items:center;
 flex-direction:column;
-text-align:center;
 padding:20px;
+text-align:center;
 }
 
 .active{display:flex;}
 
-input{
-padding:15px;
-width:300px;
-border-radius:30px;
-border:2px solid #f472b6;
-}
-
+/* BOTONES */
 .btn{
-margin-top:20px;
-padding:15px 30px;
+background:#ec4899;
+color:white;
+padding:14px 30px;
 border:none;
 border-radius:30px;
-background:linear-gradient(135deg,#ec4899,#f43f5e);
-color:white;
-font-size:18px;
 cursor:pointer;
+margin-top:15px;
+font-size:16px;
 }
 
-.quiz-card{
+.btn:hover{
+background:#db2777;
+}
+
+/* TARJETA */
+.card{
 background:white;
 padding:25px;
 border-radius:20px;
-width:90%;
 max-width:600px;
-box-shadow:0 15px 30px rgba(0,0,0,0.2);
+width:100%;
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
 }
 
+/* INPUT */
+input{
+width:100%;
+padding:12px;
+border-radius:20px;
+border:1px solid #ccc;
+margin-top:10px;
+}
+
+/* OPCIONES */
 .opt{
-padding:15px;
+border:2px solid #ec4899;
+padding:12px;
 border-radius:30px;
-border:2px solid #f472b6;
 margin:10px;
 cursor:pointer;
 }
 
-.result{
-font-size:50px;
-color:#ec4899;
-font-weight:bold;
+.opt:hover{
+background:#fce7f3;
 }
 
-.chart{
-width:300px;
-margin:20px auto;
-}
+.correct{background:#bbf7d0;}
+.wrong{background:#fecaca;}
+
 </style>
 </head>
 
 <body>
 
-<!-- INICIO -->
-<div id="start" class="screen active">
-<h2>🎭 Elige tu alias</h2>
-<input id="nombre" placeholder="Ej: Explorador">
-<button class="btn" onclick="iniciar()">▶ Comenzar</button>
+<!-- 1. INICIO -->
+<div id="inicio" class="screen active">
+<h2>🛡️ Simulación de Phishing</h2>
+<button class="btn" onclick="irConsentimiento()">Comenzar</button>
 </div>
 
-<!-- QUIZ -->
+<!-- 2. CONSENTIMIENTO -->
+<div id="consent" class="screen">
+<div class="card">
+<h3>⚠️ Consentimiento</h3>
+<p>
+Este quiz es una simulación educativa de phishing.<br>
+No se recopilan datos reales ni credenciales.<br><br>
+Tu desempeño será usado únicamente con fines académicos.
+</p>
+
+<input id="nombre" placeholder="Ingresa tu alias">
+
+<button class="btn" onclick="iniciarQuiz()">Aceptar y continuar</button>
+</div>
+</div>
+
+<!-- 3. QUIZ -->
 <div id="quizScreen" class="screen">
-<div class="quiz-card">
-<h3 id="alias"></h3>
+<div class="card">
+
+<h3 id="progreso"></h3>
 <p id="pregunta"></p>
 
-<div class="opt" onclick="responder('phishing')">🔴 Phishing</div>
-<div class="opt" onclick="responder('legit')">🟢 Legítimo</div>
+<div id="opciones"></div>
 
 <p id="feedback"></p>
 
-<button class="btn" onclick="siguiente()">Siguiente</button>
+<button id="btnNext" class="btn" onclick="siguiente()" disabled>Siguiente</button>
+
 </div>
 </div>
 
-<!-- RESULTADOS -->
-<div id="resultScreen" class="screen">
+<!-- 4. RESULTADOS -->
+<div id="resultadoScreen" class="screen">
+<div class="card">
+
 <h2>🏆 Resultado</h2>
-
-<div class="result" id="score"></div>
-<p id="nivel"></p>
+<h1 id="score"></h1>
 <p id="tiempo"></p>
-
-<canvas id="chartAciertos" class="chart"></canvas>
-<canvas id="chartTiempo" class="chart"></canvas>
+<p id="nivel"></p>
+<p id="posicion"></p>
 
 <h3>🏆 Ranking</h3>
 <div id="ranking"></div>
 
-<button class="btn" onclick="reiniciar()">🔄 Volver a jugar</button>
+<button class="btn" onclick="location.reload()">🔄 Volver a jugar</button>
+
+</div>
 </div>
 
 <script>
 
-// LIMPIAR ranking al cargar (IMPORTANTE)
-localStorage.removeItem("ranking");
-
-// preguntas
+// ================= ESCENARIOS (10 reales) =================
 let preguntas = [
-{t:"Banco falso verify.net",c:"phishing"},
-{t:"https://accounts.google.com",c:"legit"},
-{t:"SMS bit.ly",c:"phishing"},
-{t:"TI pide contraseña",c:"phishing"},
-{t:"Amazon oficial",c:"legit"}
+
+{t:`📧 Banco Santander
+De: seguridad@bancosantander-verify.net
+Asunto: Bloqueo urgente
+
+Detectamos actividad sospechosa. 
+Ingrese aquí para reactivar su cuenta:
+http://bancosantander-verificacion.com`,
+c:"phishing",
+e:"Dominio falso + urgencia. El banco nunca usa enlaces externos."},
+
+{t:`📧 Google
+Accede en: https://accounts.google.com`,
+c:"legit",
+e:"Dominio oficial de Google."},
+
+{t:`📱 SMS
+Tu paquete está retenido. Paga aquí: bit.ly/3abc`,
+c:"phishing",
+e:"Uso de URL acortada para ocultar destino."},
+
+{t:`📧 Netflix
+Tu cuenta será suspendida. Verifica aquí:
+http://netflix-secure-login.xyz`,
+c:"phishing",
+e:"Dominio falso y urgencia."},
+
+{t:`📧 Amazon
+Consulta tu pedido en:
+https://amazon.com`,
+c:"legit",
+e:"Dominio oficial sin presión."},
+
+{t:`📧 TI
+Necesitamos tu contraseña para mantenimiento.`,
+c:"phishing",
+e:"Nunca se solicitan contraseñas."},
+
+{t:`📧 PayPal
+Inicia sesión en:
+paypal-security-check.com`,
+c:"phishing",
+e:"Dominio incorrecto."},
+
+{t:`📧 Microsoft
+Actividad sospechosa detectada
+https://login.microsoft.com`,
+c:"legit",
+e:"Dominio válido."},
+
+{t:`📧 Documento adjunto
+Archivo: factura.exe`,
+c:"phishing",
+e:"Archivo ejecutable peligroso."},
+
+{t:`📧 BBVA
+Accede a tu banca:
+https://www.bbva.mx`,
+c:"legit",
+e:"Dominio correcto y seguro."}
+
 ];
 
+// ================= VARIABLES =================
 let i=0;
 let score=0;
 let nombre="";
-let tiempos=[];
 let inicio;
+let respondido=false;
 
-// iniciar
-function iniciar(){
-nombre=document.getElementById("nombre").value||"Anon";
+// ================= FLUJO =================
+function irConsentimiento(){
+document.getElementById("inicio").classList.remove("active");
+document.getElementById("consent").classList.add("active");
+}
 
-document.getElementById("start").classList.remove("active");
+function iniciarQuiz(){
+nombre=document.getElementById("nombre").value || "Anon";
+
+document.getElementById("consent").classList.remove("active");
 document.getElementById("quizScreen").classList.add("active");
-
-document.getElementById("alias").innerText=nombre;
 
 inicio=Date.now();
 mostrar();
 }
 
-// mostrar pregunta
+// ================= MOSTRAR =================
 function mostrar(){
-document.getElementById("pregunta").innerText=preguntas[i].t;
+
+respondido=false;
+
+let p=preguntas[i];
+
+document.getElementById("progreso").innerText=`Pregunta ${i+1}/10`;
+document.getElementById("pregunta").innerText=p.t;
+document.getElementById("feedback").innerText="";
+
+document.getElementById("opciones").innerHTML=`
+<div class="opt" onclick="responder('phishing',this)">🔴 Phishing</div>
+<div class="opt" onclick="responder('legit',this)">🟢 Legítimo</div>
+`;
+
+document.getElementById("btnNext").disabled=true;
 }
 
-// responder
-function responder(r){
-let tiempo=(Date.now()-inicio)/1000;
-tiempos.push(tiempo);
-inicio=Date.now();
+// ================= RESPONDER =================
+function responder(r,btn){
 
-if(r===preguntas[i].c){
-score+=20;
-document.getElementById("feedback").innerText="✅ Correcto";
+if(respondido) return;
+respondido=true;
+
+let p=preguntas[i];
+
+if(r===p.c){
+score+=10;
+btn.classList.add("correct");
+document.getElementById("feedback").innerText="✅ Correcto: "+p.e;
 }else{
-document.getElementById("feedback").innerText="❌ Incorrecto";
-}
+btn.classList.add("wrong");
+document.getElementById("feedback").innerText="❌ Incorrecto: "+p.e;
 }
 
-// siguiente
+document.getElementById("btnNext").disabled=false;
+}
+
+// ================= SIGUIENTE =================
 function siguiente(){
 i++;
 if(i<preguntas.length){
@@ -177,61 +276,41 @@ fin();
 }
 }
 
-// fin
+// ================= RESULTADO =================
 function fin(){
 
 document.getElementById("quizScreen").classList.remove("active");
-document.getElementById("resultScreen").classList.add("active");
+document.getElementById("resultadoScreen").classList.add("active");
 
-let totalTiempo=(tiempos.reduce((a,b)=>a+b,0)).toFixed(2);
+let tiempo=((Date.now()-inicio)/1000).toFixed(2);
 
 document.getElementById("score").innerText=score+"/100";
+document.getElementById("tiempo").innerText="⏱️ Tiempo: "+tiempo+" s";
 
 let nivel="";
 if(score<50) nivel="🚨 Alto riesgo";
-else if(score<80) nivel="⚠️ Medio";
-else nivel="🟢 Seguro";
+else if(score<80) nivel="⚠️ Riesgo medio";
+else nivel="🟢 Buen nivel";
 
 document.getElementById("nivel").innerText=nivel;
-document.getElementById("tiempo").innerText="⏱️ "+totalTiempo+" s";
 
-// guardar ranking
-let data=[];
+// ranking
+let data=JSON.parse(localStorage.getItem("ranking"))||[];
 data.push({nombre,score});
+data.sort((a,b)=>b.score-a.score);
 localStorage.setItem("ranking",JSON.stringify(data));
 
+// posición
+let pos=data.findIndex(p=>p.nombre===nombre && p.score===score)+1;
+document.getElementById("posicion").innerText="🏅 Posición: "+pos;
+
 // mostrar ranking
-document.getElementById("ranking").innerHTML=
-`1. ${nombre} - ${score}`;
-
-// ===== GRÁFICA ACIERTOS =====
-new Chart(document.getElementById("chartAciertos"),{
-type:"bar",
-data:{
-labels:["1","2","3","4","5"],
-datasets:[{
-label:"Aciertos",
-data:preguntas.map((_,idx)=> (idx<score/20?100:0))
-}]
-}
+let html="";
+data.slice(0,5).forEach((p,i)=>{
+html+=`${i+1}. ${p.nombre} - ${p.score}<br>`;
 });
 
-// ===== GRÁFICA TIEMPO =====
-new Chart(document.getElementById("chartTiempo"),{
-type:"line",
-data:{
-labels:["1","2","3","4","5"],
-datasets:[{
-label:"Tiempo",
-data:tiempos
-}]
-}
-});
-}
-
-// reiniciar
-function reiniciar(){
-location.reload();
+document.getElementById("ranking").innerHTML=html;
 }
 
 </script>
