@@ -5,6 +5,8 @@
 <title>Phishing Quiz Pro</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
 body{
 margin:0;
@@ -12,7 +14,6 @@ font-family:'Segoe UI',sans-serif;
 background:linear-gradient(135deg,#ffe4ec,#e0f2fe);
 }
 
-/* CONTENEDOR */
 .screen{
 display:none;
 height:100vh;
@@ -23,21 +24,15 @@ text-align:center;
 padding:20px;
 }
 
-/* ACTIVO */
-.active{
-display:flex;
-}
+.active{display:flex;}
 
-/* INPUT */
 input{
 padding:15px;
 width:300px;
 border-radius:30px;
 border:2px solid #f472b6;
-font-size:16px;
 }
 
-/* BOTÓN PRINCIPAL */
 .btn{
 margin-top:20px;
 padding:15px 30px;
@@ -47,10 +42,8 @@ background:linear-gradient(135deg,#ec4899,#f43f5e);
 color:white;
 font-size:18px;
 cursor:pointer;
-box-shadow:0 10px 20px rgba(0,0,0,0.2);
 }
 
-/* QUIZ CARD */
 .quiz-card{
 background:white;
 padding:25px;
@@ -60,22 +53,6 @@ max-width:600px;
 box-shadow:0 15px 30px rgba(0,0,0,0.2);
 }
 
-/* PROGRESO */
-.bar{
-height:10px;
-background:#eee;
-border-radius:10px;
-overflow:hidden;
-margin:15px 0;
-}
-
-.fill{
-height:100%;
-background:#ec4899;
-width:0%;
-}
-
-/* BOTONES RESPUESTA */
 .opt{
 padding:15px;
 border-radius:30px;
@@ -84,53 +61,44 @@ margin:10px;
 cursor:pointer;
 }
 
-.opt:hover{
-background:#ffe4ec;
-}
-
-/* RESULTADOS */
 .result{
-font-size:40px;
+font-size:50px;
 color:#ec4899;
 font-weight:bold;
+}
+
+.chart{
+width:300px;
+margin:20px auto;
 }
 </style>
 </head>
 
 <body>
 
-<!-- PANTALLA 1 -->
+<!-- INICIO -->
 <div id="start" class="screen active">
 <h2>🎭 Elige tu alias</h2>
 <input id="nombre" placeholder="Ej: Explorador">
 <button class="btn" onclick="iniciar()">▶ Comenzar</button>
 </div>
 
-<!-- PANTALLA 2 -->
+<!-- QUIZ -->
 <div id="quizScreen" class="screen">
 <div class="quiz-card">
-
 <h3 id="alias"></h3>
-
-<div class="bar">
-<div id="progress" class="fill"></div>
-</div>
-
 <p id="pregunta"></p>
 
-<div>
 <div class="opt" onclick="responder('phishing')">🔴 Phishing</div>
 <div class="opt" onclick="responder('legit')">🟢 Legítimo</div>
-</div>
 
 <p id="feedback"></p>
 
 <button class="btn" onclick="siguiente()">Siguiente</button>
-
 </div>
 </div>
 
-<!-- PANTALLA 3 -->
+<!-- RESULTADOS -->
 <div id="resultScreen" class="screen">
 <h2>🏆 Resultado</h2>
 
@@ -138,6 +106,10 @@ font-weight:bold;
 <p id="nivel"></p>
 <p id="tiempo"></p>
 
+<canvas id="chartAciertos" class="chart"></canvas>
+<canvas id="chartTiempo" class="chart"></canvas>
+
+<h3>🏆 Ranking</h3>
 <div id="ranking"></div>
 
 <button class="btn" onclick="reiniciar()">🔄 Volver a jugar</button>
@@ -145,48 +117,49 @@ font-weight:bold;
 
 <script>
 
-// preguntas MÁS realistas
+// LIMPIAR ranking al cargar (IMPORTANTE)
+localStorage.removeItem("ranking");
+
+// preguntas
 let preguntas = [
-{t:"📧 Banco Santander\nDe: seguridad@bancosantander-verify.net\nLink: bancoseguro-login.com",c:"phishing"},
-{t:"📧 Google\nAccede en https://accounts.google.com",c:"legit"},
-{t:"📱 SMS: Tu paquete está retenido bit.ly/xyz",c:"phishing"},
-{t:"📧 TI: envía tu contraseña para soporte",c:"phishing"},
-{t:"📧 Amazon: revisa tu pedido en amazon.com",c:"legit"}
+{t:"Banco falso verify.net",c:"phishing"},
+{t:"https://accounts.google.com",c:"legit"},
+{t:"SMS bit.ly",c:"phishing"},
+{t:"TI pide contraseña",c:"phishing"},
+{t:"Amazon oficial",c:"legit"}
 ];
 
 let i=0;
 let score=0;
 let nombre="";
+let tiempos=[];
 let inicio;
 
-// iniciar quiz
+// iniciar
 function iniciar(){
-nombre=document.getElementById("nombre").value || "Anónimo";
+nombre=document.getElementById("nombre").value||"Anon";
 
 document.getElementById("start").classList.remove("active");
 document.getElementById("quizScreen").classList.add("active");
 
-document.getElementById("alias").innerText="👤 "+nombre;
+document.getElementById("alias").innerText=nombre;
 
 inicio=Date.now();
-
 mostrar();
 }
 
 // mostrar pregunta
 function mostrar(){
-let p=preguntas[i];
-
-document.getElementById("pregunta").innerText=p.t;
-
-document.getElementById("progress").style.width=((i/preguntas.length)*100)+"%";
+document.getElementById("pregunta").innerText=preguntas[i].t;
 }
 
 // responder
 function responder(r){
-let p=preguntas[i];
+let tiempo=(Date.now()-inicio)/1000;
+tiempos.push(tiempo);
+inicio=Date.now();
 
-if(r===p.c){
+if(r===preguntas[i].c){
 score+=20;
 document.getElementById("feedback").innerText="✅ Correcto";
 }else{
@@ -197,7 +170,6 @@ document.getElementById("feedback").innerText="❌ Incorrecto";
 // siguiente
 function siguiente(){
 i++;
-
 if(i<preguntas.length){
 mostrar();
 }else{
@@ -211,7 +183,7 @@ function fin(){
 document.getElementById("quizScreen").classList.remove("active");
 document.getElementById("resultScreen").classList.add("active");
 
-let tiempo=((Date.now()-inicio)/1000).toFixed(2);
+let totalTiempo=(tiempos.reduce((a,b)=>a+b,0)).toFixed(2);
 
 document.getElementById("score").innerText=score+"/100";
 
@@ -221,21 +193,40 @@ else if(score<80) nivel="⚠️ Medio";
 else nivel="🟢 Seguro";
 
 document.getElementById("nivel").innerText=nivel;
-document.getElementById("tiempo").innerText="⏱️ "+tiempo+" s";
+document.getElementById("tiempo").innerText="⏱️ "+totalTiempo+" s";
 
-// guardar ranking SOLO aquí (solución bug)
-let data=JSON.parse(localStorage.getItem("ranking"))||[];
+// guardar ranking
+let data=[];
 data.push({nombre,score});
-data.sort((a,b)=>b.score-a.score);
 localStorage.setItem("ranking",JSON.stringify(data));
 
 // mostrar ranking
-let html="<h3>🏆 Ranking</h3>";
-data.slice(0,5).forEach((p,i)=>{
-html+=`${i+1}. ${p.nombre} - ${p.score}<br>`;
+document.getElementById("ranking").innerHTML=
+`1. ${nombre} - ${score}`;
+
+// ===== GRÁFICA ACIERTOS =====
+new Chart(document.getElementById("chartAciertos"),{
+type:"bar",
+data:{
+labels:["1","2","3","4","5"],
+datasets:[{
+label:"Aciertos",
+data:preguntas.map((_,idx)=> (idx<score/20?100:0))
+}]
+}
 });
 
-document.getElementById("ranking").innerHTML=html;
+// ===== GRÁFICA TIEMPO =====
+new Chart(document.getElementById("chartTiempo"),{
+type:"line",
+data:{
+labels:["1","2","3","4","5"],
+datasets:[{
+label:"Tiempo",
+data:tiempos
+}]
+}
+});
 }
 
 // reiniciar
