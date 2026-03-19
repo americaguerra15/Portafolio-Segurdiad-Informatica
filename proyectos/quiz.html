@@ -2,14 +2,15 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Simulador de Phishing</title>
+<title>Simulación de Phishing</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body{
 margin:0;
 font-family:'Segoe UI',sans-serif;
-background:#fdf2f8;
+background:#f8fafc;
+color:#1e293b;
 }
 
 /* PANTALLAS */
@@ -25,90 +26,111 @@ text-align:center;
 
 .active{display:flex;}
 
+/* TARJETAS */
+.card{
+background:white;
+padding:30px;
+border-radius:18px;
+max-width:650px;
+width:100%;
+box-shadow:0 10px 30px rgba(0,0,0,0.08);
+border:1px solid #e2e8f0;
+}
+
 /* BOTONES */
 .btn{
-background:#ec4899;
+background:#334155;
 color:white;
-padding:14px 30px;
+padding:12px 28px;
 border:none;
-border-radius:30px;
+border-radius:12px;
 cursor:pointer;
 margin-top:15px;
-font-size:16px;
+font-size:15px;
+transition:0.2s;
 }
 
 .btn:hover{
-background:#db2777;
-}
-
-/* TARJETA */
-.card{
-background:white;
-padding:25px;
-border-radius:20px;
-max-width:600px;
-width:100%;
-box-shadow:0 10px 30px rgba(0,0,0,0.1);
+background:#1e293b;
 }
 
 /* INPUT */
 input{
 width:100%;
 padding:12px;
-border-radius:20px;
-border:1px solid #ccc;
+border-radius:12px;
+border:1px solid #cbd5e1;
 margin-top:10px;
 }
 
 /* OPCIONES */
 .opt{
-border:2px solid #ec4899;
+border:1px solid #cbd5e1;
 padding:12px;
-border-radius:30px;
+border-radius:12px;
 margin:10px;
 cursor:pointer;
+transition:0.2s;
 }
 
 .opt:hover{
-background:#fce7f3;
+background:#f1f5f9;
 }
 
-.correct{background:#bbf7d0;}
-.wrong{background:#fecaca;}
+.correct{
+background:#dcfce7;
+border-color:#22c55e;
+}
 
+.wrong{
+background:#fee2e2;
+border-color:#ef4444;
+}
+
+/* BOTÓN REGRESAR */
+.back{
+position:absolute;
+top:20px;
+left:20px;
+text-decoration:none;
+color:#334155;
+font-weight:bold;
+}
 </style>
 </head>
 
 <body>
 
-<!-- 1. INICIO -->
-<div id="inicio" class="screen active">
-<h2>🛡️ Simulación de Phishing</h2>
-<button class="btn" onclick="irConsentimiento()">Comenzar</button>
-</div>
+<a href="PR02.html" class="back">⬅ Regresar</a>
 
-<!-- 2. CONSENTIMIENTO -->
-<div id="consent" class="screen">
+<!-- CONSENTIMIENTO -->
+<div id="consent" class="screen active">
 <div class="card">
-<h3>⚠️ Consentimiento</h3>
+
+<h2>🛡️ Simulación de Phishing</h2>
+
+<p style="color:#64748b;">
+Simulación educativa de ingeniería social basada en escenarios reales.
+</p>
+
 <p>
-Este quiz es una simulación educativa de phishing.<br>
-No se recopilan datos reales ni credenciales.<br><br>
-Tu desempeño será usado únicamente con fines académicos.
+No se recopilan datos sensibles.  
+Este ejercicio es únicamente académico.
 </p>
 
 <input id="nombre" placeholder="Ingresa tu alias">
 
-<button class="btn" onclick="iniciarQuiz()">Aceptar y continuar</button>
+<button class="btn" onclick="iniciarQuiz()">Aceptar y comenzar</button>
+
 </div>
 </div>
 
-<!-- 3. QUIZ -->
+<!-- QUIZ -->
 <div id="quizScreen" class="screen">
 <div class="card">
 
 <h3 id="progreso"></h3>
-<p id="pregunta"></p>
+<p id="pregunta" style="white-space:pre-line;"></p>
 
 <div id="opciones"></div>
 
@@ -119,11 +141,12 @@ Tu desempeño será usado únicamente con fines académicos.
 </div>
 </div>
 
-<!-- 4. RESULTADOS -->
+<!-- RESULTADO -->
 <div id="resultadoScreen" class="screen">
 <div class="card">
 
 <h2>🏆 Resultado</h2>
+
 <h1 id="score"></h1>
 <p id="tiempo"></p>
 <p id="nivel"></p>
@@ -134,100 +157,233 @@ Tu desempeño será usado únicamente con fines académicos.
 
 <button class="btn" onclick="location.reload()">🔄 Volver a jugar</button>
 
+<a href="PR02.html" class="btn">⬅ Volver al proyecto</a>
+
 </div>
 </div>
 
 <script>
 
-// ================= ESCENARIOS (10 reales) =================
+// ===== ESCENARIOS =====
 let preguntas = [
 
-{t:`📧 Banco Santander
-De: seguridad@bancosantander-verify.net
-Asunto: Bloqueo urgente
+{
+t:`📧 Banco Santander
 
-Detectamos actividad sospechosa. 
-Ingrese aquí para reactivar su cuenta:
-http://bancosantander-verificacion.com`,
+De: Seguridad Santander <seguridad@bancosantander-verify.net>
+Asunto: ⚠️ Bloqueo temporal de su cuenta
+
+Estimado cliente:
+
+Hemos detectado múltiples intentos de acceso no autorizados en su cuenta bancaria.
+Por motivos de seguridad, su cuenta ha sido temporalmente suspendida.
+
+Para evitar el bloqueo permanente, le solicitamos verificar su identidad en el siguiente enlace:
+
+http://bancosantander-verificacion.com
+
+Si no completa este proceso en las próximas 24 horas, su cuenta será desactivada definitivamente.
+
+Atentamente,
+Equipo de Seguridad Santander`,
 c:"phishing",
-e:"Dominio falso + urgencia. El banco nunca usa enlaces externos."},
+e:"El dominio no es oficial y usa urgencia para presionar al usuario."
+},
 
-{t:`📧 Google
-Accede en: https://accounts.google.com`,
+{
+t:`📧 Google
+
+De: Google Security <no-reply@accounts.google.com>
+Asunto: Nuevo inicio de sesión detectado
+
+Hola,
+
+Hemos detectado un inicio de sesión en tu cuenta desde un dispositivo nuevo.
+Si fuiste tú, no necesitas hacer nada.
+
+Puedes revisar la actividad reciente en el siguiente enlace:
+https://accounts.google.com/security
+
+Gracias por ayudar a mantener segura tu cuenta.
+
+Equipo de Google`,
 c:"legit",
-e:"Dominio oficial de Google."},
+e:"El dominio es oficial y no solicita información sensible."
+},
 
-{t:`📱 SMS
-Tu paquete está retenido. Paga aquí: bit.ly/3abc`,
+{
+t:`📱 SMS - Servicio de paquetería
+
+Estimado usuario,
+
+Tu paquete no pudo ser entregado debido a un problema con la dirección.
+Para reprogramar la entrega, accede al siguiente enlace:
+
+http://bit.ly/entrega-paquete-123
+
+Si no confirmas en las próximas horas, el paquete será devuelto.
+
+Gracias por tu preferencia.`,
 c:"phishing",
-e:"Uso de URL acortada para ocultar destino."},
+e:"Uso de enlace acortado y presión de tiempo."
+},
 
-{t:`📧 Netflix
-Tu cuenta será suspendida. Verifica aquí:
-http://netflix-secure-login.xyz`,
+{
+t:`📧 Netflix
+
+De: soporte@netflix-secure.xyz
+Asunto: Problema con tu suscripción
+
+Hola,
+
+No pudimos procesar el pago de tu suscripción mensual.
+Para evitar la cancelación del servicio, actualiza tu método de pago aquí:
+
+http://netflix-login-secure.xyz
+
+Tu cuenta será suspendida en 24 horas si no realizas la verificación.
+
+Netflix`,
 c:"phishing",
-e:"Dominio falso y urgencia."},
+e:"Dominio falso y lenguaje de urgencia."
+},
 
-{t:`📧 Amazon
-Consulta tu pedido en:
-https://amazon.com`,
+{
+t:`📧 Amazon
+
+De: auto-confirm@amazon.com
+Asunto: Confirmación de envío
+
+Hola,
+
+Tu pedido ha sido enviado correctamente y llegará en los próximos días.
+
+Puedes revisar los detalles de tu pedido y el estado de envío en:
+https://www.amazon.com/orders
+
+Gracias por comprar con nosotros.
+
+Amazon`,
 c:"legit",
-e:"Dominio oficial sin presión."},
+e:"Dominio legítimo y sin presión ni solicitud de datos."
+},
 
-{t:`📧 TI
-Necesitamos tu contraseña para mantenimiento.`,
+{
+t:`📧 Departamento de TI
+
+De: soporte-ti@empresa.com
+Asunto: Actualización de sistema
+
+Estimado colaborador,
+
+Estamos realizando una actualización del sistema corporativo.
+Para completar el proceso, necesitamos que nos proporciones tu usuario y contraseña.
+
+Por favor responde a este correo con tus credenciales.
+
+Atentamente,
+Departamento de TI`,
 c:"phishing",
-e:"Nunca se solicitan contraseñas."},
+e:"Ningún departamento solicita contraseñas por correo."
+},
 
-{t:`📧 PayPal
-Inicia sesión en:
-paypal-security-check.com`,
+{
+t:`📧 PayPal
+
+De: soporte@paypal-verificacion.com
+Asunto: Actividad inusual en tu cuenta
+
+Estimado cliente,
+
+Detectamos actividad sospechosa en tu cuenta PayPal.
+Para evitar restricciones, inicia sesión y verifica tu información:
+
+http://paypal-verificacion-segura.com
+
+Gracias por tu cooperación.
+
+PayPal`,
 c:"phishing",
-e:"Dominio incorrecto."},
+e:"El dominio no es paypal.com."
+},
 
-{t:`📧 Microsoft
-Actividad sospechosa detectada
-https://login.microsoft.com`,
+{
+t:`📧 Microsoft
+
+De: account-security@microsoft.com
+Asunto: Inicio de sesión inusual
+
+Hola,
+
+Detectamos un intento de acceso desde una ubicación desconocida.
+Si no reconoces esta actividad, revisa tu cuenta aquí:
+
+https://login.microsoft.com/security
+
+No es necesario realizar ninguna acción si reconoces el acceso.
+
+Microsoft`,
 c:"legit",
-e:"Dominio válido."},
+e:"Dominio oficial y mensaje informativo."
+},
 
-{t:`📧 Documento adjunto
-Archivo: factura.exe`,
+{
+t:`📧 Factura adjunta
+
+De: facturacion@proveedor.com
+Asunto: Factura pendiente
+
+Buen día,
+
+Adjuntamos la factura correspondiente a su último pedido.
+Por favor revise el archivo adjunto y confirme su recepción.
+
+Archivo: factura.exe
+
+Saludos.`,
 c:"phishing",
-e:"Archivo ejecutable peligroso."},
+e:"Los archivos .exe pueden ejecutar malware."
+},
 
-{t:`📧 BBVA
-Accede a tu banca:
-https://www.bbva.mx`,
+{
+t:`📧 BBVA
+
+De: notificaciones@bbva.mx
+Asunto: Estado de cuenta disponible
+
+Estimado cliente,
+
+Su estado de cuenta mensual ya está disponible.
+Puede consultarlo de manera segura en el siguiente enlace:
+
+https://www.bbva.mx
+
+Gracias por confiar en BBVA.`,
 c:"legit",
-e:"Dominio correcto y seguro."}
+e:"Dominio oficial y comunicación informativa."
+}
 
 ];
-
-// ================= VARIABLES =================
 let i=0;
 let score=0;
 let nombre="";
 let inicio;
 let respondido=false;
 
-// ================= FLUJO =================
-function irConsentimiento(){
-document.getElementById("inicio").classList.remove("active");
-document.getElementById("consent").classList.add("active");
-}
-
+// ===== INICIAR =====
 function iniciarQuiz(){
+
 nombre=document.getElementById("nombre").value || "Anon";
 
 document.getElementById("consent").classList.remove("active");
 document.getElementById("quizScreen").classList.add("active");
 
 inicio=Date.now();
+
 mostrar();
 }
 
-// ================= MOSTRAR =================
+// ===== MOSTRAR =====
 function mostrar(){
 
 respondido=false;
@@ -246,7 +402,7 @@ document.getElementById("opciones").innerHTML=`
 document.getElementById("btnNext").disabled=true;
 }
 
-// ================= RESPONDER =================
+// ===== RESPONDER =====
 function responder(r,btn){
 
 if(respondido) return;
@@ -266,7 +422,7 @@ document.getElementById("feedback").innerText="❌ Incorrecto: "+p.e;
 document.getElementById("btnNext").disabled=false;
 }
 
-// ================= SIGUIENTE =================
+// ===== SIGUIENTE =====
 function siguiente(){
 i++;
 if(i<preguntas.length){
@@ -276,7 +432,7 @@ fin();
 }
 }
 
-// ================= RESULTADO =================
+// ===== RESULTADO =====
 function fin(){
 
 document.getElementById("quizScreen").classList.remove("active");
@@ -285,7 +441,7 @@ document.getElementById("resultadoScreen").classList.add("active");
 let tiempo=((Date.now()-inicio)/1000).toFixed(2);
 
 document.getElementById("score").innerText=score+"/100";
-document.getElementById("tiempo").innerText="⏱️ Tiempo: "+tiempo+" s";
+document.getElementById("tiempo").innerText="⏱️ "+tiempo+" s";
 
 let nivel="";
 if(score<50) nivel="🚨 Alto riesgo";
