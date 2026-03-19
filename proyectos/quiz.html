@@ -452,19 +452,50 @@ document.getElementById("nivel").innerText=nivel;
 
 // ranking
 let data=JSON.parse(localStorage.getItem("ranking"))||[];
-data.push({nombre,score});
-data.sort((a,b)=>b.score-a.score);
+data.push({
+nombre,
+score,
+tiempo: parseFloat(tiempo)
+});
+data.sort((a,b)=>{
+if(b.score !== a.score){
+return b.score - a.score; // mayor puntaje primero
+}
+return a.tiempo - b.tiempo; // menor tiempo gana
+});
 localStorage.setItem("ranking",JSON.stringify(data));
 
 // posición
-let pos=data.findIndex(p=>p.nombre===nombre && p.score===score)+1;
+let pos = data.findIndex(p =>
+p.nombre === nombre &&
+p.score === score &&
+p.tiempo === parseFloat(tiempo)
+) + 1;
 document.getElementById("posicion").innerText="🏅 Posición: "+pos;
 
 // mostrar ranking
-let html="";
+let html = `
+<table style="width:100%; border-collapse:collapse; margin-top:10px;">
+<tr style="background:#f1f5f9;">
+<th style="padding:8px;border:1px solid #e2e8f0;">Pos</th>
+<th style="padding:8px;border:1px solid #e2e8f0;">Nombre</th>
+<th style="padding:8px;border:1px solid #e2e8f0;">Puntaje</th>
+<th style="padding:8px;border:1px solid #e2e8f0;">Tiempo</th>
+</tr>
+`;
+
 data.slice(0,5).forEach((p,i)=>{
-html+=`${i+1}. ${p.nombre} - ${p.score}<br>`;
+html += `
+<tr>
+<td style="padding:8px;border:1px solid #e2e8f0;">${i+1}</td>
+<td style="padding:8px;border:1px solid #e2e8f0;">${p.nombre}</td>
+<td style="padding:8px;border:1px solid #e2e8f0;">${p.score}</td>
+<td style="padding:8px;border:1px solid #e2e8f0;">${p.tiempo}s</td>
+</tr>
+`;
 });
+
+html += `</table>`;
 
 document.getElementById("ranking").innerHTML=html;
 }
