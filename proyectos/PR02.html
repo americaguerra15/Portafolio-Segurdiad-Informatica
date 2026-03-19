@@ -605,111 +605,11 @@ https://hoxhunt.com/
 </ul>
 
 
-<hr style="margin:40px 0">
+  <a href="quiz.html" class="activity-btn" 
+     style="font-size:18px; padding:15px 25px;">
+     🧠 Simulación de Ataque Phishing (Entrenamiento)
+  </a>
 
-
-<h3>Phishing Quiz</h3>
-
-<p>Identifica si el mensaje es phishing o legítimo.</p>
-
-
-<form id="quizForm">
-
-<p><b>1.</b> Tu cuenta de Netflix será suspendida. Verifica tu información.</p>
-<label><input type="radio" name="q1" value="phishing"> Phishing</label>
-<label><input type="radio" name="q1" value="legit"> Legítimo</label>
-
-<p><b>2.</b> Departamento de TI solicita contraseña.</p>
-<label><input type="radio" name="q2" value="phishing"> Phishing</label>
-<label><input type="radio" name="q2" value="legit"> Legítimo</label>
-
-<p><b>3.</b> Banco solicita confirmar datos mediante enlace.</p>
-<label><input type="radio" name="q3" value="phishing"> Phishing</label>
-<label><input type="radio" name="q3" value="legit"> Legítimo</label>
-
-<p><b>4.</b> Factura de servicio desconocido.</p>
-<label><input type="radio" name="q4" value="phishing"> Phishing</label>
-<label><input type="radio" name="q4" value="legit"> Legítimo</label>
-
-<p><b>5.</b> Ganaste un premio.</p>
-<label><input type="radio" name="q5" value="phishing"> Phishing</label>
-<label><input type="radio" name="q5" value="legit"> Legítimo</label>
-
-<p><b>6.</b> Paquetería solicita pago.</p>
-<label><input type="radio" name="q6" value="phishing"> Phishing</label>
-<label><input type="radio" name="q6" value="legit"> Legítimo</label>
-
-<p><b>7.</b> Compañero solicita transferencia urgente.</p>
-<label><input type="radio" name="q7" value="phishing"> Phishing</label>
-<label><input type="radio" name="q7" value="legit"> Legítimo</label>
-
-<p><b>8.</b> SMS del banco para verificar identidad.</p>
-<label><input type="radio" name="q8" value="phishing"> Phishing</label>
-<label><input type="radio" name="q8" value="legit"> Legítimo</label>
-
-<p><b>9.</b> Documento urgente para descargar.</p>
-<label><input type="radio" name="q9" value="phishing"> Phishing</label>
-<label><input type="radio" name="q9" value="legit"> Legítimo</label>
-
-<p><b>10.</b> Correo con dominio incorrecto.</p>
-<label><input type="radio" name="q10" value="phishing"> Phishing</label>
-<label><input type="radio" name="q10" value="legit"> Legítimo</label>
-
-<br><br>
-
-<button type="button" onclick="calcularResultado()" class="activity-btn">
-<i class="fas fa-check"></i> Enviar respuestas
-</button>
-
-</form>
-
-<h3 id="resultado" style="margin-top:20px"></h3>
-
-<script>
-
-function calcularResultado(){
-
-let correctas={
-q1:"phishing",
-q2:"phishing",
-q3:"phishing",
-q4:"phishing",
-q5:"phishing",
-q6:"phishing",
-q7:"phishing",
-q8:"phishing",
-q9:"phishing",
-q10:"phishing"
-};
-
-let score=0;
-
-for(let i=1;i<=10;i++){
-
-let r=document.querySelector('input[name="q'+i+'"]:checked');
-
-if(r && r.value===correctas["q"+i]){
-score+=10;
-}
-
-}
-
-let nivel="";
-
-if(score<=40){
-nivel="Alto riesgo";
-}
-else if(score<=70){
-nivel="Riesgo medio";
-}
-else{
-nivel="Buen nivel de detección";
-}
-
-document.getElementById("resultado").innerHTML=
-"Puntaje: "+score+"/100 | Nivel: "+nivel;
-
-}
 
 </script>
 
