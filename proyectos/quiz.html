@@ -2,28 +2,28 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Phishing Quiz</title>
+<title>Simulador de Phishing</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body{
 font-family: 'Segoe UI', sans-serif;
-background:#f1f5f9;
+background: linear-gradient(135deg,#fce7f3,#e0f2fe);
 margin:0;
-padding:0;
 }
 
 .container{
-max-width:700px;
+max-width:800px;
 margin:auto;
 padding:30px;
 }
 
 .card{
 background:white;
-padding:25px;
-border-radius:15px;
-box-shadow:0 10px 25px rgba(0,0,0,0.1);
+padding:30px;
+border-radius:20px;
+box-shadow:0 20px 40px rgba(0,0,0,0.15);
+border-top:5px solid #ec4899;
 }
 
 h1{
@@ -31,79 +31,88 @@ text-align:center;
 }
 
 input{
-padding:10px;
 width:100%;
-margin-bottom:15px;
-border-radius:8px;
+padding:12px;
+border-radius:10px;
 border:1px solid #ccc;
+margin-bottom:15px;
 }
 
 button{
-padding:10px 15px;
+padding:12px 20px;
 border:none;
-border-radius:8px;
+border-radius:999px;
 cursor:pointer;
+font-weight:bold;
 margin:5px;
-}
-
-.btn{
-background:#2563eb;
+background:#ec4899;
 color:white;
 }
 
-.btn:hover{
-background:#1d4ed8;
+button:hover{
+transform:scale(1.05);
 }
 
-.feedback{
-margin-top:10px;
-font-weight:bold;
-}
-
-.top{
-text-align:center;
+#barra{
+height:10px;
+background:#e5e7eb;
+border-radius:10px;
+overflow:hidden;
 margin-bottom:20px;
 }
 
+#progreso{
+height:100%;
+width:0%;
+background:#ec4899;
+}
+
 .ranking{
-margin-top:20px;
 background:#f8fafc;
 padding:15px;
 border-radius:10px;
+margin-top:20px;
 }
 
 .back{
-margin-top:20px;
 display:block;
 text-align:center;
-text-decoration:none;
+margin-top:20px;
 color:#2563eb;
+text-decoration:none;
 }
 </style>
-
 </head>
 
 <body>
 
 <div class="container">
-
 <div class="card">
 
-<div class="top">
 <h1>🛡️ Simulador de Phishing</h1>
-<p><b>América Fabiola Guerra Ramírez</b><br>
-Seguridad Informática | 8° semestre</p>
+<p style="text-align:center;">
+América Fabiola Guerra Ramírez<br>
+Seguridad Informática | 8° semestre
+</p>
+
+<!-- INPUT DEL NOMBRE -->
+<input type="text" id="nombre" placeholder="Ingresa tu alias para el ranking">
+
+<!-- BARRA DE PROGRESO -->
+<div id="barra">
+<div id="progreso"></div>
 </div>
 
-<input type="text" id="nombre" placeholder="Ingresa tu nombre">
-
+<!-- QUIZ -->
 <div id="quiz"></div>
 
-<button class="btn" onclick="siguiente()">Siguiente</button>
+<button id="btnNext" onclick="siguiente()">Siguiente</button>
 
 <h3 id="resultado"></h3>
 
-<div class="ranking" id="ranking"></div>
+<div id="ranking" class="ranking"></div>
+
+<button onclick="reiniciar()">🔄 Volver a jugar</button>
 
 <a href="PR02.html" class="back">⬅ Regresar</a>
 
@@ -112,92 +121,220 @@ Seguridad Informática | 8° semestre</p>
 
 <script>
 
+// =======================
+// VARIABLES GLOBALES
+// =======================
+
+// Lista de preguntas con:
+// t = texto
+// c = respuesta correcta
+// e = explicación
 let preguntas = [
-{t:"Netflix: Verifica aquí http://netflix-verifica.xyz", c:"phishing", e:"Dominio falso"},
+{t:"Netflix: http://netflix-verifica.xyz", c:"phishing", e:"Dominio falso"},
 {t:"Banco: https://bbva.com", c:"legit", e:"Dominio oficial"},
-{t:"SMS: paquete retenido bit.ly", c:"phishing", e:"URL acortada"},
-{t:"TI pide contraseña", c:"phishing", e:"Nunca pedirán contraseña"},
-{t:"Amazon factura oficial", c:"legit", e:"Sin engaño"},
-{t:"Ganaste premio urgente", c:"phishing", e:"Urgencia falsa"},
+{t:"SMS: bit.ly enlace", c:"phishing", e:"URL acortada"},
+{t:"TI pide contraseña", c:"phishing", e:"Nunca piden contraseña"},
+{t:"Amazon factura", c:"legit", e:"Mensaje legítimo"},
+{t:"Premio urgente", c:"phishing", e:"Urgencia sospechosa"},
 {t:"PayPal-login-secure.com", c:"phishing", e:"Dominio falso"},
 {t:"Google accounts.google.com", c:"legit", e:"Seguro"},
 {t:"Archivo .exe", c:"phishing", e:"Archivo peligroso"},
 {t:"Microsoft oficial", c:"legit", e:"Dominio correcto"}
 ];
 
-let i=0;
-let score=0;
+// índice de pregunta actual
+let i = 0;
 
+// puntaje del usuario
+let score = 0;
+
+// arreglo para guardar tiempos por pregunta
+let tiempos = [];
+
+// tiempo inicial
+let inicioTiempo = Date.now();
+
+
+// =======================
+// FUNCIÓN: mostrar()
+// Muestra la pregunta actual en pantalla
+// =======================
 function mostrar(){
-let p=preguntas[i];
 
-document.getElementById("quiz").innerHTML=`
+let p = preguntas[i];
+
+document.getElementById("quiz").innerHTML = `
 <p><b>Pregunta ${i+1}/10</b></p>
-<p>${p.t}</p>
+<p style="font-size:18px;">${p.t}</p>
 
-<button onclick="resp('phishing')">Phishing</button>
-<button onclick="resp('legit')">Legítimo</button>
+<button onclick="responder('phishing')">🔴 Phishing</button>
+<button onclick="responder('legit')">🟢 Legítimo</button>
 
-<p class="feedback" id="f"></p>
+<p id="feedback"></p>
 `;
+
+// actualiza barra de progreso
+actualizarBarra();
 }
 
-function resp(r){
-let p=preguntas[i];
 
-if(r===p.c){
-score+=10;
-document.getElementById("f").innerHTML="✅ Correcto: "+p.e;
+// =======================
+// FUNCIÓN: responder()
+// Evalúa la respuesta del usuario
+// Guarda tiempo y muestra feedback
+// =======================
+function responder(r){
+
+let p = preguntas[i];
+
+// calcular tiempo que tardó
+let tiempo = (Date.now() - inicioTiempo)/1000;
+tiempos.push(tiempo);
+inicioTiempo = Date.now();
+
+// verificar respuesta
+if(r === p.c){
+score += 10;
+document.getElementById("feedback").innerHTML = "✅ Correcto: "+p.e;
 }else{
-document.getElementById("f").innerHTML="❌ Incorrecto: "+p.e;
+document.getElementById("feedback").innerHTML = "❌ Incorrecto: "+p.e;
 }
 }
 
+
+// =======================
+// FUNCIÓN: siguiente()
+// Pasa a la siguiente pregunta
+// =======================
 function siguiente(){
+
 i++;
-if(i<preguntas.length){
+
+if(i < preguntas.length){
 mostrar();
 }else{
 fin();
 }
 }
 
+
+// =======================
+// FUNCIÓN: fin()
+// Calcula resultados finales
+// Guarda ranking
+// =======================
 function fin(){
 
-let nombre=document.getElementById("nombre").value || "Anónimo";
+let nombre = document.getElementById("nombre").value.trim();
 
-let nivel="";
-if(score<=40) nivel="Alto riesgo";
-else if(score<=70) nivel="Riesgo medio";
-else nivel="Buen nivel";
+// evitar guardar sin nombre
+if(nombre === ""){
+nombre = "Anónimo";
+}
 
-document.getElementById("quiz").innerHTML="";
-document.getElementById("resultado").innerHTML=
-`🎯 ${nombre}<br>Puntaje: ${score}<br>${nivel}`;
+// calcular promedio de tiempo
+let promedio = tiempos.reduce((a,b)=>a+b,0)/tiempos.length;
 
-guardarRanking(nombre,score);
+// nivel de riesgo
+let nivel = "";
+if(score <= 40) nivel = "🚨 Alto riesgo";
+else if(score <= 70) nivel = "⚠️ Riesgo medio";
+else nivel = "🟢 Buen nivel";
+
+// mostrar resultado
+document.getElementById("quiz").innerHTML = "";
+document.getElementById("btnNext").style.display = "none";
+
+document.getElementById("resultado").innerHTML =
+`🎯 ${nombre}<br>
+Puntaje: ${score}/100<br>
+${nivel}<br>
+⏱️ Tiempo promedio: ${promedio.toFixed(2)} s`;
+
+// guardar en ranking
+guardarRanking(nombre, score);
+
+// mostrar ranking
 mostrarRanking();
 }
 
-function guardarRanking(nombre,score){
-let data=JSON.parse(localStorage.getItem("ranking"))||[];
-data.push({nombre,score});
-data.sort((a,b)=>b.score-a.score);
-localStorage.setItem("ranking",JSON.stringify(data));
+
+// =======================
+// FUNCIÓN: guardarRanking()
+// Guarda datos en localStorage
+// Evita duplicados consecutivos
+// =======================
+function guardarRanking(nombre, score){
+
+let data = JSON.parse(localStorage.getItem("ranking")) || [];
+
+let ultimo = data[data.length - 1];
+
+// evita guardar duplicado inmediato
+if(ultimo && ultimo.nombre === nombre && ultimo.score === score){
+return;
 }
 
+data.push({nombre, score});
+
+// ordenar por mayor puntaje
+data.sort((a,b)=>b.score-a.score);
+
+localStorage.setItem("ranking", JSON.stringify(data));
+}
+
+
+// =======================
+// FUNCIÓN: mostrarRanking()
+// Muestra top 5 del ranking
+// =======================
 function mostrarRanking(){
-let data=JSON.parse(localStorage.getItem("ranking"))||[];
 
-let html="<h3>🏆 Ranking</h3>";
+let data = JSON.parse(localStorage.getItem("ranking")) || [];
 
-data.slice(0,5).forEach((p,i)=>{
-html+=`${i+1}. ${p.nombre} - ${p.score}<br>`;
+let html = "<h3>🏆 Ranking</h3>";
+
+data.slice(0,5).forEach((p, index)=>{
+html += `${index+1}. ${p.nombre} - ${p.score}<br>`;
 });
 
-document.getElementById("ranking").innerHTML=html;
+document.getElementById("ranking").innerHTML = html;
 }
 
+
+// =======================
+// FUNCIÓN: actualizarBarra()
+// Actualiza barra de progreso
+// =======================
+function actualizarBarra(){
+
+let porcentaje = (i / preguntas.length) * 100;
+
+document.getElementById("progreso").style.width = porcentaje + "%";
+}
+
+
+// =======================
+// FUNCIÓN: reiniciar()
+// Reinicia TODO el quiz
+// =======================
+function reiniciar(){
+
+i = 0;
+score = 0;
+tiempos = [];
+inicioTiempo = Date.now();
+
+document.getElementById("nombre").value = "";
+document.getElementById("resultado").innerHTML = "";
+
+document.getElementById("btnNext").style.display = "inline-block";
+
+mostrar();
+}
+
+
+// iniciar quiz
 mostrar();
 mostrarRanking();
 
