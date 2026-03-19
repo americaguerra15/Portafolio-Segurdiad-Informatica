@@ -1,136 +1,207 @@
-<hr style="margin:40px 0">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Phishing Quiz</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<h2>🛡️ Simulador de Phishing Interactivo</h2>
-<p>Analiza cada mensaje como si fuera real. ¿Caerías o no?</p>
+<style>
+body{
+font-family: 'Segoe UI', sans-serif;
+background:#f1f5f9;
+margin:0;
+padding:0;
+}
 
-<div id="quizContainer"></div>
+.container{
+max-width:700px;
+margin:auto;
+padding:30px;
+}
 
-<br>
-<button onclick="siguientePregunta()" id="btnNext">Siguiente</button>
+.card{
+background:white;
+padding:25px;
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+h1{
+text-align:center;
+}
+
+input{
+padding:10px;
+width:100%;
+margin-bottom:15px;
+border-radius:8px;
+border:1px solid #ccc;
+}
+
+button{
+padding:10px 15px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+margin:5px;
+}
+
+.btn{
+background:#2563eb;
+color:white;
+}
+
+.btn:hover{
+background:#1d4ed8;
+}
+
+.feedback{
+margin-top:10px;
+font-weight:bold;
+}
+
+.top{
+text-align:center;
+margin-bottom:20px;
+}
+
+.ranking{
+margin-top:20px;
+background:#f8fafc;
+padding:15px;
+border-radius:10px;
+}
+
+.back{
+margin-top:20px;
+display:block;
+text-align:center;
+text-decoration:none;
+color:#2563eb;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<div class="top">
+<h1>🛡️ Simulador de Phishing</h1>
+<p><b>América Fabiola Guerra Ramírez</b><br>
+Seguridad Informática | 8° semestre</p>
+</div>
+
+<input type="text" id="nombre" placeholder="Ingresa tu nombre">
+
+<div id="quiz"></div>
+
+<button class="btn" onclick="siguiente()">Siguiente</button>
 
 <h3 id="resultado"></h3>
+
+<div class="ranking" id="ranking"></div>
+
+<a href="PR02.html" class="back">⬅ Regresar</a>
+
+</div>
+</div>
 
 <script>
 
 let preguntas = [
-{
-texto: "📧 Netflix: Tu cuenta será suspendida. Ingresa aquí: http://netflix-verifica.xyz",
-correcta: "phishing",
-explicacion: "Dominio falso y urgencia → típico phishing."
-},
-{
-texto: "📧 Banco BBVA: Verifica tu cuenta en https://bbva.com",
-correcta: "legit",
-explicacion: "Dominio oficial y sin urgencia sospechosa."
-},
-{
-texto: "📱 SMS: Paquete retenido. Paga aquí: bit.ly/3abc",
-correcta: "phishing",
-explicacion: "URL acortada → oculta destino real."
-},
-{
-texto: "📧 TI: Necesitamos tu contraseña para mantenimiento",
-correcta: "phishing",
-explicacion: "NUNCA te pedirán contraseñas."
-},
-{
-texto: "📧 Amazon: Factura disponible en tu cuenta oficial",
-correcta: "legit",
-explicacion: "No pide datos ni enlaces sospechosos."
-},
-{
-texto: "📧 Premio ganado! Da clic ya o lo pierdes",
-correcta: "phishing",
-explicacion: "Urgencia + premio falso."
-},
-{
-texto: "📧 PayPal: Inicia sesión en paypal-secure-login.com",
-correcta: "phishing",
-explicacion: "Dominio falso (no es paypal.com)."
-},
-{
-texto: "📧 Microsoft: Actividad sospechosa detectada (login.microsoft.com)",
-correcta: "legit",
-explicacion: "Dominio oficial."
-},
-{
-texto: "📧 Archivo urgente adjunto (.exe)",
-correcta: "phishing",
-explicacion: "Archivos ejecutables = peligro."
-},
-{
-texto: "📧 Google: Nueva política (accounts.google.com)",
-correcta: "legit",
-explicacion: "Dominio correcto."
-}
+{t:"Netflix: Verifica aquí http://netflix-verifica.xyz", c:"phishing", e:"Dominio falso"},
+{t:"Banco: https://bbva.com", c:"legit", e:"Dominio oficial"},
+{t:"SMS: paquete retenido bit.ly", c:"phishing", e:"URL acortada"},
+{t:"TI pide contraseña", c:"phishing", e:"Nunca pedirán contraseña"},
+{t:"Amazon factura oficial", c:"legit", e:"Sin engaño"},
+{t:"Ganaste premio urgente", c:"phishing", e:"Urgencia falsa"},
+{t:"PayPal-login-secure.com", c:"phishing", e:"Dominio falso"},
+{t:"Google accounts.google.com", c:"legit", e:"Seguro"},
+{t:"Archivo .exe", c:"phishing", e:"Archivo peligroso"},
+{t:"Microsoft oficial", c:"legit", e:"Dominio correcto"}
 ];
 
-let actual = 0;
-let score = 0;
+let i=0;
+let score=0;
 
-function mostrarPregunta(){
-let p = preguntas[actual];
+function mostrar(){
+let p=preguntas[i];
 
-document.getElementById("quizContainer").innerHTML = `
-<div style="border:1px solid #ccc; padding:15px; border-radius:10px;">
-<p><b>Pregunta ${actual+1} de 10</b></p>
-<p>${p.texto}</p>
+document.getElementById("quiz").innerHTML=`
+<p><b>Pregunta ${i+1}/10</b></p>
+<p>${p.t}</p>
 
-<button onclick="responder('phishing')">Phishing</button>
-<button onclick="responder('legit')">Legítimo</button>
+<button onclick="resp('phishing')">Phishing</button>
+<button onclick="resp('legit')">Legítimo</button>
 
-<p id="feedback"></p>
-</div>
+<p class="feedback" id="f"></p>
 `;
 }
 
-function responder(resp){
-let p = preguntas[actual];
-let feedback = document.getElementById("feedback");
+function resp(r){
+let p=preguntas[i];
 
-if(resp === p.correcta){
-score += 10;
-feedback.innerHTML = "✅ Correcto: " + p.explicacion;
-feedback.style.color = "green";
+if(r===p.c){
+score+=10;
+document.getElementById("f").innerHTML="✅ Correcto: "+p.e;
 }else{
-feedback.innerHTML = "❌ Incorrecto: " + p.explicacion;
-feedback.style.color = "red";
+document.getElementById("f").innerHTML="❌ Incorrecto: "+p.e;
 }
 }
 
-function siguientePregunta(){
-actual++;
-
-if(actual < preguntas.length){
-mostrarPregunta();
+function siguiente(){
+i++;
+if(i<preguntas.length){
+mostrar();
 }else{
-mostrarResultado();
+fin();
 }
 }
 
-function mostrarResultado(){
+function fin(){
 
-let nivel = "";
+let nombre=document.getElementById("nombre").value || "Anónimo";
 
-if(score <= 40){
-nivel = "🚨 Alto riesgo";
-}
-else if(score <= 70){
-nivel = "⚠️ Riesgo medio";
-}
-else{
-nivel = "🟢 Buen nivel";
-}
+let nivel="";
+if(score<=40) nivel="Alto riesgo";
+else if(score<=70) nivel="Riesgo medio";
+else nivel="Buen nivel";
 
-document.getElementById("quizContainer").innerHTML = "";
-document.getElementById("btnNext").style.display = "none";
+document.getElementById("quiz").innerHTML="";
+document.getElementById("resultado").innerHTML=
+`🎯 ${nombre}<br>Puntaje: ${score}<br>${nivel}`;
 
-document.getElementById("resultado").innerHTML =
-`🎯 Puntaje: ${score}/100 <br> Nivel: ${nivel}
-<br><br> 💡 Recomendación:
-Nunca hagas clic en enlaces sospechosos ni compartas contraseñas.`;
+guardarRanking(nombre,score);
+mostrarRanking();
 }
 
-mostrarPregunta();
+function guardarRanking(nombre,score){
+let data=JSON.parse(localStorage.getItem("ranking"))||[];
+data.push({nombre,score});
+data.sort((a,b)=>b.score-a.score);
+localStorage.setItem("ranking",JSON.stringify(data));
+}
+
+function mostrarRanking(){
+let data=JSON.parse(localStorage.getItem("ranking"))||[];
+
+let html="<h3>🏆 Ranking</h3>";
+
+data.slice(0,5).forEach((p,i)=>{
+html+=`${i+1}. ${p.nombre} - ${p.score}<br>`;
+});
+
+document.getElementById("ranking").innerHTML=html;
+}
+
+mostrar();
+mostrarRanking();
 
 </script>
+
+</body>
+</html>
