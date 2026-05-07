@@ -134,12 +134,17 @@
                alt="Reconocimiento"
                style="width:100%; border-radius:12px;">
 
+          <h2 style="margin-top:35px;">Enumeracion</h2>
+
           <p style="
             margin-top:10px;
             font-size:14px;
             color:#475569;
           ">
-            Imagen 1: Reconocimiento de red con netdiscover.
+            
+            Se ejecutó un escaneo de puertos y detección de servicios utilizando nmap -sS -sC -p- -T4
+            192.168.56.102, confirmando la disponibilidad de múltiples vectores de entrada (FTP, SSH,
+            HTTP, RPC, SMB, NFS).
           </p>
 
         </div>
@@ -153,34 +158,36 @@
         ">
 
           <!-- CAMBIAR NOMBRE -->
-          <img src="../../img/nmap.png"
+          <img src="../../img/img2.png"
                alt="Escaneo Nmap"
                style="width:100%; border-radius:12px;">
+        </div>
+        
+        <!-- IMAGEN 3 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
 
-          <p style="
-            margin-top:10px;
-            font-size:14px;
-            color:#475569;
-          ">
-            Imagen 2: Escaneo de puertos con Nmap.
-          </p>
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/img3.png"
+               alt="Escaneo Nmap"
+               style="width:100%; border-radius:12px;">
 
         </div>
 
       </div>
-
-      <!-- ENUMERACION -->
-      <h2 style="margin-top:40px;">Enumeración</h2>
-
+      
       <p>
-        Durante la enumeración se identificaron múltiples servicios expuestos,
-        incluyendo FTP, SSH, SMB y HTTP.
+        <srtrong>Enumeración Web (HTTP):</srtrong> Tras descartar vulnerabilidades evidentes en el código fuente de la
+        página principal, y ante la demora de herramientas de fuerza bruta de directorios, se optó por un
+        escaneo de vulnerabilidades web con nikto. Esto reveló la existencia de un archivo público en la
+        raíz (readme.txt), el cual contenía una contraseña hardcodeada (rootroot1), evidenciando una
+        falla crítica en la protección de la Confidencialidad de los Datos.
       </p>
 
-      <p>
-        También se descubrió un archivo readme.txt accesible públicamente
-        que contenía credenciales en texto claro.
-      </p>
 
       <!-- GALERIA -->
       <div style="
@@ -197,14 +204,9 @@
           border:1px solid #e2e8f0;
         ">
 
-          <img src="../../img/nikto.png"
+          <img src="../../img/impg4.png"
                alt="Nikto"
                style="width:100%; border-radius:12px;">
-
-          <p style="margin-top:10px; font-size:14px; color:#475569;">
-            Imagen 3: Enumeración web con Nikto.
-          </p>
-
         </div>
 
         <div style="
@@ -214,24 +216,19 @@
           border:1px solid #e2e8f0;
         ">
 
-          <img src="../../img/smbmap.png"
+          <img src="../../img/img5.png"
                alt="SMBMap"
                style="width:100%; border-radius:12px;">
-
-          <p style="margin-top:10px; font-size:14px; color:#475569;">
-            Imagen 4: Enumeración SMB con smbmap.
-          </p>
-
         </div>
 
       </div>
 
-      <!-- EXPLOTACION -->
-      <h2 style="margin-top:40px;">Explotación</h2>
-
       <p>
-        Utilizando las credenciales encontradas, se logró acceso exitoso al
-        servicio FTP del servidor objetivo.
+        <srtrong>Enumeración SMB:</srtrong> Para identificar usuarios válidos y evadir los mecanismos de Control de
+        Acceso, se utilizó smbmap -H 192.168.56.102. El análisis de los recursos compartidos expuso
+        los directorios print$, IPC$, smbdata (con permisos de lectura y escritura) y, de manera crucial,
+        un directorio nombrado smbuser. Mediante inferencia lógica, se determinó que smbuser
+        correspondía a una cuenta válida del sistema.
       </p>
 
       <div style="
