@@ -169,22 +169,14 @@
         </div>
       
       <p>
-        <srtrong>Enumeración Web (HTTP):</srtrong> Tras descartar vulnerabilidades evidentes en el código fuente de la
+        <b>Enumeración Web (HTTP):</b> Tras descartar vulnerabilidades evidentes en el código fuente de la
         página principal, y ante la demora de herramientas de fuerza bruta de directorios, se optó por un
         escaneo de vulnerabilidades web con nikto. Esto reveló la existencia de un archivo público en la
         raíz (readme.txt), el cual contenía una contraseña hardcodeada (rootroot1), evidenciando una
         falla crítica en la protección de la Confidencialidad de los Datos.
       </p>
 
-
-      <!-- GALERIA -->
-      <div style="
-        display:grid;
-        grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
-        gap:20px;
-        margin-top:20px;
-      ">
-
+        <!-- IMAGEN 4 -->
         <div style="
           background:#f8fafc;
           padding:15px;
@@ -192,11 +184,13 @@
           border:1px solid #e2e8f0;
         ">
 
-          <img src="../../img/impg4.png"
-               alt="Nikto"
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/img4.png"
+               alt="Escaneo Nmap"
                style="width:100%; border-radius:12px;">
         </div>
-
+        
+        <!-- IMAGEN 5 -->
         <div style="
           background:#f8fafc;
           padding:15px;
@@ -204,60 +198,80 @@
           border:1px solid #e2e8f0;
         ">
 
+          <!-- CAMBIAR NOMBRE -->
           <img src="../../img/img5.png"
-               alt="SMBMap"
+               alt="Escaneo Nmap"
                style="width:100%; border-radius:12px;">
-        </div>
 
-      </div>
+        </div>
 
       <p>
-        <srtrong>Enumeración SMB:</srtrong> Para identificar usuarios válidos y evadir los mecanismos de Control de
+        <b>Enumeración SMB:</b> Para identificar usuarios válidos y evadir los mecanismos de Control de
         Acceso, se utilizó smbmap -H 192.168.56.102. El análisis de los recursos compartidos expuso
         los directorios print$, IPC$, smbdata (con permisos de lectura y escritura) y, de manera crucial,
         un directorio nombrado smbuser. Mediante inferencia lógica, se determinó que smbuser
         correspondía a una cuenta válida del sistema.
       </p>
 
-      <div style="
-        background:#f8fafc;
-        padding:15px;
-        border-radius:16px;
-        border:1px solid #e2e8f0;
-        margin-top:20px;
-      ">
+      <!-- IMAGEN 6 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
 
-        <img src="../../img/ftp.png"
-             alt="FTP"
-             style="width:100%; border-radius:12px;">
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/img6.png"
+               alt="Reconocimiento"
+               style="width:100%; border-radius:12px;">
 
-        <p style="margin-top:10px; font-size:14px; color:#475569;">
-          Imagen 5: Acceso exitoso al servicio FTP.
-        </p>
+          <h2 style="margin-top:35px;">Explotación</h2>
 
-      </div>
+          <p style="
+            margin-top:10px;
+            font-size:14px;
+            color:#475569;
+          ">
+            
+            Con el vector de Autenticación comprometido (usuario: smbuser, contraseña: rootroot1), se
+            procedió a vulnerar el servicio FTP (vsFTPd). El inicio de sesión fue exitoso, otorgando acceso
+            de lectura y escritura a la estructura de archivos del usuario. Esta brecha confirma la ineficacia
+            de los controles de seguridad lógicos del servidor frente a la fuga de información previa.
+          </p>
+
+        </div>
+      
+      <!-- IMAGEN 7 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/img7.png"
+               alt="Escaneo Nmap"
+               style="width:100%; border-radius:12px;">
+
+        </div>
 
       <!-- ESCALADA -->
       <h2 style="margin-top:40px;">Escalada de Privilegios</h2>
 
       <p>
-        Posteriormente se generaron llaves SSH para mantener persistencia
-        dentro del servidor.
+        Para elevar el nivel de acceso desde una sesión de transferencia de archivos (FTP) a una consola
+        interactiva completa (bypasseando futuras rotaciones de contraseñas), se ejecutó una técnica de
+        persistencia basada en criptografía asimétrica.
       </p>
 
       <p>
-        Finalmente se explotó la vulnerabilidad Dirty COW para obtener
-        privilegios root sobre el sistema.
+        Se generó un par de llaves criptográficas localmente utilizando sudo ssh-keygen (algoritmo
+        ED25519).
       </p>
 
-      <!-- GRID -->
-      <div style="
-        display:grid;
-        grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
-        gap:20px;
-        margin-top:20px;
-      ">
-
+      <!-- IMAGEN 8 -->
         <div style="
           background:#f8fafc;
           padding:15px;
@@ -265,16 +279,35 @@
           border:1px solid #e2e8f0;
         ">
 
-          <img src="../../img/sshkey.png"
-               alt="SSH Keys"
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/img8.png"
+               alt="Escaneo Nmap"
                style="width:100%; border-radius:12px;">
-
-          <p style="margin-top:10px; font-size:14px; color:#475569;">
-            Imagen 6: Generación de llaves SSH.
-          </p>
 
         </div>
 
+      <p>
+        A través de la sesión FTP previamente vulnerada, se aprovechó la falta de validación de
+        Integridad de los Datos para crear un directorio oculto /.ssh en la raíz del usuario.
+      </p>
+      <p>
+        Se inyectó la llave pública (id_ed25519.pub) en el servidor.
+      </p>
+      <p>
+        Esto permitió autenticarse posteriormente de forma directa a través del servicio SSH,
+        garantizando un acceso remoto continuo y sin restricciones.
+      </p>
+      <p>
+        Para elevar el nivel de acceso desde una sesión de transferencia de archivos (FTP) a una consola
+        interactiva completa, se ejecutó una técnica de persistencia basada en criptografía asimétrica para
+        evadir la Autenticación basada en contraseñas:
+      </p>
+      <p>
+        Se generó un par de llaves criptográficas (algoritmo ED25519) en el entorno del atacante
+        utilizando sudo ssh-keygen.
+      </p>
+
+      <!-- IMAGEN 9 -->
         <div style="
           background:#f8fafc;
           padding:15px;
@@ -282,26 +315,112 @@
           border:1px solid #e2e8f0;
         ">
 
-          <img src="../../img/dirtycow.png"
-               alt="Dirty COW"
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/img9.png"
+               alt="Escaneo Nmap"
                style="width:100%; border-radius:12px;">
-
-          <p style="margin-top:10px; font-size:14px; color:#475569;">
-            Imagen 7: Explotación de Dirty COW.
-          </p>
 
         </div>
 
-      </div>
+      <p>
+        A través de la sesión FTP vulnerada previamente con las credenciales de smbuser, se aprovechó
+        la falta de restricciones para subir la llave pública (id_ed25519.pub) y renombrarla como
+        authorized_keys dentro del directorio del usuario.
+      </p>
+      <p>
+        Esto permitió establecer una conexión SSH interactiva y segura directamente como smbuser
+        hacia el servidor
+      </p>
 
+      <!-- IMAGEN 10 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/img10.png"
+               alt="Escaneo Nmap"
+               style="width:100%; border-radius:12px;">
+
+        </div>
+
+      <p>
+        Una vez estabilizada la sesión interactiva, se realizó una enumeración del sistema operativo,
+        detectando una versión del kernel de Linux susceptible a la vulnerabilidad de condición de
+        carrera (Race Condition) documentada como CVE-2016-5195 (Dirty COW). Para realizar la
+        transferencia del vector de ataque, se estructuró el código fuente del exploit en un archivo local
+        (dirtycow.c) con el repositorio https://github.com/SecWiki/linux-kernelexploits/blob/master/2016/CVE-2016-5195/40616.c y se desplegó un servidor HTTP temporal
+        (puerto 8080) en la infraestructura del atacante. A través de este canal, se instruyó al servidor
+        objetivo para descargar el archivo malicioso.
+      </p>
+
+      <!-- IMAGEN 11 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/img11.png"
+               alt="Escaneo Nmap"
+               style="width:100%; border-radius:12px;">
+
+        </div>
+
+      <!-- IMAGEN 12 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/img12.png"
+               alt="Escaneo Nmap"
+               style="width:100%; border-radius:12px;">
+
+        </div>
+
+      <p>
+        Posteriormente, el código se compiló localmente aprovechando la disponibilidad del compilador
+        gcc. Al ejecutar el binario resultante, se corrompió la Integridad de los mecanismos de gestión de
+        memoria del kernel (Copy-on-Write), lo que permitió sobrescribir binarios protegidos y otorgar
+        una shell interactiva con privilegios máximos (root), anulando por completo las políticas de
+        Autorización del sistema.
+      </p>
+
+      <!-- IMAGEN 13 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/img13.png"
+               alt="Escaneo Nmap"
+               style="width:100%; border-radius:12px;">
+
+        </div>
+      
       <!-- IMPACTO -->
       <h2 style="margin-top:40px;">Análisis de Impacto</h2>
 
       <ul style="line-height:30px; color:#475569;">
 
-        <li><strong>Confidencialidad:</strong> Impacto total.</li>
+        <li><strong>Confidencialidad:</strong> Impacto Total. Cualquier atacante no autenticado puede leer
+        archivos sensibles (readme.txt) que comprometen la red.</li>
 
-        <li><strong>Integridad:</strong> Impacto total.</li>
+        <li><strong>Integridad:</strong> Impacto total. . El uso de contraseñas predecibles o
+        almacenadas en texto claro anula la capacidad del sistema para corroborar la identidad real de las
+        entidades (Peer Entity Authentication)</li>
 
         <li><strong>Autenticación:</strong> Comprometida.</li>
 
