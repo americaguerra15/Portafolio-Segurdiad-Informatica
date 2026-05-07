@@ -22,7 +22,7 @@
 
       <div class="links">
         <a href="../../index.html">Inicio</a>
-        <a href="parcial3.html">Parcial 3</a>
+        <a href="parcial2.html">Parcial 2</a>
       </div>
 
     </div>
@@ -45,25 +45,36 @@
         <strong>Fecha:</strong> 9 de Marzo de 2026 <br>
 
         <strong>Integrantes:</strong><br>
-        América Fabiola Guerra Ramírez - 179888 <br>
-        Cesar Yahir Benites Rangel - 179091 <br>
-        Carol Elizabeth Cortes Beltran - 177203
+        Benites Rangel Cesar Yahir – 179091 <br>
+        Cortes Beltran Carol Elizabeth – 177203 <br>
+        Guerra Ramírez América Fabiola – 179888 <br>
+        Larios Guerra Gustavo Michael – 178318 <br>
+        Montelongo Martínez Laura Ivon – 177291<br>
+        Puente Luna Bruno Axel – 177876 <br>
+        Rodríguez Moreno Cristian Alejandro – 181641 <br> 
+        
       </p>
 
       <!-- INTRODUCCION -->
       <h3>Executive Summary</h3>
 
       <p>
-        El presente reporte documenta una evaluación de seguridad realizada sobre el
-        servidor vulnerable “My File Server 1”. Durante la auditoría se identificaron
-        múltiples vulnerabilidades críticas relacionadas con autenticación, control de acceso,
-        exposición de información sensible y escalada de privilegios.
+        El presente documento detalla los resultados de la evaluación de seguridad realizada sobre el
+        servidor objetivo "My File Server 1". Durante la auditoría, se logró comprometer el sistema en
+        su totalidad debido a fallos críticos en los mecanismos de Autenticación y Control de Acceso. La
+        exposición de credenciales en texto claro a través del servicio web permitió el acceso no
+        autorizado mediante FTP. Posteriormente, se logró establecer persistencia interactiva en el
+        servidor a través de SSH. El riesgo global del sistema se clasifica como CRÍTICO, representando
+        una pérdida total de la Confidencialidad y la Integridad de los datos.
       </p>
 
       <p>
-        La explotación exitosa permitió obtener acceso inicial mediante FTP, persistencia
-        a través de SSH y posteriormente privilegios de administrador utilizando la
-        vulnerabilidad Dirty COW (CVE-2016-5195).
+        Durante la fase de post-explotación, se logró evadir los mecanismos de Control de Acceso
+        locales explotando una vulnerabilidad crítica a nivel del kernel de Linux (CVE-2016-5195,
+        conocida como "Dirty COW"). Esto permitió realizar una escalada de privilegios vertical,
+        transitando de un usuario con privilegios limitados (smbuser) a obtener el control absoluto del
+        sistema (root), resultando en el compromiso total de la Confidencialidad, Integridad y
+        Disponibilidad de la infraestructura evaluada.
       </p>
 
       <hr style="border:none; border-top:1px solid #e2e8f0; margin:30px 0;">
@@ -77,23 +88,27 @@
         <li>Servicios evaluados:
           HTTP, FTP, SSH, SMB, NFS y RPCbind
         </li>
-        <li>Metodología aplicada: Pentesting Black Box</li>
+        <li>Limitaciones: Las pruebas se realizaron en un entorno de red local controlada</li>
       </ul>
 
       <!-- METODOLOGIA -->
       <h2 style="margin-top:35px;">Metodología Aplicada</h2>
 
       <p>
-        La evaluación de seguridad se realizó bajo el estándar PTES utilizando
-        un enfoque de caja negra, simulando el comportamiento de un atacante externo.
+        La evaluación se ejecutó siguiendo un enfoque estructurado de caja negra (Black-Box),
+        emulando las tácticas de un actor de amenazas real. La metodología incluyó las fases de:
+        Reconocimiento pasivo/activo, Enumeración de servicios, Explotación de vulnerabilidades
+        lógicas y Post-explotación (Mantenimiento de acceso)
       </p>
 
       <!-- RECONOCIMIENTO -->
       <h2 style="margin-top:35px;">Fase de Reconocimiento</h2>
 
       <p>
-        Se utilizó la herramienta netdiscover para identificar los dispositivos
-        activos dentro de la red local y localizar el servidor objetivo.
+        Se inició la auditoría analizando el segmento de red local para identificar activos vivos sin
+        generar alertas masivas. Utilizando la herramienta netdiscover mediante la inspección de
+        paquetes ARP, se logró identificar la dirección MAC (08:00:27:e4:b3:e4) y asignar de manera
+        inequívoca la dirección IP 192.168.56.102 al servidor objetivo.
       </p>
 
       <!-- IMAGENES -->
@@ -115,7 +130,7 @@
         ">
 
           <!-- CAMBIAR NOMBRE -->
-          <img src="../../img/reconocimiento.png"
+          <img src="../../img/img1.png"
                alt="Reconocimiento"
                style="width:100%; border-radius:12px;">
 
