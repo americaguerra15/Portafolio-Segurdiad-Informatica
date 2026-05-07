@@ -1,1 +1,447 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Actividad | Red Team Report: Pentesting de "My File Server 1"</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../../style.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-content">
+
+      <div class="logo">
+        AG<span>.</span>
+      </div>
+
+      <div class="links">
+        <a href="../../index.html">Inicio</a>
+        <a href="parcial2.html">Parcial 2</a>
+      </div>
+
+    </div>
+  </nav>
+
+  <div style="max-width: 1100px; margin:auto; padding:50px 20px;">
+
+    <div class="info-card" style="margin-top:25px;">
+
+      <!-- TITULO -->
+      <div class="card-title">
+        <i class="fas fa-user-secret"></i>
+        <h3>Actividad: Red Team Report: Pentesting de "My File Server 1"</h3>
+      </div>
+
+      <!-- INFORMACION -->
+      <p style="color:#64748b; margin-top:-10px;">
+        <strong>Materia:</strong> Seguridad Informática |
+        <strong>Semestre:</strong> 8° |
+        <strong>Fecha:</strong> 9 de Marzo de 2026 <br>
+
+        <strong>Integrantes:</strong><br>
+        Benites Rangel Cesar Yahir – 179091 <br>
+        Cortes Beltran Carol Elizabeth – 177203 <br>
+        Guerra Ramírez América Fabiola – 179888 <br>
+        Larios Guerra Gustavo Michael – 178318 <br>
+        Montelongo Martínez Laura Ivon – 177291<br>
+        Puente Luna Bruno Axel – 177876 <br>
+        Rodríguez Moreno Cristian Alejandro – 181641 <br> 
+        
+      </p>
+
+      <!-- INTRODUCCION -->
+      <h3>Resumen Ejecutivo</h3>
+
+      <p>
+        Se realizó una evaluación de seguridad ofensiva sobre el servidor Napping. El análisis
+        reveló debilidades críticas en la gestión de accesos y la configuración de servicios que
+        permiten a un atacante externo obtener control total del sistema (acceso Root). La
+        vulnerabilidad principal radica en una técnica de TabNapping en el servicio web, seguida
+        de una mala configuración en las tareas programadas o permisos de usuario que facilitan
+        la escalada de privilegios
+      </p>
+
+      <hr style="border:none; border-top:1px solid #e2e8f0; margin:30px 0;">
+
+      <!-- ALCANCE -->
+      <h2>Alcance</h2>
+      <p>
+        El alcance de esta evaluación se limitó exclusivamente a la dirección IP asignada a la
+        máquina Napping, evaluando los servicios expuestos, vulnerabilidades web y
+        configuraciones internas del sistema operativo Linux.
+      </p>
+
+      <!-- METODOLOGIA -->
+      <h2 style="margin-top:35px;">Metodología Aplicada</h2>
+
+      <p>
+        Se utilizó la metodología estándar de pruebas de penetración:
+          <list>1. Reconocimiento: Identificación de la superficie de ataque.</list>
+          <list>2. Enumeración: Análisis profundo de servicios abiertos.</list>
+          <list>3. Explotación: Ejecución de vectores de ataque para ganar acceso inicial.</list>
+          <list>4. Post-Explotación: Escalada de privilegios y persistencia.</list>
+      </p>
+
+      <!-- RECONOCIMIENTO -->
+      <h2 style="margin-top:35px;">Fase de Reconocimiento</h2>
+
+      <p>
+       Utilizamos el comando nmap -A para realizar un escaneo avanzado de la dirección IP de la
+        máquina objetivo. Este análisis permitió identificar los puertos abiertos, entre los cuales
+        se encontraron el servicio SSH y el servicio HTTP activos
+      </p>
+
+        <!-- IMAGEN 1 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/imagen1.png"
+               alt="Reconocimiento"
+               style="width:100%; border-radius:12px;">
+
+          <h2 style="margin-top:35px;">Enumeracion</h2>
+
+          <p style="
+            margin-top:10px;
+            font-size:14px;
+            color:#475569;
+          ">
+            
+           Ingresamos la dirección IP de la máquina virtual en el navegador para visualizar el sitio web que se encuentra disponible y accesible desde el servicio HTTP. 
+          </p>
+
+        </div>
+
+        <!-- IMAGEN 2 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/imagen2.png"
+               alt="Escaneo Nmap"
+               style="width:100%; border-radius:12px;">
+        </div>
+    
+          <h2 style="margin-top:35px;">Enumeración</h2>
+
+          <p style="
+            margin-top:10px;
+            font-size:14px;
+            color:#475569;
+          ">
+            
+            Utilizamos la herramienta DirBuster en su modo interactivo para realizar un análisis de
+            fuerza bruta sobre el sitio web, con el objetivo de identificar los directorios y recursos
+            accesibles que no se encuentran listados de forma visible.
+          </p>
+
+        </div>
+      
+      <!-- IMAGEN 3 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/imagen3.png"
+               alt="Escaneo Nmap"
+               style="width:100%; border-radius:12px;">
+
+        </div>
+
+    <p>
+      Esperamos a que el programa termine de escanear los directorios 
+    </p>
+
+    <!-- IMAGEN 4 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/imagen4.png"
+               alt="Escaneo Nmap"
+               style="width:100%; border-radius:12px;">
+
+        </div>
+
+    <p>
+      Durante el análisis con DirBuster, la herramienta identificó dos recursos principales
+      dentro del sitio web: index.php y register.php.    
+    </p>
+
+    <!-- IMAGEN 5 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/imagen5.png"
+               alt="Escaneo Nmap"
+               style="width:100%; border-radius:12px;">
+
+        </div>
+
+    <p>
+      Utilizamos la herramienta Gobuster junto con un diccionario de palabras para realizar un
+      proceso de fuerza bruta dirigido sobre el servidor web. El objetivo de este análisis es
+      descubrir directorios y archivos ocultos que no están enlazados de manera visible en el
+      sitio, pero que podrían existir en el servidor    
+    </p>
+
+    <!-- IMAGEN 6 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/imagen6.png"
+               alt="Escaneo Nmap"
+               style="width:100%; border-radius:12px;">
+
+        </div>
+
+    <p>
+      Accedimos a uno de los directorios descubiertos durante la enumeración y encontramos
+      una página que permite realizar el proceso de registro de usuarios. Desde este formulario
+      creamos una cuenta nueva para continuar con el análisis del sitio.  
+    </p>
+
+    <!-- IMAGEN 7 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/imagen7.png"
+               alt="Escaneo Nmap"
+               style="width:100%; border-radius:12px;">
+
+        </div>
+
+    <p>
+      Accedimos al sitio después de completar el registro y se nos mostró una página de
+      bienvenida. En esta sección, el sistema indica que los enlaces enviados serán revisados
+      manualmente por el administrador, lo que sugiere que existe un flujo de validación o
+      moderación dentro de la plataforma.  
+    </p>
+
+    <!-- IMAGEN 8 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/imagen8.png"
+               alt="Escaneo Nmap"
+               style="width:100%; border-radius:12px;">
+
+        </div>
+
+    <p>
+      Utilizamos la combinación Ctrl + U en el navegador para visualizar el código fuente de la
+      página. Esto nos permitió revisar la estructura interna del sitio y buscar elementos
+      interesantes, como comentarios, rutas ocultas, scripts o cualquier información que
+      pudiera ser útil para el análisis.
+    </p>
+
+    <!-- IMAGEN 9 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/imagen9.png"
+               alt="Escaneo Nmap"
+               style="width:100%; border-radius:12px;">
+
+        </div>
+
+    <h2 style="margin-top:35px;">Explotación</h2>
+
+      <p>
+       En la imagen se observa lo siguiente:
+        <list>Navegación de directorios: El usuario utiliza los comandos ls para listar las
+        carpetas de su sesión y cd Desktop para moverse al escritorio dentro de una
+        terminal de Kali Linux</list>
+        <list>Consulta de red: Se ejecuta el comando ifconfig para visualizar la configuración de
+        las interfaces de red activas en el sistema. </list>
+        <list>Detalles de la interfaz eth0: Se muestra que la tarjeta de red tiene asignada la
+        dirección IP 192.168.56.101 y ha transferido aproximadamente 17.1 GiB de datos
+        recibidos. </list>
+      </p>
+
+        <!-- IMAGEN 10 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/imagen10.png"
+               alt="Reconocimiento"
+               style="width:100%; border-radius:12px;">
+
+          <h2 style="margin-top:35px;">Enumeracion</h2>
+        </div>
+
+    <p>
+      Creamos un archivo que contiene código HTML diseñado para funcionar como un
+      payload, con el objetivo de probar cómo el sistema procesa y valida el contenido
+      enviado por los usuarios. Este archivo nos permite evaluar si el sitio es vulnerable a la
+      ejecución de código o a la manipulación de entradas.
+    </p>
+
+    <!-- IMAGEN 11 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/imagen11.png"
+               alt="Escaneo Nmap"
+               style="width:100%; border-radius:12px;">
+
+        </div>
+
+
+    <!-- IMAGEN 12 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/imagen12.png"
+               alt="Escaneo Nmap"
+               style="width:100%; border-radius:12px;">
+
+        </div>
+
+    <!-- IMAGEN 13 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/imagen13.png"
+               alt="Escaneo Nmap"
+               style="width:100%; border-radius:12px;">
+
+        </div>
+
+    <p>
+      Ejecutamos el comando python -m http.server 80 para iniciar un servidor web local en
+      el puerto 80. Esto nos permitió poner a disposición el archivo que contenía el payload,
+      de modo que pudiera ser accedido desde la máquina objetivo mediante una URL
+      directa
+    </p>
+
+    <!-- IMAGEN 14 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/imagen14.png"
+               alt="Escaneo Nmap"
+               style="width:100%; border-radius:12px;">
+
+        </div>
+
+    <p>
+      Desarrollo del exploit: Accedimos al editor nano para crear el archivo payload.html,
+      programando un script de Reverse Tabnabbing que redirige la pestaña de la víctima
+      hacia nuestra IP 192.168.56.101. 
+    </p>
+    <p>
+      Preparación del entorno: Tras guardar el código, ejecutamos el comando ls en el
+      escritorio de nuestra máquina Kali Linux para confirmar que el archivo malicioso
+      está generado y listo para la fase de ataque.
+    </p>
+    <!-- IMAGEN 15 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/imagen15.png"
+               alt="Escaneo Nmap"
+               style="width:100%; border-radius:12px;">
+
+        </div>
+      
+
+      <!-- PDF -->
+      <div style="margin-top:35px; text-align:center;">
+
+        <a href="../../pdf/act11-Equipo3.pdf"
+           class="activity-btn"
+           target="_blank">
+
+          <i class="fas fa-file-pdf"></i>
+          Exportar PDF
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
