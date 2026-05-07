@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Actividad | Red Team Report - My File Server 1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../../style.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-content">
+
+      <div class="logo">
+        AG<span>.</span>
+      </div>
+
+      <div class="links">
+        <a href="../../index.html">Inicio</a>
+        <a href="parcial3.html">Parcial 3</a>
+      </div>
+
+    </div>
+  </nav>
+
+  <div style="max-width: 1100px; margin:auto; padding:50px 20px;">
+
+    <div class="info-card" style="margin-top:25px;">
+
+      <!-- TITULO -->
+      <div class="card-title">
+        <i class="fas fa-user-secret"></i>
+        <h3>Actividad: Red Team Report - My File Server 1</h3>
+      </div>
+
+      <!-- INFORMACION -->
+      <p style="color:#64748b; margin-top:-10px;">
+        <strong>Materia:</strong> Seguridad Informática |
+        <strong>Semestre:</strong> 8° |
+        <strong>Fecha:</strong> 9 de Marzo de 2026 <br>
+
+        <strong>Integrantes:</strong><br>
+        América Fabiola Guerra Ramírez - 179888 <br>
+        Cesar Yahir Benites Rangel - 179091 <br>
+        Carol Elizabeth Cortes Beltran - 177203
+      </p>
+
+      <!-- INTRODUCCION -->
+      <h3>Executive Summary</h3>
+
+      <p>
+        El presente reporte documenta una evaluación de seguridad realizada sobre el
+        servidor vulnerable “My File Server 1”. Durante la auditoría se identificaron
+        múltiples vulnerabilidades críticas relacionadas con autenticación, control de acceso,
+        exposición de información sensible y escalada de privilegios.
+      </p>
+
+      <p>
+        La explotación exitosa permitió obtener acceso inicial mediante FTP, persistencia
+        a través de SSH y posteriormente privilegios de administrador utilizando la
+        vulnerabilidad Dirty COW (CVE-2016-5195).
+      </p>
+
+      <hr style="border:none; border-top:1px solid #e2e8f0; margin:30px 0;">
+
+      <!-- ALCANCE -->
+      <h2>Alcance</h2>
+
+      <ul style="line-height:30px; color:#475569;">
+        <li>Objetivo: Máquina virtual "My File Server 1"</li>
+        <li>IP identificada: 192.168.56.102</li>
+        <li>Servicios evaluados:
+          HTTP, FTP, SSH, SMB, NFS y RPCbind
+        </li>
+        <li>Metodología aplicada: Pentesting Black Box</li>
+      </ul>
+
+      <!-- METODOLOGIA -->
+      <h2 style="margin-top:35px;">Metodología Aplicada</h2>
+
+      <p>
+        La evaluación de seguridad se realizó bajo el estándar PTES utilizando
+        un enfoque de caja negra, simulando el comportamiento de un atacante externo.
+      </p>
+
+      <!-- RECONOCIMIENTO -->
+      <h2 style="margin-top:35px;">Fase de Reconocimiento</h2>
+
+      <p>
+        Se utilizó la herramienta netdiscover para identificar los dispositivos
+        activos dentro de la red local y localizar el servidor objetivo.
+      </p>
+
+      <!-- IMAGENES -->
+      <h4 style="margin-top:25px;">Imágenes</h4>
+
+      <div style="
+        display:grid;
+        grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+        gap:20px;
+        margin-top:20px;
+      ">
+
+        <!-- IMAGEN 1 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/reconocimiento.png"
+               alt="Reconocimiento"
+               style="width:100%; border-radius:12px;">
+
+          <p style="
+            margin-top:10px;
+            font-size:14px;
+            color:#475569;
+          ">
+            Imagen 1: Reconocimiento de red con netdiscover.
+          </p>
+
+        </div>
+
+        <!-- IMAGEN 2 -->
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <!-- CAMBIAR NOMBRE -->
+          <img src="../../img/nmap.png"
+               alt="Escaneo Nmap"
+               style="width:100%; border-radius:12px;">
+
+          <p style="
+            margin-top:10px;
+            font-size:14px;
+            color:#475569;
+          ">
+            Imagen 2: Escaneo de puertos con Nmap.
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- ENUMERACION -->
+      <h2 style="margin-top:40px;">Enumeración</h2>
+
+      <p>
+        Durante la enumeración se identificaron múltiples servicios expuestos,
+        incluyendo FTP, SSH, SMB y HTTP.
+      </p>
+
+      <p>
+        También se descubrió un archivo readme.txt accesible públicamente
+        que contenía credenciales en texto claro.
+      </p>
+
+      <!-- GALERIA -->
+      <div style="
+        display:grid;
+        grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+        gap:20px;
+        margin-top:20px;
+      ">
+
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <img src="../../img/nikto.png"
+               alt="Nikto"
+               style="width:100%; border-radius:12px;">
+
+          <p style="margin-top:10px; font-size:14px; color:#475569;">
+            Imagen 3: Enumeración web con Nikto.
+          </p>
+
+        </div>
+
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <img src="../../img/smbmap.png"
+               alt="SMBMap"
+               style="width:100%; border-radius:12px;">
+
+          <p style="margin-top:10px; font-size:14px; color:#475569;">
+            Imagen 4: Enumeración SMB con smbmap.
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- EXPLOTACION -->
+      <h2 style="margin-top:40px;">Explotación</h2>
+
+      <p>
+        Utilizando las credenciales encontradas, se logró acceso exitoso al
+        servicio FTP del servidor objetivo.
+      </p>
+
+      <div style="
+        background:#f8fafc;
+        padding:15px;
+        border-radius:16px;
+        border:1px solid #e2e8f0;
+        margin-top:20px;
+      ">
+
+        <img src="../../img/ftp.png"
+             alt="FTP"
+             style="width:100%; border-radius:12px;">
+
+        <p style="margin-top:10px; font-size:14px; color:#475569;">
+          Imagen 5: Acceso exitoso al servicio FTP.
+        </p>
+
+      </div>
+
+      <!-- ESCALADA -->
+      <h2 style="margin-top:40px;">Escalada de Privilegios</h2>
+
+      <p>
+        Posteriormente se generaron llaves SSH para mantener persistencia
+        dentro del servidor.
+      </p>
+
+      <p>
+        Finalmente se explotó la vulnerabilidad Dirty COW para obtener
+        privilegios root sobre el sistema.
+      </p>
+
+      <!-- GRID -->
+      <div style="
+        display:grid;
+        grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+        gap:20px;
+        margin-top:20px;
+      ">
+
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <img src="../../img/sshkey.png"
+               alt="SSH Keys"
+               style="width:100%; border-radius:12px;">
+
+          <p style="margin-top:10px; font-size:14px; color:#475569;">
+            Imagen 6: Generación de llaves SSH.
+          </p>
+
+        </div>
+
+        <div style="
+          background:#f8fafc;
+          padding:15px;
+          border-radius:16px;
+          border:1px solid #e2e8f0;
+        ">
+
+          <img src="../../img/dirtycow.png"
+               alt="Dirty COW"
+               style="width:100%; border-radius:12px;">
+
+          <p style="margin-top:10px; font-size:14px; color:#475569;">
+            Imagen 7: Explotación de Dirty COW.
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- IMPACTO -->
+      <h2 style="margin-top:40px;">Análisis de Impacto</h2>
+
+      <ul style="line-height:30px; color:#475569;">
+
+        <li><strong>Confidencialidad:</strong> Impacto total.</li>
+
+        <li><strong>Integridad:</strong> Impacto total.</li>
+
+        <li><strong>Autenticación:</strong> Comprometida.</li>
+
+        <li><strong>Disponibilidad:</strong> Riesgo crítico.</li>
+
+      </ul>
+
+      <!-- RECOMENDACIONES -->
+      <h2 style="margin-top:40px;">Recomendaciones</h2>
+
+      <ul style="line-height:30px; color:#475569;">
+
+        <li>Eliminar archivos sensibles públicos.</li>
+
+        <li>Implementar contraseñas robustas.</li>
+
+        <li>Reemplazar FTP por SFTP.</li>
+
+        <li>Actualizar el kernel de Linux.</li>
+
+        <li>Aplicar principio de menor privilegio.</li>
+
+      </ul>
+
+      <!-- VIDEO -->
+      <h2 style="margin-top:40px;">Video Explicativo</h2>
+
+      <div style="
+        margin-top:20px;
+        border-radius:18px;
+        overflow:hidden;
+        box-shadow:0px 8px 20px rgba(0,0,0,0.20);
+      ">
+
+        <div style="
+          position:relative;
+          width:100%;
+          padding-top:56.25%;
+        ">
+
+          <!-- CAMBIAR LINK -->
+          <iframe
+            src="https://www.youtube.com/embed/VIDEO"
+            title="Video"
+            frameborder="0"
+            allowfullscreen
+            style="
+              position:absolute;
+              top:0;
+              left:0;
+              width:100%;
+              height:100%;
+              border:none;
+            ">
+          </iframe>
+
+        </div>
+
+      </div>
+
+      <!-- PDF -->
+      <div style="margin-top:35px; text-align:center;">
+
+        <a href="../../pdf/reporte-redteam.pdf"
+           class="activity-btn"
+           target="_blank">
+
+          <i class="fas fa-file-pdf"></i>
+          Exportar PDF
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
