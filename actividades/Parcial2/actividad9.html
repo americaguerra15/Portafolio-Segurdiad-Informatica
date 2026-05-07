@@ -415,33 +415,50 @@
 
       <ul style="line-height:30px; color:#475569;">
 
-        <li><strong>Confidencialidad:</strong> Impacto Total. Cualquier atacante no autenticado puede leer
+        <li><strong>Confidencialidad de los Datos:</strong> Impacto Total. Cualquier atacante no autenticado puede leer
         archivos sensibles (readme.txt) que comprometen la red.</li>
 
-        <li><strong>Integridad:</strong> Impacto total. . El uso de contraseñas predecibles o
+        <li><strong>Autenticación y control de acceso:</strong>  Impacto Total. El uso de contraseñas predecibles o
         almacenadas en texto claro anula la capacidad del sistema para corroborar la identidad real de las
-        entidades (Peer Entity Authentication)</li>
+        entidades (Peer Entity Authentication).</li>
 
-        <li><strong>Autenticación:</strong> Comprometida.</li>
+        <li><strong>Integridad de los Datos:</strong> Impacto total. . El uso de contraseñas predecibles o
+        almacenadas en texto claro anula la capacidad del sistema para corroborar la identidad real de las
+        entidades (Peer Entity Authentication)</li>        
 
-        <li><strong>Disponibilidad:</strong> Riesgo crítico.</li>
+        <li><strong>Integridad del Sistema y Autorización: Impacto Total:</strong>La explotación exitosa de CVE-2016-
+        5195 demuestra que un usuario sin privilegios puede corromper la memoria del kernel para
+        forzar una escalada vertical. El atacante como root tiene la capacidad irrestricta de modificar
+        registros (logs), instalar rootkits, exfiltrar bases de datos y comprometer cualquier servicio de red
+        subyacente, evadiendo todos los dominios de seguridad del sistema operativo.</li>
 
       </ul>
 
       <!-- RECOMENDACIONES -->
-      <h2 style="margin-top:40px;">Recomendaciones</h2>
+      <h2 style="margin-top:40px;">Recomendaciones técnicas</h2>
 
       <ul style="line-height:30px; color:#475569;">
 
-        <li>Eliminar archivos sensibles públicos.</li>
+        <li><strong>Remediación Inmediata:</strong>  Eliminar permanentemente el archivo readme.txt del directorio web
+        público y rotar de manera inmediata la contraseña del usuario smbuser y de todos los
+        administradores</li>
 
-        <li>Implementar contraseñas robustas.</li>
+        <li><strong>Fortalecimiento de la autenticación:</strong>  Implementar políticas de contraseñas robustas y
+        deshabilitar la autenticación por contraseña en SSH, permitiendo únicamente el acceso mediante
+        llaves públicas legítimas y auditadas.</li>
 
-        <li>Reemplazar FTP por SFTP.</li>
+        <li><strong>Cifrado y conttol de Acceso:</strong>  Deshabilitar servicios de transferencia en texto claro como FTP
+        en favor de protocolos seguros como SFTP. Configurar el servicio Samba para que ningún
+        recurso compartido admita acceso anónimo o permisos de escritura globales sin autenticación
+        previa (Principio de Menor Privilegio).
+        Gestión de Parches y Actualizaciones (Patch Management): Actualizar inmediatamente el
+        kernel de Linux a una versión superior que mitigue la vulnerabilidad CVE-2016-5195 (Dirty
+        COW). Mantener un ciclo continuo de parcheo para el sistema operativo base.</li>
 
-        <li>Actualizar el kernel de Linux.</li>
-
-        <li>Aplicar principio de menor privilegio.</li>
+        <li><strong>restricción de herramientas de desarrollo:</strong>   Desinstalar o restringir estrictamente los permisos
+        de ejecución de compiladores (como gcc o make) en servidores de producción. Esto mitiga el
+        riesgo de que un atacante compile exploits locales (Local Privilege Escalation) directamente en
+        la máquina comprometida.</li>
 
       </ul>
 
@@ -484,7 +501,7 @@
       <!-- PDF -->
       <div style="margin-top:35px; text-align:center;">
 
-        <a href="../../pdf/reporte-redteam.pdf"
+        <a href="../../pdf/act09-Equipo3.pdf"
            class="activity-btn"
            target="_blank">
 
