@@ -832,3 +832,23 @@ cursor:pointer;
 font-weight:800;
 color:var(--text-dark);
 }
+
+.roadmap-icon{
+    width:80px;
+    height:80px;
+    border-radius:22px;
+    border:1px solid #dbe2ea;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin-bottom:25px;
+
+    background:#f8fafc;
+}
+
+.roadmap-icon i{
+    font-size:38px;
+    color:#475569;
+}
