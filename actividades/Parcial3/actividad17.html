@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Actividad 17 | CVSS 3.1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="../../style.css">
+</head>
+
+<body>
+
+   <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-content">
+
+      <div class="logo">
+        AG<span>.</span>
+      </div>
+
+       <div class="links">
+        <a href="../../index.html">Inicio</a>
+        <a href="parcial3.html">Parcial 3</a>
+      </div>
+      
+    </div>
+  </nav>
+
+  <div style="max-width: 1000px; margin: auto; padding: 50px 20px;">
+
+    <div class="info-card" style="margin-top: 25px;">
+
+      <div class="card-title">
+        <i class="fas fa-shield-virus"></i>
+        <h3>Actividad 17: Evaluación de vulnerabilidades con CVSS 3.1</h3>
+      </div>
+
+      <p style="color:#64748b; margin-top:-10px;">
+        <strong>Materia:</strong> Seguridad Informática | <strong>Semestre:</strong> 8º | 
+        <strong>Fecha:</strong> 15 de mayo de 2026 | <strong>Tema:</strong>Evaluación de vulnerabilidades con CVSS 3.1<br>
+        <strong>Integrantes:</strong><br>
+        - América Fabiola Guerra Ramírez - 179884 <br>
+        - Bruno Axel Puente Luna - 177876 <br>
+        - Laura Ivon Montelongo Martinez - 177291 <br>
+        - Gustavo Michael Larios Guerra - 178318 <br>
+        - Carol Elizabeth Cortes Beltran - 177203 <br>
+        - Benites Rangel Cesar Yahir - 179091 <br>
+        - Cristian Alejandro Rodriguez Moreno - 181641 <br>
+      </p>
+
+    <hr style="border:none; border-top:1px solid #e2e8f0; margin:25px 0;">
+
+      <!-- CONSTRUCCIÓN DEL VECTOR -->
+      <h3>1. Construcción del vector</h3>
+
+      <p>
+        Con base en el escenario proporcionado:
+      </p>
+
+      <ul style="color:#475569; line-height:1.8;">
+
+        <li>
+          <strong>AV:N (Attack Vector: Network)</strong>
+          → La vulnerabilidad puede explotarse a través de la red.
+        </li>
+
+        <li>
+          <strong>AC:L (Attack Complexity: Low)</strong>
+          → La explotación requiere baja complejidad.
+        </li>
+
+        <li>
+          <strong>PR:H (Privileges Required: High)</strong>
+          → Se necesitan privilegios elevados.
+        </li>
+
+        <li>
+          <strong>UI:N (User Interaction: None)</strong>
+          → No requiere interacción del usuario.
+        </li>
+
+        <li>
+          <strong>S:U (Scope: Unchanged)</strong>
+          → No cambia el alcance.
+        </li>
+
+        <li>
+          <strong>C:L (Confidentiality: Low)</strong>
+          → Impacto bajo en confidencialidad.
+        </li>
+
+        <li>
+          <strong>I:L (Integrity: Low)</strong>
+          → Impacto bajo en integridad.
+        </li>
+
+        <li>
+          <strong>A:L (Availability: Low)</strong>
+          → Impacto bajo en disponibilidad.
+        </li>
+
+      </ul>
+
+      <!-- IMÁGENES -->
+      <h4 style="margin-top:25px;">Imágenes</h4>
+      
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:15px; margin-top:15px;">
+      
+        <div style="background:#f8fafc; padding:15px; border-radius:15px; border:1px solid #e2e8f0;">
+
+          <img src="../../img/a1.png" alt="CVSS Base Score" style="width:100%; border-radius:12px;">
+
+          <p style="margin-top:10px; font-size:14px; color:#475569;">
+            Imagen 1: Configuración Base Score CVSS 3.1.
+          </p>
+
+        </div>
+      
+        <div style="background:#f8fafc; padding:15px; border-radius:15px; border:1px solid #e2e8f0;">
+
+          <img src="../../img/a2.png" alt="CVSS Vector String" style="width:100%; border-radius:12px;">
+
+          <p style="margin-top:10px; font-size:14px; color:#475569;">
+            Imagen 2: Vector String CVSS v3.1.
+          </p>
+
+        </div>
+
+        <div style="background:#f8fafc; padding:15px; border-radius:15px; border:1px solid #e2e8f0;">
+
+          <img src="../../img/a3.png" alt="CVSS Environmental Score" style="width:100%; border-radius:12px;">
+
+          <p style="margin-top:10px; font-size:14px; color:#475569;">
+            Imagen 3: Environmental Score CVSS.
+          </p>
+
+        </div>
+      
+      </div>
+
+      <!-- INTERPRETACIÓN -->
+      <h3 style="margin-top:35px;">2. Interpretación técnica</h3>
+
+      <p>
+        Aunque esta vulnerabilidad necesita privilegios elevados para poder explotarse,
+        sigue siendo importante debido a que un atacante con acceso administrativo
+        o permisos avanzados podría utilizarla para afectar aún más los sistemas
+        internos de la organización.
+      </p>
+
+      <p>
+        Este tipo de fallas representa un riesgo especialmente en situaciones
+        donde existen cuentas comprometidas, amenazas internas o procesos previos
+        de escalamiento de privilegios.
+      </p>
+
+      <p>
+        Quienes podrían aprovecharla serían principalmente usuarios internos
+        malintencionados, administradores comprometidos o atacantes externos
+        que hayan conseguido credenciales privilegiadas mediante técnicas como
+        phishing, filtración de información o ataques de fuerza bruta.
+      </p>
+
+      <p>
+        Aunque el impacto en la confidencialidad, integridad y disponibilidad
+        es bajo, esto únicamente indica que no ocasiona daños críticos
+        ni pérdida total de información; aun así, puede generar accesos parciales
+        a datos, cambios menores en el sistema o interrupciones limitadas del servicio,
+        por lo que continúa siendo una vulnerabilidad que requiere atención y mitigación.
+      </p>
+
+      <!-- CÁLCULO -->
+      <h3>3. Cálculo de puntuación</h3>
+
+      <p>
+        Usando la calculadora oficial CVSS v3.1:
+      </p>
+
+      <p>
+        El vector:
+      </p>
+
+      <p style="font-weight:600; color:#0f172a;">
+        CVSS:3.1/AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:L/A:L
+      </p>
+
+      <p>
+        produce la siguiente puntuación:
+      </p>
+
+      <h4>A) Puntuación base</h4>
+
+      <p>
+        4.7
+      </p>
+
+      <h4>B) Categoría de riesgo</h4>
+
+      <p>
+        Media
+      </p>
+
+      <p>
+        Porque según CVSS v3.1:
+      </p>
+
+      <ul style="color:#475569; line-height:1.8;">
+
+        <li>
+          Baja → 0.1–3.9
+        </li>
+
+        <li>
+          Media → 4.0–6.9
+        </li>
+
+        <li>
+          Alta → 7.0–8.9
+        </li>
+
+        <li>
+          Crítica → 9.0–10
+        </li>
+
+      </ul>
+
+      <!-- CONCLUSIÓN -->
+      <h3>4. Conclusión</h3>
+
+      <p>
+        La vulnerabilidad analizada alcanzó una puntuación de 4.7 en CVSS v3.1,
+        por lo que se considera de nivel medio.
+      </p>
+
+      <p>
+        A pesar de que para explotarla se requieren privilegios elevados,
+        sigue representando un riesgo importante, ya que podría ser utilizada
+        por usuarios internos maliciosos o por atacantes que hayan obtenido
+        acceso a cuentas privilegiadas.
+      </p>
+
+      <p>
+        Asimismo, el hecho de que pueda explotarse remotamente
+        y con baja complejidad técnica aumenta su importancia
+        dentro de la infraestructura de una organización.
+      </p>
+
+      <p>
+        Aunque las afectaciones en confidencialidad, integridad
+        y disponibilidad son bajas y no implican un daño crítico al sistema,
+        es recomendable implementar controles de seguridad,
+        supervisión de cuentas con altos privilegios y estrategias
+        de mitigación que ayuden a disminuir la probabilidad de explotación.
+      </p>
+
+      <!-- VIDEO -->
+      <h4 style="margin-top:30px;">Video Explicativo</h4>
+
+      <div style="margin-top:20px; border-radius:18px; overflow:hidden; box-shadow:0px 8px 20px rgba(0,0,0,0.20);">
+        
+        <div style="position:relative; width:100%; padding-top:56.25%;">
+
+          <iframe 
+            src="https://www.youtube.com/embed/1bF094rwc_o"
+            title="Video explicativo"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            style="position:absolute; top:0; left:0; width:100%; height:100%;">
+          </iframe>
+
+        </div>
+      
+      </div>
+      
+      <!-- PDF -->
+      <div style="margin-top: 35px; text-align: center;">
+
+        <a href="../../pdf/act17-Equipo3.pdf" class="activity-btn" target="_blank">
+
+          <i class="fas fa-file-pdf"></i> Exportar PDF
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
