@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Actividad 15 | SET</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- FUENTE -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- ICONOS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <!-- TU CSS -->
+  <link rel="stylesheet" href="../../style.css">
+
+  <style>
+
+    .hero-banner{
+      background: linear-gradient(135deg, #0f172a, #111827);
+      border-radius: 24px;
+      padding: 60px 40px;
+      color: white;
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+      border:1px solid rgba(255,255,255,0.05);
+    }
+
+    .hero-banner::before{
+      content:"";
+      position:absolute;
+      width:300px;
+      height:300px;
+      background:rgba(34,197,94,0.10);
+      border-radius:50%;
+      top:-100px;
+      right:-100px;
+    }
+
+    .hero-banner h1{
+      font-size:42px;
+      margin-bottom:10px;
+      font-weight:800;
+    }
+
+    .hero-banner p{
+      color:#cbd5e1;
+      max-width:700px;
+      line-height:1.7;
+    }
+
+    .badge-container{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:20px;
+    }
+
+    .badge{
+      background:#0f172a;
+      border:1px solid #1e293b;
+      color:#22c55e;
+      padding:8px 14px;
+      border-radius:50px;
+      font-size:14px;
+      font-weight:600;
+    }
+
+    .code-block{
+      background:#020617;
+      color:#22c55e;
+      padding:20px;
+      border-radius:18px;
+      overflow:auto;
+      margin-top:15px;
+      border:1px solid #1e293b;
+      font-family: monospace;
+      line-height:1.7;
+    }
+
+    .section-image{
+      width:100%;
+      border-radius:18px;
+      margin-top:20px;
+      border:1px solid #e2e8f0;
+      box-shadow:0px 8px 20px rgba(0,0,0,0.10);
+    }
+
+    .term-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:20px;
+      margin-top:20px;
+    }
+
+    .term-card{
+      background:#f8fafc;
+      border:1px solid #e2e8f0;
+      border-radius:20px;
+      padding:20px;
+    }
+
+    .term-card h4{
+      margin-bottom:10px;
+      color:#0f172a;
+    }
+
+    .term-card p{
+      color:#64748b;
+      font-size:15px;
+      line-height:1.7;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-content">
+
+      <div class="logo">
+        AG<span>.</span>
+      </div>
+
+      <div class="links">
+        <a href="../../index.html">Inicio</a>
+        <a href="parcial3.html">Parcial 3</a>
+      </div>
+
+    </div>
+  </nav>
+
+  <div style="max-width:1100px; margin:auto; padding:50px 20px;">
+
+    <!-- HERO -->
+    <div class="hero-banner">
+
+      <h1>
+        Actividad 15 - Social Engineer Toolkit
+      </h1>
+
+      <p>
+        Implementación y análisis técnico de una campaña de phishing controlada
+        utilizando SET, Postfix y MailHog en un entorno sandbox para validar
+        mecanismos de defensa y filtrado SMTP.
+      </p>
+
+      <div class="badge-container">
+        <span class="badge">SET</span>
+        <span class="badge">Postfix</span>
+        <span class="badge">MailHog</span>
+        <span class="badge">SMTP</span>
+        <span class="badge">Phishing</span>
+        <span class="badge">Cybersecurity</span>
+      </div>
+
+    </div>
+
+    <!-- CARD -->
+    <div class="info-card">
+
+      <div class="card-title">
+        <i class="fas fa-user-secret"></i>
+        <h3>Actividad 15: SET</h3>
+      </div>
+
+      <p style="color:#64748b; margin-top:-10px;">
+
+        <strong>Materia:</strong> Seguridad Informática |
+        <strong>Semestre:</strong> 8º |
+        <strong>Fecha:</strong> 26 de marzo de 2026 |
+        <strong>Profesor:</strong> Servando López Contreras
+
+      </p>
+
+      <hr style="border:none; border-top:1px solid #e2e8f0; margin:30px 0;">
+
+      <!-- RESUMEN -->
+      <h3>Resumen Ejecutivo</h3>
+
+      <p>
+        En esta práctica se realizó una prueba de concepto enfocada en el despliegue
+        de una campaña de phishing controlada mediante la herramienta Social Engineer Toolkit (SET)
+        y un servidor Postfix. El objetivo principal fue analizar la entrega de correos electrónicos
+        y validar la efectividad de mecanismos de protección perimetral implementados por Microsoft
+        Exchange Online Protection.
+      </p>
+
+      <!-- IMAGEN -->
+      <img src="../../img/set1.png" class="section-image">
+
+      <!-- DESARROLLO -->
+      <h3 style="margin-top:40px;">Primeros Pasos</h3>
+
+      <p>
+        Se seleccionó el vector de ataque "Mass Mailer Attack" dentro de SET para realizar
+        el envío de correos de phishing utilizando un servidor SMTP propio.
+      </p>
+
+      <div class="code-block">
+
+1) Social Engineering Attacks
+5) Mass Mailer Attack
+
+Remitente:
+soporte@lab.local
+
+Servidor:
+127.0.0.1
+
+Puerto SMTP:
+25
+
+      </div>
+
+      <img src="../../img/set2.png" class="section-image">
+
+      <!-- POSTFIX -->
+      <h3 style="margin-top:40px;">
+        Configuración y Validación de Postfix
+      </h3>
+
+      <p>
+        Se configuró Postfix como servidor MTA local para gestionar el envío de correos
+        electrónicos generados por SET. Posteriormente se validó el correcto funcionamiento
+        mediante registros del sistema.
+      </p>
+
+      <div class="code-block">
+
+postfix/smtpd[4924]: connect from localhost[127.0.0.1]
+
+9EACEC6C2A: client=localhost[127.0.0.1]
+
+status=bounced (550 5.7.1 Service unavailable)
+
+      </div>
+
+      <img src="../../img/postfix1.png" class="section-image">
+
+      <!-- ANALISIS -->
+      <h3 style="margin-top:40px;">
+        Análisis del Bloqueo SMTP
+      </h3>
+
+      <p>
+        El correo fue bloqueado por los filtros de Microsoft Outlook Protection
+        debido a que la IP de origen se encontraba catalogada como residencial
+        dentro de Spamhaus.
+      </p>
+
+      <div class="code-block">
+
+550 5.7.1 Service unavailable,
+Client host blocked using Spamhaus
+
+      </div>
+
+      <p>
+        Esto demuestra la implementación de capas robustas de seguridad
+        perimetral capaces de detectar posibles vectores de phishing
+        provenientes de infraestructura no confiable.
+      </p>
+
+      <!-- MAILHOG -->
+      <h3 style="margin-top:40px;">
+        Entorno Sandbox con MailHog
+      </h3>
+
+      <p>
+        Para validar el funcionamiento del ataque en un entorno controlado,
+        se implementó MailHog como servidor SMTP falso, permitiendo capturar
+        e inspeccionar los mensajes generados por SET sin depender de servidores externos.
+      </p>
+
+      <img src="../../img/mailhog1.png" class="section-image">
+
+      <div class="code-block">
+
+relayhost = [127.0.0.1]:1025
+
+sudo systemctl restart postfix
+
+      </div>
+
+      <!-- RESULTADOS -->
+      <h3 style="margin-top:40px;">
+        Resultados Obtenidos
+      </h3>
+
+      <p>
+        La recepción exitosa del correo dentro de MailHog confirmó que el
+        servidor Postfix funcionaba correctamente y que el vector de phishing
+        mantenía intacto el formato HTML y la apariencia visual del mensaje.
+      </p>
+
+      <!-- GALERIA -->
+      <h3 style="margin-top:40px;">
+        Galería de Evidencias
+      </h3>
+
+      <div style="
+        display:grid;
+        grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
+        gap:20px;
+        margin-top:20px;
+      ">
+
+        <div class="term-card">
+          <img src="../../img/set3.png"
+               style="width:100%; border-radius:15px;">
+          <p style="margin-top:10px;">
+            Configuración inicial del ataque SET.
+          </p>
+        </div>
+
+        <div class="term-card">
+          <img src="../../img/postfix2.png"
+               style="width:100%; border-radius:15px;">
+          <p style="margin-top:10px;">
+            Validación del servicio Postfix.
+          </p>
+        </div>
+
+        <div class="term-card">
+          <img src="../../img/mailhog2.png"
+               style="width:100%; border-radius:15px;">
+          <p style="margin-top:10px;">
+            Recepción del correo en MailHog.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- CONCLUSION -->
+      <h3 style="margin-top:40px;">
+        Conclusión
+      </h3>
+
+      <p>
+        Esta práctica permitió analizar el ciclo completo de una amenaza
+        basada en ingeniería social, desde la generación del vector hasta
+        su bloqueo o entrega en un entorno controlado.
+      </p>
+
+      <p>
+        Se concluye que la infraestructura de seguridad basada en filtros
+        de reputación representa una barrera efectiva frente a ataques
+        provenientes de infraestructura residencial, aunque el factor humano
+        continúa siendo el principal objetivo de la ingeniería social.
+      </p>
+
+      <!-- GLOSARIO -->
+      <h3 style="margin-top:40px;">
+        Glosario Técnico
+      </h3>
+
+      <div class="term-grid">
+
+        <div class="term-card">
+          <h4>MTA</h4>
+          <p>
+            Software encargado de transferir correos electrónicos
+            utilizando SMTP.
+          </p>
+        </div>
+
+        <div class="term-card">
+          <h4>Spamhaus</h4>
+          <p>
+            Base de datos utilizada para detectar direcciones IP
+            consideradas sospechosas o maliciosas.
+          </p>
+        </div>
+
+        <div class="term-card">
+          <h4>MailHog</h4>
+          <p>
+            Herramienta SMTP falsa utilizada para pruebas y entornos sandbox.
+          </p>
+        </div>
+
+        <div class="term-card">
+          <h4>SET</h4>
+          <p>
+            Framework especializado en ataques de ingeniería social
+            y simulaciones de phishing.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- VIDEO -->
+      <h3 style="margin-top:40px;">
+        Video Explicativo
+      </h3>
+
+      <div style="
+        margin-top:20px;
+        border-radius:20px;
+        overflow:hidden;
+        box-shadow:0px 10px 30px rgba(0,0,0,0.15);
+      ">
+
+        <div style="position:relative; width:100%; padding-top:56.25%;">
+
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="Video explicativo"
+            frameborder="0"
+            allowfullscreen
+            style="
+              position:absolute;
+              top:0;
+              left:0;
+              width:100%;
+              height:100%;
+            ">
+          </iframe>
+
+        </div>
+
+      </div>
+
+      <!-- PDF -->
+      <div style="margin-top:40px; text-align:center;">
+
+        <a href="../../pdf/act15-set.pdf"
+           class="activity-btn"
+           target="_blank">
+
+          <i class="fas fa-file-pdf"></i>
+          Exportar PDF
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
